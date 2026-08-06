@@ -1,0 +1,68 @@
+---
+import Button from "@shared/ui/Button.astro";
+import Container from "@shared/ui/Container.astro";
+import { heroContent } from "./hero.data";
+---
+
+<section
+  id="inicio"
+  class="relative flex min-h-screen items-center overflow-hidden bg-kuroki-black bg-cover bg-center py-28 sm:py-32 lg:py-24"
+  style="background-image: url('/images/brand/fondo-kuroki.png');"
+>
+  <div
+    class="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,.2),rgba(13,13,13,.46))]"
+    aria-hidden="true"
+  >
+  </div>
+  <Container class="relative w-full">
+    <div
+      class="mx-auto max-w-5xl animate-[kuroki-rise_.7s_ease-out_both] text-center"
+    >
+      <p
+        class="mb-5 text-xs font-extrabold uppercase tracking-[0.24em] text-kuroki-orange sm:text-sm"
+      >
+        {heroContent.eyebrow}
+      </p>
+      <h1
+        class="mx-auto max-w-[960px] text-balance text-4xl font-extrabold leading-tight text-white sm:text-6xl lg:text-7xl"
+      >
+        Menos procesos manuales.
+        <span class="text-kuroki-orange"> Más negocio en movimiento.</span>
+      </h1>
+      <p
+        class="mx-auto mt-8 max-w-3xl text-pretty text-base leading-8 text-white/75 sm:text-lg lg:text-xl"
+      >
+        {heroContent.description}
+      </p>
+      <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+        <Button href="#contacto">Cuéntanos tu proyecto</Button>
+        <Button href="#servicios" variant="secondary"
+          >Ver nuestros servicios</Button
+        >
+      </div>
+      <div
+        class="mx-auto mt-12 grid max-w-4xl gap-4 text-left sm:grid-cols-3 sm:gap-0"
+      >
+        {
+          heroContent.levels.map((level, index) => (
+            <div
+              class:list={[
+                "min-w-0 border-l px-5",
+                index === 0
+                  ? "border-kuroki-orange"
+                  : "border-white/20",
+              ]}
+            >
+              <p class="text-xs font-bold tracking-[0.18em] text-kuroki-orange">
+                {level.number}
+              </p>
+              <p class="mt-2 text-sm font-semibold text-white sm:text-base">
+                {level.title}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</section>

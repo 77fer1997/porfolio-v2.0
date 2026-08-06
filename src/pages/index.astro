@@ -1,0 +1,43 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { AboutSection } from "@features/landing/about";
+import { ContactSection } from "@features/landing/contact";
+import { FaqSection } from "@features/landing/faq";
+import { Footer } from "@features/landing/footer";
+import { Header } from "@features/landing/header";
+import { HeroSection } from "@features/landing/hero";
+import { ProblemsSection } from "@features/landing/problems";
+import { ProcessSection } from "@features/landing/process";
+import { ProjectsSection } from "@features/landing/projects";
+import { ServicesSection } from "@features/landing/services";
+import { WhyKurokiSection } from "@features/landing/why-kuroki";
+import { faqItems } from "@features/landing/faq/faq.data";
+import {
+  faqJsonLd,
+  organizationJsonLd,
+  professionalServiceJsonLd,
+  serviceJsonLd,
+  websiteJsonLd,
+} from "@shared/seo/structured-data";
+---
+
+<BaseLayout>
+  <Header />
+  <main id="contenido-principal">
+    <HeroSection />
+    <ProblemsSection />
+    <ServicesSection />
+    <ProjectsSection />
+    <ProcessSection />
+    <WhyKurokiSection />
+    <AboutSection />
+    <FaqSection />
+    <ContactSection />
+  </main>
+  <Footer />
+  <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(professionalServiceJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(serviceJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd(faqItems))} />
+</BaseLayout>

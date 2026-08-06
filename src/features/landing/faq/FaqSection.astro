@@ -1,0 +1,23 @@
+---
+import Container from "@shared/ui/Container.astro";
+import SectionHeading from "@shared/ui/SectionHeading.astro";
+import { faqItems } from "./faq.data";
+---
+
+<section id="preguntas" class="bg-white py-24 text-kuroki-black sm:py-32">
+  <Container class="grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
+    <SectionHeading
+      eyebrow="PREGUNTAS"
+      title="Antes de iniciar una conversacion"
+      intro="Estas respuestas ayudan a ubicar el alcance inicial. La definicion final se realiza despues del diagnostico."
+    />
+    <div class="space-y-3" data-reveal-group>
+      {faqItems.map((item) => (
+        <details class="group rounded-lg border border-border-light bg-white p-5" data-reveal>
+          <summary class="cursor-pointer list-none text-lg font-bold marker:hidden">{item.question}</summary>
+          <p class="mt-4 text-sm leading-7 text-kuroki-gray">{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </Container>
+</section>

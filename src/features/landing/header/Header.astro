@@ -1,0 +1,66 @@
+---
+import Button from "@shared/ui/Button.astro";
+import Container from "@shared/ui/Container.astro";
+import { siteConfig } from "@shared/config/site.config";
+import { navigationItems } from "./navigation.data";
+---
+
+<header class="site-header fixed inset-x-0 top-0 z-40 bg-kuroki-black" data-site-header>
+  <Container class="flex h-20 items-center justify-between gap-5">
+    <a href="#inicio" class="flex items-center gap-3" aria-label="KUROKI inicio">
+      <img src={siteConfig.logo} alt="KUROKI" width="184" height="36" class="h-9 w-auto" />
+    </a>
+    <nav class="hidden items-center gap-7 lg:flex" aria-label="Navegacion principal">
+      {navigationItems.map((item) => (
+        <a class="text-sm font-semibold text-text-secondary transition hover:text-kuroki-orange" href={item.href}>{item.label}</a>
+      ))}
+    </nav>
+    <div class="hidden lg:block">
+      <Button href="#contacto">Cuentanos tu proyecto</Button>
+    </div>
+    <button
+      class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-md border border-white/15 text-white lg:hidden"
+      type="button"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-menu-button
+    >
+      <span class="h-0.5 w-6 bg-current before:block before:h-0.5 before:w-6 before:-translate-y-2 before:bg-current before:content-[''] after:block after:h-0.5 after:w-6 after:translate-y-1.5 after:bg-current after:content-['']"></span>
+    </button>
+  </Container>
+  <nav id="mobile-menu" class="hidden border-t border-white/10 bg-kuroki-black px-5 py-5 lg:hidden" aria-label="Navegacion movil" data-mobile-menu>
+    <div class="mx-auto flex max-w-7xl flex-col gap-2">
+      {navigationItems.map((item) => (
+        <a class="rounded-md px-3 py-3 text-base font-semibold text-white hover:bg-white/5" href={item.href}>{item.label}</a>
+      ))}
+      <Button href="#contacto" class="mt-2 w-full">Cuentanos tu proyecto</Button>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const button = document.querySelector("[data-menu-button]");
+  const menu = document.querySelector("[data-mobile-menu]");
+  const header = document.querySelector("[data-site-header]");
+
+  const updateHeader = () => {
+    header?.setAttribute("data-scrolled", String(window.scrollY > 12));
+  };
+
+  updateHeader();
+  window.addEventListener("scroll", updateHeader, { passive: true });
+
+  button?.addEventListener("click", () => {
+    const expanded = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!expanded));
+    menu?.classList.toggle("hidden");
+  });
+
+  menu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      button?.setAttribute("aria-expanded", "false");
+      menu.classList.add("hidden");
+    });
+  });
+</script>

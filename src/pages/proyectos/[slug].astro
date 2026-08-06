@@ -1,0 +1,50 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Button from "@shared/ui/Button.astro";
+import Container from "@shared/ui/Container.astro";
+import { siteConfig } from "@shared/config/site.config";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects", ({ data }) => data.published);
+  return projects.map((project) => ({
+    params: { slug: project.data.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout
+  title={project.data.seoTitle}
+  description={project.data.seoDescription}
+  canonical={`${siteConfig.url}/proyectos/${project.data.slug}/`}
+>
+  <main id="contenido-principal" class="bg-kuroki-black">
+    <section class="pt-16">
+      <Container class="py-16 sm:py-24">
+        <Button href="/#proyectos" variant="secondary">Volver a proyectos</Button>
+        <p class="mt-10 text-sm font-extrabold tracking-[0.16em] text-kuroki-orange">{project.data.serviceLevel}</p>
+        <h1 class="mt-4 max-w-4xl text-4xl font-extrabold leading-tight text-white sm:text-5xl">{project.data.title}</h1>
+        <p class="mt-6 max-w-3xl text-lg leading-8 text-text-secondary">{project.data.summary}</p>
+        <figure class="mt-10 overflow-hidden rounded-lg border border-white/10 bg-white">
+          <img src={project.data.coverImage} alt={project.data.coverImageAlt} width="1200" height="720" class="h-auto w-full" />
+        </figure>
+      </Container>
+    </section>
+    <section class="bg-white py-16 text-kuroki-black">
+      <Container class="grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
+        <dl class="space-y-6">
+          <div><dt class="font-bold">Problema</dt><dd class="mt-2 leading-7 text-kuroki-gray">{project.data.problem}</dd></div>
+          <div><dt class="font-bold">Solucion</dt><dd class="mt-2 leading-7 text-kuroki-gray">{project.data.solution}</dd></div>
+          <div><dt class="font-bold">Alcance</dt><dd class="mt-2 leading-7 text-kuroki-gray">{project.data.scope}</dd></div>
+        </dl>
+        <article class="prose max-w-none">
+          <Content />
+        </article>
+      </Container>
+    </section>
+  </main>
+</BaseLayout>

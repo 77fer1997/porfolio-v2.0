@@ -1,0 +1,25 @@
+---
+import Container from "@shared/ui/Container.astro";
+import SectionHeading from "@shared/ui/SectionHeading.astro";
+import { processSteps } from "./process.data";
+---
+
+<section id="metodo" class="bg-kuroki-black py-24 sm:py-32">
+  <Container>
+    <SectionHeading
+      eyebrow="METODO"
+      title="De una necesidad a una solucion funcional"
+      intro="Trabajamos por etapas para reducir incertidumbre, controlar el alcance y construir una solucion que pueda evolucionar."
+      dark
+    />
+    <div class="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+      {processSteps.map(([number, title, description]) => (
+        <article class="rounded-lg border border-white/10 bg-white/[0.03] p-6" data-reveal>
+          <span class="text-sm font-extrabold text-kuroki-orange">{number}</span>
+          <h3 class="mt-4 text-xl font-bold text-white">{title}</h3>
+          <p class="mt-3 text-sm leading-7 text-text-secondary">{description}</p>
+        </article>
+      ))}
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,43 @@
+---
+import { siteConfig } from "@shared/config/site.config";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+  imageAlt?: string;
+  type?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = siteConfig.title,
+  description = siteConfig.description,
+  canonical = siteConfig.url,
+  image = siteConfig.ogImage,
+  imageAlt = "Identidad visual de KUROKI para consultoria tecnologica",
+  type = "website",
+  noindex = false,
+} = Astro.props;
+const imageUrl = image.startsWith("http") ? image : `${siteConfig.url}${image}`;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:locale" content={siteConfig.locale} />
+<meta property="og:site_name" content={siteConfig.name} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="theme-color" content={siteConfig.themeColor} />
+

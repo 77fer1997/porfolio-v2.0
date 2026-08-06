@@ -1,0 +1,18 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  dark?: boolean;
+}
+
+const { eyebrow, title, intro, dark = false } = Astro.props;
+---
+
+<div class="max-w-3xl" data-reveal>
+  <p class="mb-4 text-sm font-bold tracking-[0.18em] text-kuroki-orange">{eyebrow}</p>
+  <h2 class:list={["text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl", dark ? "text-white" : "text-kuroki-black"]}>
+    {title}
+  </h2>
+  {intro && <p class:list={["mt-5 text-base leading-8 sm:text-lg", dark ? "text-text-secondary" : "text-kuroki-gray"]}>{intro}</p>}
+</div>

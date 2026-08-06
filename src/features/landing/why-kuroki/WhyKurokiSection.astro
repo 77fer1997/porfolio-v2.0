@@ -1,0 +1,23 @@
+---
+import Container from "@shared/ui/Container.astro";
+import SectionHeading from "@shared/ui/SectionHeading.astro";
+import { benefits } from "./benefits.data";
+---
+
+<section class="bg-white py-24 text-kuroki-black sm:py-32">
+  <Container class="grid gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-start">
+    <SectionHeading
+      eyebrow="POR QUE KUROKI"
+      title="Tecnologia clara para decisiones reales"
+      intro="Combinamos criterio de negocio, diseno de producto y desarrollo para construir soluciones que se puedan operar, mantener y mejorar."
+    />
+    <div class="border-y border-border-light" data-reveal-group>
+      {benefits.map((benefit, index) => (
+        <div class="grid grid-cols-[56px_1fr] gap-4 border-b border-border-light py-5 last:border-b-0" data-reveal>
+          <span class="font-extrabold text-kuroki-orange">{String(index + 1).padStart(2, "0")}</span>
+          <p class="text-lg font-semibold leading-7">{benefit}</p>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,24 @@
+---
+import Container from "@shared/ui/Container.astro";
+import SectionHeading from "@shared/ui/SectionHeading.astro";
+import { problems } from "./problems.data";
+---
+
+<section id="problemas" class="bg-white py-24 text-kuroki-black sm:py-32">
+  <Container>
+    <SectionHeading
+      eyebrow="PROBLEMAS"
+      title="La tecnologia debe simplificar tu operacion"
+      intro="Una pagina que no genera confianza, procesos que dependen de tareas manuales o herramientas que no se comunican pueden limitar el crecimiento de una empresa. En KUROKI analizamos el problema y proponemos la solucion mas simple que pueda resolverlo correctamente."
+    />
+    <div class="mt-14 border-y border-border-light" data-reveal-group>
+      {problems.map((problem) => (
+        <article class="grid gap-5 border-b border-border-light py-8 last:border-b-0 md:grid-cols-[120px_1fr_1.1fr] md:items-start" data-reveal>
+          <span class="text-sm font-extrabold text-kuroki-orange">{problem.number}</span>
+          <h3 class="text-2xl font-bold leading-tight">{problem.title}</h3>
+          <p class="text-base leading-8 text-kuroki-gray">{problem.description}</p>
+        </article>
+      ))}
+    </div>
+  </Container>
+</section>

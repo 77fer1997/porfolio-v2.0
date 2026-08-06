@@ -1,0 +1,272 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --color-kuroki-orange: #ff5004;
+  --color-kuroki-black: #0d0d0d;
+  --color-kuroki-gray: #3b3b3b;
+  --color-kuroki-white: #ffffff;
+  --color-surface-dark: #0d0d0d;
+  --color-surface-elevated: #171717;
+  --color-surface-light: #f5f5f2;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #c9c9c9;
+  --color-border-dark: #2a2a2a;
+  --color-border-light: #d8d8d2;
+  --color-focus-ring: #ff5004;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark light;
+}
+
+body {
+  margin: 0;
+  background: #0d0d0d;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #ff5004;
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 3px solid #ff5004;
+  outline-offset: 4px;
+}
+
+.site-header {
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 240ms ease,
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    backdrop-filter 240ms ease;
+}
+
+.site-header[data-scrolled="true"] {
+  background-color: rgba(23, 23, 23, 0.94);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(14px);
+}
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  filter: blur(5px);
+  transition:
+    opacity 650ms ease,
+    transform 650ms ease,
+    filter 650ms ease,
+    border-color 250ms ease,
+    background-color 250ms ease;
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+
+[data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+[data-reveal-group] > :nth-child(2) {
+  --reveal-delay: 80ms;
+}
+
+[data-reveal-group] > :nth-child(3) {
+  --reveal-delay: 140ms;
+}
+
+[data-reveal-group] > :nth-child(4) {
+  --reveal-delay: 200ms;
+}
+
+[data-reveal-group] > :nth-child(5) {
+  --reveal-delay: 260ms;
+}
+
+[data-reveal-group] > :nth-child(6) {
+  --reveal-delay: 320ms;
+}
+
+@keyframes kuroki-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes kuroki-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes kuroki-node {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 80, 4, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(255, 80, 4, 0);
+  }
+}
+
+@keyframes kuroki-scan-x {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  20%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(220px);
+    opacity: 0;
+  }
+}
+
+@keyframes kuroki-dash {
+  to {
+    stroke-dashoffset: -580;
+  }
+}
+
+@keyframes kuroki-cube {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) skew(-8deg, -8deg);
+  }
+  50% {
+    transform: translate3d(28px, -22px, 0) rotate(8deg) skew(-8deg, -8deg);
+  }
+}
+
+@keyframes kuroki-atom {
+  to {
+    transform: rotate(360deg);
+    transform-origin: center;
+  }
+}
+
+@keyframes kuroki-scan-wide {
+  0% {
+    transform: translateX(-140px);
+    opacity: 0;
+  }
+  18%,
+  82% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(72vw);
+    opacity: 0;
+  }
+}
+
+@keyframes kuroki-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(18px, -18px, 0);
+  }
+}
+
+@keyframes kuroki-drift-large {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-22px, 20px, 0);
+  }
+}
+
+@keyframes kuroki-line-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.hero-cube {
+  animation: kuroki-cube 14s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes kuroki-cube-orbit {
+  0%,
+  100% {
+    transform: translate3d(0, -50%, 0);
+  }
+  25% {
+    transform: translate3d(32px, -62%, 0);
+  }
+  50% {
+    transform: translate3d(18px, -34%, 0);
+  }
+  75% {
+    transform: translate3d(-24px, -42%, 0);
+  }
+}
+
+@keyframes kuroki-atom-orbit-path {
+  0%,
+  100% {
+    transform: translate3d(0, -50%, 0);
+  }
+  25% {
+    transform: translate3d(-28px, -58%, 0);
+  }
+  50% {
+    transform: translate3d(-16px, -38%, 0);
+  }
+  75% {
+    transform: translate3d(24px, -44%, 0);
+  }
+}
+
+.hero-cube-orbit {
+  animation: kuroki-cube-orbit 34s ease-in-out infinite;
+}
+
+.hero-atom-orbit {
+  animation: kuroki-atom-orbit-path 38s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

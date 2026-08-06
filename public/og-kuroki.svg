@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="KUROKI consultora tecnologica">
+  <rect width="1200" height="630" fill="#0D0D0D"/>
+  <path d="M80 110h1040v410H80z" fill="none" stroke="#3B3B3B"/>
+  <path d="M140 450h920" stroke="#FF5004" stroke-width="6"/>
+  <text x="140" y="250" fill="#FFFFFF" font-family="Montserrat, Arial, sans-serif" font-size="92" font-weight="800">KUROKI</text>
+  <text x="145" y="330" fill="#C9C9C9" font-family="Montserrat, Arial, sans-serif" font-size="34" font-weight="600">Desarrollo web, automatizacion y software a medida</text>
+</svg>

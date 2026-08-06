@@ -1,0 +1,97 @@
+---
+const orbitNodes = [
+  { label: "Web", detail: "Presencia digital", position: "left-4 top-12 sm:left-8 sm:top-16" },
+  { label: "API", detail: "Integraciones", position: "right-6 top-20 sm:right-12 sm:top-24" },
+  { label: "App", detail: "iOS / Android", position: "left-6 bottom-24 sm:left-14 sm:bottom-28" },
+  { label: "CRM", detail: "Seguimiento", position: "right-4 bottom-20 sm:right-10 sm:bottom-24" },
+];
+
+const systemSignals = ["Usuarios", "Notificaciones", "Base de datos", "Analitica"];
+---
+
+<div class="relative min-h-[620px] overflow-hidden rounded-lg border border-white/10 bg-[#101010] shadow-2xl shadow-black/50">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_64%_24%,rgba(255,80,4,.22),transparent_34%),radial-gradient(circle_at_20%_80%,rgba(255,255,255,.08),transparent_30%),linear-gradient(135deg,#151515,#0d0d0d_55%,#171717)]"></div>
+  <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.045)_1px,transparent_1px)] bg-[size:34px_34px] opacity-60 [transform:perspective(900px)_rotateX(58deg)_scale(1.35)] [transform-origin:center_top]"></div>
+  <div class="absolute inset-x-8 top-24 h-px bg-kuroki-orange/40"></div>
+  <div class="absolute bottom-20 left-10 right-10 h-px bg-white/10"></div>
+  <div class="absolute left-1/2 top-16 h-[460px] w-px bg-white/10"></div>
+
+  <svg class="absolute inset-0 h-full w-full" viewBox="0 0 680 620" fill="none" aria-hidden="true">
+    <path d="M102 146 C206 110 260 160 340 250 C420 342 512 310 585 230" stroke="rgba(255,80,4,.45)" stroke-width="1.5" stroke-dasharray="8 10" />
+    <path d="M108 472 C220 380 275 430 340 320 C410 202 514 240 584 402" stroke="rgba(255,255,255,.16)" stroke-width="1.5" stroke-dasharray="5 12" />
+    <path class="animate-[kuroki-dash_7s_linear_infinite]" d="M108 472 C220 380 275 430 340 320 C410 202 514 240 584 402" stroke="rgba(255,80,4,.8)" stroke-width="2" stroke-dasharray="60 520" />
+    <circle cx="340" cy="310" r="150" stroke="rgba(255,255,255,.1)" />
+    <circle cx="340" cy="310" r="205" stroke="rgba(255,80,4,.18)" stroke-dasharray="8 14" />
+  </svg>
+
+  <div class="absolute left-1/2 top-1/2 z-10 w-[78%] max-w-[430px] -translate-x-1/2 -translate-y-1/2">
+    <div class="relative animate-[kuroki-float_7s_ease-in-out_infinite] rounded-xl border border-white/15 bg-white/[0.075] p-4 shadow-2xl shadow-kuroki-orange/10 backdrop-blur-md">
+      <div class="absolute -inset-px rounded-xl bg-[linear-gradient(120deg,rgba(255,80,4,.45),transparent_35%,rgba(255,255,255,.16))] opacity-60"></div>
+      <div class="relative overflow-hidden rounded-lg border border-white/10 bg-kuroki-black">
+        <div class="flex min-h-12 items-center justify-between gap-3 border-b border-white/10 px-4">
+          <div class="flex gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-kuroki-orange"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-white/25"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-white/25"></span>
+          </div>
+          <p class="truncate text-[11px] font-bold tracking-[0.16em] text-white/50">KUROKI SYSTEM MAP</p>
+        </div>
+        <div class="grid gap-4 p-4 sm:grid-cols-[1fr_.72fr]">
+          <div class="min-w-0 rounded-md border border-white/10 bg-white/[0.04] p-4">
+            <p class="text-[11px] font-bold tracking-[0.18em] text-kuroki-orange">ECOSISTEMA DIGITAL</p>
+            <h3 class="mt-3 text-balance text-xl font-extrabold leading-tight text-white">Procesos aislados convertidos en sistema</h3>
+            <div class="mt-5 space-y-3">
+              <div class="h-2.5 w-full rounded bg-white/20"></div>
+              <div class="h-2.5 w-4/5 rounded bg-white/15"></div>
+              <div class="h-2.5 w-2/3 rounded bg-kuroki-orange/80"></div>
+            </div>
+            <div class="mt-6 grid grid-cols-2 gap-3">
+              <div class="rounded border border-white/10 bg-kuroki-black p-3">
+                <p class="truncate text-[10px] font-bold text-white/45">AUTOMATION</p>
+                <p class="mt-1 truncate text-sm font-bold text-white">Activa</p>
+              </div>
+              <div class="rounded border border-kuroki-orange/50 bg-kuroki-orange/10 p-3">
+                <p class="truncate text-[10px] font-bold text-kuroki-orange">SYNC</p>
+                <p class="mt-1 truncate text-sm font-bold text-white">API</p>
+              </div>
+            </div>
+          </div>
+          <div class="mx-auto w-full max-w-[150px] rounded-[26px] border border-white/15 bg-[#111] p-3">
+            <div class="mx-auto mb-3 h-1.5 w-12 rounded-full bg-white/20"></div>
+            <div class="rounded-[18px] border border-white/10 bg-white/[0.04] p-3">
+              <p class="truncate text-[10px] font-bold tracking-[0.14em] text-kuroki-orange">APP CONTROL</p>
+              <div class="mt-4 h-16 rounded-md border border-white/10 bg-white/10"></div>
+              <div class="mt-4 grid grid-cols-2 gap-2">
+                <span class="h-10 rounded border border-kuroki-orange/40 bg-kuroki-orange/10"></span>
+                <span class="h-10 rounded border border-white/10 bg-white/5"></span>
+              </div>
+              <div class="mt-4 h-2 w-full rounded bg-white/25"></div>
+              <div class="mt-2 h-2 w-2/3 rounded bg-white/15"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {orbitNodes.map((node, index) => (
+    <div class:list={["absolute z-20 w-32 rounded-lg border border-white/10 bg-white/[0.07] p-3 shadow-xl shadow-black/30 backdrop-blur-md transition hover:border-kuroki-orange/60 sm:w-36", node.position, index % 2 === 0 ? "animate-[kuroki-float_8s_ease-in-out_infinite]" : "animate-[kuroki-float_9s_ease-in-out_infinite]"]}>
+      <div class="flex items-center gap-2">
+        <span class="h-2.5 w-2.5 shrink-0 animate-[kuroki-node_2.8s_ease-in-out_infinite] rounded-full bg-kuroki-orange"></span>
+        <p class="truncate text-sm font-extrabold text-white">{node.label}</p>
+      </div>
+      <p class="mt-2 text-wrap text-[11px] font-semibold leading-4 text-text-secondary">{node.detail}</p>
+    </div>
+  ))}
+
+  <div class="absolute bottom-5 left-5 right-5 z-20 grid gap-2 sm:grid-cols-4">
+    {systemSignals.map((signal) => (
+      <div class="min-w-0 rounded-md border border-white/10 bg-kuroki-black/70 px-3 py-3 backdrop-blur">
+        <p class="truncate text-[11px] font-bold tracking-[0.08em] text-white/55">{signal}</p>
+        <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
+          <span class="block h-full w-2/3 rounded-full bg-kuroki-orange"></span>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
