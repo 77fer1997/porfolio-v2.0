@@ -1,7 +1,6 @@
 ---
 import Button from "@shared/ui/Button.astro";
 import Container from "@shared/ui/Container.astro";
-import SectionHeading from "@shared/ui/SectionHeading.astro";
 import { featuredProjects } from "./projects.data";
 
 const projects = featuredProjects.filter((project) => project.published && project.featured);
@@ -9,33 +8,85 @@ const projects = featuredProjects.filter((project) => project.published && proje
 
 <section id="proyectos" class="bg-surface-light py-24 text-kuroki-black sm:py-32">
   <Container>
-    <SectionHeading
-      eyebrow="PROYECTOS"
-      title="Soluciones que hemos construido"
-      intro="Cada proyecto comienza con un problema concreto. Disenamos la solucion, construimos la tecnologia necesaria y acompanamos su implementacion."
-    />
-    <div class="mt-14 space-y-10" data-reveal-group>
-      {projects.map((project) => (
-        <article class="grid gap-8 border-t border-border-light pt-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center" data-reveal>
-          <div>
-            <p class="text-sm font-extrabold tracking-[0.16em] text-kuroki-orange">{project.number} / {project.category}</p>
-            <h3 class="mt-4 text-3xl font-extrabold">{project.name}</h3>
-            <p class="mt-4 leading-8 text-kuroki-gray">{project.description}</p>
-            <dl class="mt-6 grid gap-4">
-              <div><dt class="font-bold">Problema</dt><dd class="mt-1 text-sm leading-7 text-kuroki-gray">{project.problem}</dd></div>
-              <div><dt class="font-bold">Solucion</dt><dd class="mt-1 text-sm leading-7 text-kuroki-gray">{project.solution}</dd></div>
-              <div><dt class="font-bold">Alcance</dt><dd class="mt-1 text-sm leading-7 text-kuroki-gray">{project.scope}</dd></div>
-            </dl>
-            <div class="mt-5 flex flex-wrap gap-2">
-              {project.technologies.map((tech) => <span class="rounded border border-border-light px-3 py-1 text-xs font-bold">{tech}</span>)}
-            </div>
-            <Button href={`/proyectos/${project.slug}/`} variant="dark" class="mt-7">Ver caso completo</Button>
-          </div>
-          <figure class="overflow-hidden rounded-lg border border-border-light bg-white">
-            <img src={project.image} alt={project.imageAlt} width="880" height="560" loading="lazy" decoding="async" class="h-auto w-full" />
-          </figure>
-        </article>
-      ))}
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-3xl" data-reveal>
+        <p class="mb-4 text-sm font-bold tracking-[0.18em] text-kuroki-orange">PROYECTOS</p>
+        <h2 class="max-w-[680px] text-3xl font-extrabold leading-tight text-kuroki-black sm:text-4xl lg:text-[2.65rem]">
+          Soluciones construidas para operar de verdad
+        </h2>
+        <p class="mt-5 max-w-2xl text-base leading-8 text-kuroki-gray">
+          Diseñamos alrededor del problema, no de una plantilla.
+        </p>
+      </div>
+      <Button href="#contacto" variant="dark" class="w-full sm:w-auto">Cuéntanos tu proyecto</Button>
+    </div>
+
+    <div class="mt-16 grid gap-16" data-reveal-group>
+      {
+        projects.map((project, index) => {
+          const reversed = index % 2 === 1;
+
+          return (
+            <article
+              class:list={[
+                "grid gap-8 rounded-lg border border-border-light bg-white p-5 shadow-sm lg:items-center lg:p-7",
+                reversed ? "lg:grid-cols-[1.2fr_.8fr]" : "lg:grid-cols-[.8fr_1.2fr]",
+              ]}
+              data-reveal
+            >
+              <div class:list={["order-1", reversed && "lg:order-2"]}>
+                <p class="text-xs font-extrabold tracking-[0.16em] text-kuroki-orange">
+                  {project.number} / {project.category}
+                </p>
+                <h3 class="mt-4 text-3xl font-extrabold">{project.name}</h3>
+                <p class="mt-4 max-w-xl text-base leading-7 text-kuroki-gray">{project.description}</p>
+
+                <div class="mt-6 flex flex-wrap gap-2">
+                  {project.metrics.map((metric) => (
+                    <span class="rounded-sm border border-border-light bg-surface-light/70 px-3 py-1.5 text-xs font-bold text-kuroki-gray">
+                      {metric}
+                    </span>
+                  ))}
+                </div>
+
+                <dl class="mt-7 grid gap-4 text-sm">
+                  <div>
+                    <dt class="font-extrabold uppercase tracking-[0.08em] text-kuroki-black">Antes</dt>
+                    <dd class="mt-1 leading-7 text-kuroki-gray">{project.problem}</dd>
+                  </div>
+                  <div>
+                    <dt class="font-extrabold uppercase tracking-[0.08em] text-kuroki-black">Después</dt>
+                    <dd class="mt-1 leading-7 text-kuroki-gray">{project.solution}</dd>
+                  </div>
+                  <div>
+                    <dt class="font-extrabold uppercase tracking-[0.08em] text-kuroki-black">Impacto</dt>
+                    <dd class="mt-1 leading-7 text-kuroki-gray">{project.outcome}</dd>
+                  </div>
+                </dl>
+
+                <Button href={`/proyectos/${project.slug}/`} variant="dark" class="mt-7">Ver caso</Button>
+              </div>
+
+              <figure class:list={["order-2 overflow-hidden rounded-lg border border-border-light bg-white shadow-sm", reversed && "lg:order-1"]}>
+                <div class="flex gap-2 border-b border-border-light bg-white px-4 py-3">
+                  <span class="h-2.5 w-2.5 rounded-full bg-kuroki-orange"></span>
+                  <span class="h-2.5 w-2.5 rounded-full bg-kuroki-black/20"></span>
+                  <span class="h-2.5 w-2.5 rounded-full bg-kuroki-black/20"></span>
+                </div>
+                <img
+                  src={project.image}
+                  alt={project.imageAlt}
+                  width="960"
+                  height="620"
+                  loading="lazy"
+                  decoding="async"
+                  class="h-auto w-full object-contain"
+                />
+              </figure>
+            </article>
+          );
+        })
+      }
     </div>
   </Container>
 </section>

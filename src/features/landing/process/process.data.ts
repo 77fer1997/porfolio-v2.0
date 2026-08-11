@@ -1,9 +1,30 @@
 export const processSteps = [
-  ["01", "Diagnostico", "Entendemos el problema, los usuarios, los procesos actuales y los objetivos del proyecto."],
-  ["02", "Definicion", "Delimitamos funcionalidades, prioridades, alcance, tiempos y entregables."],
-  ["03", "Diseno y arquitectura", "Disenamos la experiencia, la estructura tecnica y la forma en que funcionara la solucion."],
-  ["04", "Desarrollo", "Construimos el proyecto por etapas, mostramos avances y validamos las decisiones principales."],
-  ["05", "Pruebas e implementacion", "Probamos flujos criticos, ajustamos detalles y dejamos la solucion lista para operar."],
-  ["06", "Evolucion", "Medimos uso, recogemos aprendizajes y priorizamos mejoras por impacto."],
+  {
+    number: "01",
+    title: "ENTENDEMOS EL PROBLEMA",
+    description:
+      "Identificamos qué está frenando el negocio, quién interviene y qué resultado realmente necesitas.",
+    outcome: "Problema definido · Prioridad · Ruta recomendada",
+  },
+  {
+    number: "02",
+    title: "DEFINIMOS LO NECESARIO",
+    description:
+      "Decidimos qué resolver ahora, qué puede esperar y cuál es el alcance adecuado.",
+    outcome: "Alcance · Entregables · Tiempos",
+  },
+  {
+    number: "03",
+    title: "CONSTRUIMOS Y VALIDAMOS",
+    description:
+      "Avanzamos por bloques funcionales para que puedas ver, probar y validar antes de seguir.",
+    outcome: "Entregas funcionales · Feedback · Avance visible",
+  },
+  {
+    number: "04",
+    title: "LANZAMOS Y EVOLUCIONAMOS",
+    description:
+      "Ponemos la solución en operación, verificamos su funcionamiento y definimos las siguientes mejoras.",
+    outcome: "Solución operativa · Seguimiento · Próximos pasos",
+  },
 ] as const;
-

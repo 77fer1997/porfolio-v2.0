@@ -1,6 +1,7 @@
 ---
 import Button from "@shared/ui/Button.astro";
 import Container from "@shared/ui/Container.astro";
+import HeroAmbient from "./HeroAmbient.astro";
 import { heroContent } from "./hero.data";
 ---
 
@@ -10,47 +11,34 @@ import { heroContent } from "./hero.data";
   style="background-image: url('/images/brand/fondo-kuroki.png');"
 >
   <div
-    class="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,.2),rgba(13,13,13,.46))]"
+    class="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,.18),rgba(13,13,13,.58))]"
     aria-hidden="true"
   >
   </div>
+  <HeroAmbient />
   <Container class="relative w-full">
-    <div
-      class="mx-auto max-w-5xl animate-[kuroki-rise_.7s_ease-out_both] text-center"
-    >
-      <p
-        class="mb-5 text-xs font-extrabold uppercase tracking-[0.24em] text-kuroki-orange sm:text-sm"
-      >
+    <div class="mx-auto max-w-5xl animate-[kuroki-rise_.7s_ease-out_both] text-center">
+      <p class="mb-5 text-xs font-extrabold uppercase tracking-[0.24em] text-kuroki-orange sm:text-sm">
         {heroContent.eyebrow}
       </p>
-      <h1
-        class="mx-auto max-w-[960px] text-balance text-4xl font-extrabold leading-tight text-white sm:text-6xl lg:text-7xl"
-      >
-        Menos procesos manuales.
-        <span class="text-kuroki-orange"> Más negocio en movimiento.</span>
+      <h1 class="mx-auto max-w-[980px] text-balance text-4xl font-extrabold leading-tight text-white sm:text-6xl lg:text-7xl">
+        Convertimos tus procesos
+        <span class="text-kuroki-orange"> en software que trabaja por ti.</span>
       </h1>
-      <p
-        class="mx-auto mt-8 max-w-3xl text-pretty text-base leading-8 text-white/75 sm:text-lg lg:text-xl"
-      >
+      <p class="mx-auto mt-7 max-w-3xl text-pretty text-base leading-8 text-white/78 sm:text-lg lg:text-xl">
         {heroContent.description}
       </p>
-      <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-        <Button href="#contacto">Cuéntanos tu proyecto</Button>
-        <Button href="#servicios" variant="secondary"
-          >Ver nuestros servicios</Button
-        >
+      <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+        <Button href="#contacto">Cuentanos tu proyecto</Button>
+        <Button href="#servicios" variant="secondary">Ver como trabajamos</Button>
       </div>
-      <div
-        class="mx-auto mt-12 grid max-w-4xl gap-4 text-left sm:grid-cols-3 sm:gap-0"
-      >
+      <div class="mx-auto mt-11 grid max-w-4xl gap-3 text-left sm:grid-cols-3">
         {
           heroContent.levels.map((level, index) => (
             <div
               class:list={[
-                "min-w-0 border-l px-5",
-                index === 0
-                  ? "border-kuroki-orange"
-                  : "border-white/20",
+                "rounded-md border bg-white/[0.045] px-5 py-4",
+                index === 0 ? "border-kuroki-orange/70" : "border-white/12",
               ]}
             >
               <p class="text-xs font-bold tracking-[0.18em] text-kuroki-orange">

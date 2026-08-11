@@ -1,23 +1,27 @@
 export const faqItems = [
   {
-    question: "Que tipo de proyecto puede iniciar con KUROKI?",
+    question: "¿Necesito saber qué solución necesito?",
     answer:
-      "Podemos empezar con una landing, una mejora puntual, una automatizacion o una plataforma completa. Primero evaluamos el problema y proponemos un alcance razonable.",
+      "No. Cuéntanos qué problema quieres resolver y evaluamos si necesitas mejorar tu presencia digital, automatizar un proceso o construir software a medida.",
   },
   {
-    question: "Trabajan aplicaciones moviles para iOS y Android?",
+    question: "¿Pueden trabajar con lo que ya utiliza mi empresa?",
     answer:
-      "Si. Definimos si conviene una app movil, una aplicacion web progresiva o una combinacion segun usuarios, presupuesto y objetivos.",
+      "Sí. Antes de reemplazar herramientas, evaluamos si podemos conectarlas, mejorarlas o aprovechar lo que ya funciona.",
   },
   {
-    question: "Pueden integrar herramientas que ya usamos?",
+    question: "¿También desarrollan aplicaciones móviles?",
     answer:
-      "Si. Podemos conectar formularios, CRM, hojas de calculo, calendarios, pasarelas de pago, WhatsApp y APIs externas.",
+      "Sí, cuando el proyecto realmente lo requiere. Primero evaluamos si una aplicación móvil es la solución adecuada o si el objetivo puede resolverse de una forma más simple.",
   },
   {
-    question: "Como se estima el costo de un proyecto?",
+    question: "¿Cómo calculan el costo de un proyecto?",
     answer:
-      "Despues de una etapa breve de diagnostico definimos alcance, entregables y prioridades. Asi evitamos presupuestos genericos que no reflejan la complejidad real.",
+      "Depende del alcance, la complejidad y las integraciones necesarias. Primero definimos qué debe resolverse y luego presentamos una propuesta con entregables y costos claros.",
+  },
+  {
+    question: "¿Cuánto tiempo toma desarrollar una solución?",
+    answer:
+      "Depende del alcance. Trabajamos por etapas para entregar avances funcionales, validar temprano y evitar construir durante meses sin feedback.",
   },
 ];
-

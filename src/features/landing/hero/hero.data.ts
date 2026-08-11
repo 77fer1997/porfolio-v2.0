@@ -1,11 +1,11 @@
 export const heroContent = {
-  eyebrow: "DESARROLLO · AUTOMATIZACIÓN · SOFTWARE",
-  title: "Menos procesos manuales. Más negocio en movimiento.",
+  eyebrow: "WEB - AUTOMATIZACION - SOFTWARE",
+  title: "Convertimos tus procesos en software que trabaja por ti.",
   description:
-    "Creamos soluciones web, móviles y automatizaciones que conectan tus operaciones, reducen el trabajo repetitivo y convierten tus ideas en productos digitales reales.",
+    "Creamos software, automatizaciones y soluciones web a medida para generar oportunidades, reducir tareas manuales y darte mayor control sobre tu operación.",
   levels: [
-    { number: "01", title: "Presencia digital" },
-    { number: "02", title: "Procesos automatizados" },
-    { number: "03", title: "Software a medida" },
+    { number: "01", title: "Más oportunidades comerciales" },
+    { number: "02", title: "Menos tareas repetitivas" },
+    { number: "03", title: "Mejor control operativo" },
   ],
 };

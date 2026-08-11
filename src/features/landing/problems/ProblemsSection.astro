@@ -1,24 +1,43 @@
 ---
 import Container from "@shared/ui/Container.astro";
-import SectionHeading from "@shared/ui/SectionHeading.astro";
 import { problems } from "./problems.data";
 ---
 
-<section id="problemas" class="bg-white py-24 text-kuroki-black sm:py-32">
+<section id="problemas" class="bg-white py-20 text-kuroki-black sm:py-28">
   <Container>
-    <SectionHeading
-      eyebrow="PROBLEMAS"
-      title="La tecnologia debe simplificar tu operacion"
-      intro="Una pagina que no genera confianza, procesos que dependen de tareas manuales o herramientas que no se comunican pueden limitar el crecimiento de una empresa. En KUROKI analizamos el problema y proponemos la solucion mas simple que pueda resolverlo correctamente."
-    />
-    <div class="mt-14 border-y border-border-light" data-reveal-group>
-      {problems.map((problem) => (
-        <article class="grid gap-5 border-b border-border-light py-8 last:border-b-0 md:grid-cols-[120px_1fr_1.1fr] md:items-start" data-reveal>
-          <span class="text-sm font-extrabold text-kuroki-orange">{problem.number}</span>
-          <h3 class="text-2xl font-bold leading-tight">{problem.title}</h3>
-          <p class="text-base leading-8 text-kuroki-gray">{problem.description}</p>
-        </article>
-      ))}
+    <div class="max-w-3xl" data-reveal>
+      <p class="mb-4 text-sm font-bold tracking-[0.18em] text-kuroki-orange">
+        PROBLEMAS
+      </p>
+      <h2
+        class="max-w-[750px] text-3xl font-extrabold leading-tight text-kuroki-black sm:text-4xl lg:text-[2.65rem]"
+      >
+        No todos los problemas necesitan un sistema completo
+      </h2>
+      <p class="mt-5 max-w-2xl text-base leading-8 text-kuroki-gray">
+        Detectamos dónde se frena tu negocio y empezamos por la solucion mas
+        simple que realmente lo resuelva.
+      </p>
+    </div>
+    <div class="mt-12 grid gap-4 md:grid-cols-3" data-reveal-group>
+      {
+        problems.map((problem) => (
+          <article
+            class="flex h-full flex-col rounded-lg border border-border-light bg-white p-6 shadow-sm"
+            data-reveal
+          >
+            <span class="text-sm font-extrabold text-kuroki-orange">
+              {problem.number}
+            </span>
+            <h3 class="mt-4 text-2xl font-bold leading-tight md:min-h-[3.5rem]">
+              {problem.title}
+            </h3>
+            <p class="mt-3 text-sm leading-7 text-kuroki-gray">
+              {problem.description}
+            </p>
+          </article>
+        ))
+      }
     </div>
   </Container>
 </section>

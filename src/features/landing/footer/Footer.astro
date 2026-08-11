@@ -12,6 +12,6 @@ import { footerLinks } from "./footer.data";
     <nav class="flex flex-wrap gap-4" aria-label="Navegacion secundaria">
       {footerLinks.map((link) => <a class="text-sm font-semibold text-text-secondary hover:text-kuroki-orange" href={link.href}>{link.label}</a>)}
     </nav>
-    <p class="text-sm text-text-secondary">© {new Date().getFullYear()} KUROKI.</p>
+    <p class="text-sm text-text-secondary">&copy; {new Date().getFullYear()} KUROKI.</p>
   </Container>
 </footer>

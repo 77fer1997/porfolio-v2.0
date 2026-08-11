@@ -1,36 +1,32 @@
 export const serviceLevels = [
   {
-    number: "NIVEL 01",
-    title: "Presencia y mejora digital",
-    subtitle: "Mostrar, comunicar y captar.",
+    number: "01",
+    name: "PRESENCIA DIGITAL",
+    headline: "Haz que tu negocio se entienda y genere oportunidades.",
     description:
-      "Creamos y mejoramos la presencia digital de negocios que necesitan verse profesionales, comunicar claramente sus servicios y generar nuevas oportunidades de contacto.",
-    includes: ["Landing pages", "Paginas corporativas", "Catalogos de servicios", "Formularios", "WhatsApp", "SEO tecnico basico", "Analitica", "Mantenimiento"],
-    result: "Una presencia digital clara, profesional y preparada para recibir consultas.",
-    cta: "Mejorar mi presencia digital",
-    visual: "presence",
+      "Creamos sitios y experiencias digitales claras para presentar tu oferta, generar confianza y facilitar el contacto.",
+    tags: ["Web corporativa", "Landing", "Catalogo", "SEO"],
+    ideal:
+      "necesitas mejorar como te encuentran, entienden o contactan.",
   },
   {
-    number: "NIVEL 02",
-    title: "Automatizacion e integracion",
-    subtitle: "Conectar herramientas y reducir tareas manuales.",
+    number: "02",
+    name: "AUTOMATIZACION",
+    headline: "Haz que tus herramientas trabajen juntas.",
     description:
-      "Automatizamos flujos de trabajo y conectamos las herramientas que tu empresa ya utiliza para reducir errores, demoras y tareas repetitivas.",
-    includes: ["Formularios conectados", "Google Sheets", "CRM", "WhatsApp", "Calendarios", "Pagos", "APIs", "Paneles de seguimiento"],
-    result: "Procesos mas rapidos, consistentes y faciles de controlar.",
-    cta: "Automatizar un proceso",
-    visual: "automation",
+      "Conectamos formularios, CRM, WhatsApp, calendarios, pagos y otros servicios para reducir tareas manuales.",
+    tags: ["CRM", "WhatsApp", "Calendarios", "Pagos", "APIs"],
+    ideal:
+      "tu equipo repite tareas o mueve informacion manualmente.",
   },
   {
-    number: "NIVEL 03",
-    title: "Aplicaciones web, moviles y software a medida",
-    subtitle: "Construir procesos y plataformas propias.",
+    number: "03",
+    name: "SOFTWARE A MEDIDA",
+    headline: "Cuando tu operacion necesita algo propio.",
     description:
-      "Disenamos y desarrollamos aplicaciones para web, iOS y Android, ademas de sistemas personalizados para empresas que necesitan gestionar procesos, usuarios y reglas propias.",
-    includes: ["Aplicaciones web", "Apps iOS y Android", "Paneles administrativos", "Portales", "CRM y ERP personalizados", "Roles y permisos", "Reportes", "Integraciones complejas"],
-    result: "Una plataforma alineada con la operacion real de tu empresa y preparada para crecer por etapas.",
-    cta: "Desarrollar una solucion a medida",
-    visual: "software",
+      "Disenamos plataformas para procesos que requieren reglas, usuarios, permisos, informacion y controles especificos.",
+    tags: ["Plataformas", "Paneles", "Roles", "Reportes", "Integraciones"],
+    ideal:
+      "las herramientas existentes ya no se adaptan a tu operacion.",
   },
 ];
-

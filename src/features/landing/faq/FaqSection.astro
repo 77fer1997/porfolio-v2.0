@@ -4,20 +4,42 @@ import SectionHeading from "@shared/ui/SectionHeading.astro";
 import { faqItems } from "./faq.data";
 ---
 
-<section id="preguntas" class="bg-white py-24 text-kuroki-black sm:py-32">
-  <Container class="grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
+<section id="preguntas" class="bg-surface-light py-20 text-kuroki-black sm:py-28">
+  <Container class="grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
     <SectionHeading
       eyebrow="PREGUNTAS"
-      title="Antes de iniciar una conversacion"
-      intro="Estas respuestas ayudan a ubicar el alcance inicial. La definicion final se realiza despues del diagnostico."
+      title="Antes de empezar"
+      intro="Resolvemos las dudas más comunes antes de definir tu proyecto."
     />
     <div class="space-y-3" data-reveal-group>
-      {faqItems.map((item) => (
-        <details class="group rounded-lg border border-border-light bg-white p-5" data-reveal>
-          <summary class="cursor-pointer list-none text-lg font-bold marker:hidden">{item.question}</summary>
-          <p class="mt-4 text-sm leading-7 text-kuroki-gray">{item.answer}</p>
-        </details>
-      ))}
+      {
+        faqItems.map((item) => (
+          <details class="group rounded-lg border border-border-light bg-white px-5 py-4 transition-colors hover:bg-white/80" data-faq-item data-reveal>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-5 text-base font-bold leading-7 marker:hidden sm:text-lg">
+              <span>{item.question}</span>
+              <span class="shrink-0 text-xl font-semibold leading-none text-kuroki-black/70 group-open:hidden" aria-hidden="true">+</span>
+              <span class="hidden shrink-0 text-xl font-semibold leading-none text-kuroki-black/70 group-open:inline" aria-hidden="true">−</span>
+            </summary>
+            <p class="mt-4 max-w-2xl text-sm leading-7 text-kuroki-gray">{item.answer}</p>
+          </details>
+        ))
+      }
     </div>
   </Container>
 </section>
+
+<script>
+  const faqItems = document.querySelectorAll("[data-faq-item]");
+
+  faqItems.forEach((item) => {
+    item.addEventListener("toggle", () => {
+      if (!(item instanceof HTMLDetailsElement) || !item.open) return;
+
+      faqItems.forEach((otherItem) => {
+        if (otherItem !== item && otherItem instanceof HTMLDetailsElement) {
+          otherItem.open = false;
+        }
+      });
+    });
+  });
+</script>

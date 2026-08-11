@@ -164,6 +164,21 @@ body {
   }
 }
 
+@keyframes kuroki-particle-drift {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0) scale(0.76);
+  }
+  18%,
+  78% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--travel-x, 34px), var(--travel), 0) scale(1.18);
+  }
+}
+
 @keyframes kuroki-scan-wide {
   0% {
     transform: translateX(-140px);
@@ -252,6 +267,18 @@ body {
 
 .hero-atom-orbit {
   animation: kuroki-atom-orbit-path 38s ease-in-out infinite;
+}
+
+.hero-particle {
+  position: absolute;
+  display: block;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow:
+    0 0 14px rgba(255, 80, 4, 0.58),
+    0 0 26px rgba(255, 80, 4, 0.24);
+  animation: kuroki-particle-drift var(--duration, 18s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
 }
 
 @media (prefers-reduced-motion: reduce) {

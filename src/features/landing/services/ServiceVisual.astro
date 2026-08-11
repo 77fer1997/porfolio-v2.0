@@ -4,39 +4,51 @@ interface Props {
 }
 
 const { type } = Astro.props;
-const nodes = type === "automation" ? ["Formulario", "API", "CRM", "WhatsApp", "Calendario"] : ["Web", "Admin", "Mobile", "API"];
+const flowNodes =
+  type === "automation" ? ["Lead", "CRM", "Agenda"] : ["Usuario", "Panel", "Reporte"];
 ---
 
-<figure class="rounded-lg border border-white/10 bg-white/[0.03] p-5">
-  {type === "presence" ? (
-    <div class="overflow-hidden rounded-md border border-white/10 bg-kuroki-black">
-      <div class="flex gap-2 border-b border-white/10 p-3">
-        <span class="h-2.5 w-2.5 rounded-full bg-kuroki-orange"></span>
-        <span class="h-2.5 w-2.5 rounded-full bg-white/30"></span>
-        <span class="h-2.5 w-2.5 rounded-full bg-white/30"></span>
-      </div>
-      <div class="grid gap-4 p-5">
-        <div class="h-7 w-3/4 rounded bg-white/80"></div>
-        <div class="h-3 w-full rounded bg-white/25"></div>
-        <div class="h-3 w-2/3 rounded bg-white/25"></div>
-        <div class="grid grid-cols-3 gap-3 pt-3">
-          <div class="h-20 rounded border border-white/10 bg-white/5"></div>
-          <div class="h-20 rounded border border-white/10 bg-white/5"></div>
-          <div class="h-20 rounded border border-white/10 bg-white/5"></div>
+<figure class="rounded-md border border-white/10 bg-kuroki-black/70 p-4">
+  {
+    type === "presence" ? (
+      <div class="overflow-hidden rounded-md border border-white/10 bg-white/[0.025]">
+        <div class="flex items-center justify-between border-b border-white/10 p-3">
+          <div class="flex gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-kuroki-orange"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-white/30"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-white/30"></span>
+          </div>
+          <span class="h-2 w-20 rounded bg-white/20"></span>
+        </div>
+        <div class="grid gap-3 p-4">
+          <div class="h-7 w-4/5 rounded bg-white/80"></div>
+          <div class="h-3 w-full rounded bg-white/25"></div>
+          <div class="h-3 w-2/3 rounded bg-white/25"></div>
+          <div class="grid grid-cols-2 gap-3 pt-1">
+            <div class="rounded border border-kuroki-orange/40 bg-kuroki-orange/10 p-3">
+              <div class="h-3 w-12 rounded bg-kuroki-orange"></div>
+              <div class="mt-4 h-6 rounded bg-white/18"></div>
+            </div>
+            <div class="rounded border border-white/10 bg-white/[0.04] p-3">
+              <div class="h-3 w-16 rounded bg-white/35"></div>
+              <div class="mt-4 h-6 rounded bg-white/15"></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  ) : (
-    <div class="grid gap-3">
-      {nodes.map((node, index) => (
-        <div class="flex items-center gap-3">
-          <span class="h-3 w-3 rounded-full bg-kuroki-orange"></span>
-          <span class="min-w-28 rounded border border-white/10 bg-kuroki-black px-3 py-2 text-sm font-semibold text-white">{node}</span>
-          {index < nodes.length - 1 && <span class="h-px flex-1 bg-kuroki-orange/50"></span>}
-        </div>
-      ))}
-    </div>
-  )}
-  <figcaption class="sr-only">Visual tecnico provisional del servicio {type}</figcaption>
+    ) : (
+      <div class="grid gap-4">
+        {flowNodes.map((node, index) => (
+          <div class="flex items-center gap-3">
+            <span class="grid h-6 w-6 place-items-center rounded-full border border-kuroki-orange/50 bg-kuroki-orange/10 text-[10px] font-extrabold text-kuroki-orange">
+              {index + 1}
+            </span>
+            <span class="min-w-24 rounded border border-white/10 bg-white/[0.035] px-3 py-2 text-sm font-semibold text-white">{node}</span>
+            {index < flowNodes.length - 1 && <span class="h-px flex-1 bg-kuroki-orange/50"></span>}
+          </div>
+        ))}
+      </div>
+    )
+  }
+  <figcaption class="sr-only">Visual tecnico del servicio {type}</figcaption>
 </figure>
-

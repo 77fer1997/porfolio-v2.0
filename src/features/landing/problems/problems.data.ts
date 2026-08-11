@@ -1,21 +1,20 @@
 export const problems = [
   {
     number: "01",
-    title: "Tu empresa no comunica bien su valor",
+    title: "Tu presencia digital no genera oportunidades",
     description:
-      "Tu pagina esta desactualizada, tus servicios no se entienden o dependes unicamente de redes sociales.",
+      "Tu web no comunica con claridad, genera poca confianza o no facilita que te contacten.",
   },
   {
     number: "02",
-    title: "Tu equipo pierde tiempo en tareas manuales",
+    title: "Tu operación depende de tareas manuales",
     description:
-      "La informacion se copia entre sistemas, los seguimientos se realizan manualmente o las herramientas estan desconectadas.",
+      "Datos, seguimientos y avisos se repiten entre herramientas que no están conectadas.",
   },
   {
     number: "03",
-    title: "Tu operacion necesita una solucion propia",
+    title: "Las herramientas genericas ya no alcanzan",
     description:
-      "Los procesos, usuarios y reglas de tu empresa ya no pueden gestionarse correctamente con herramientas genericas.",
+      "Tu operación necesita reglas, usuarios, trazabilidad o funciones que requieren software propio.",
   },
 ];
-
