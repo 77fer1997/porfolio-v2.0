@@ -1,13 +1,14 @@
 export const siteConfig = {
   name: "KUROKI",
+  alternateName: "kuroki.com.pe",
   title: "KUROKI | Desarrollo web, automatizacion y software a medida",
   description:
-    "Consultora tecnologica especializada en presencia digital, automatizacion, integraciones, aplicaciones web, aplicaciones moviles para iOS y Android, y software a medida.",
-  url: "https://kuroki.example.com",
+    "Creamos sitios web, automatizaciones y software a medida para empresas que quieren vender mas, reducir tareas manuales y ordenar su operacion.",
+  url: "https://kuroki.com.pe",
   locale: "es_PE",
   logo: "/images/brand/logo-kuroki.png",
+  favicon: "/images/brand/favicon-48x48.svg",
   ogImage: "/og-kuroki.svg",
   themeColor: "#0D0D0D",
-  isPlaceholder: true,
-  // TODO: reemplazar dominio, logo oficial, imagen OG y datos reales de KUROKI antes de produccion.
+  isPlaceholder: false,
 } as const;

@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { Header } from "@features/landing/header";
 import Button from "@shared/ui/Button.astro";
 import Container from "@shared/ui/Container.astro";
 import { siteConfig } from "@shared/config/site.config";
@@ -23,6 +24,7 @@ const galleryImages = project.data.galleryImages;
   description={project.data.seoDescription}
   canonical={`${siteConfig.url}/proyectos/${project.data.slug}/`}
 >
+  <Header />
   <main id="contenido-principal" class="bg-kuroki-black">
     <section class="pt-16">
       <Container class="py-16 sm:py-24">

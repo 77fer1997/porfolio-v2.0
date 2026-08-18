@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kuroki.example.com/sitemap-index.xml
+Sitemap: https://kuroki.com.pe/sitemap-index.xml

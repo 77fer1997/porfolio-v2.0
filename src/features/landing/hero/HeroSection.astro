@@ -18,21 +18,21 @@ import { heroContent } from "./hero.data";
   <HeroAmbient />
   <Container class="relative w-full">
     <div class="mx-auto max-w-5xl animate-[kuroki-rise_.7s_ease-out_both] text-center">
-      <p class="mb-5 text-xs font-extrabold uppercase tracking-[0.24em] text-kuroki-orange sm:text-sm">
+      <p class="hero-sequence-item mb-5 text-xs font-extrabold uppercase tracking-[0.24em] text-kuroki-orange sm:text-sm [--hero-sequence-delay:0ms]">
         {heroContent.eyebrow}
       </p>
-      <h1 class="mx-auto max-w-[980px] text-balance text-4xl font-extrabold leading-tight text-white sm:text-6xl lg:text-7xl">
+      <h1 class="hero-sequence-item mx-auto max-w-[980px] text-balance text-4xl font-extrabold leading-tight text-white sm:text-6xl lg:text-7xl [--hero-sequence-delay:0ms]">
         Convertimos tus procesos
         <span class="text-kuroki-orange"> en software que trabaja por ti.</span>
       </h1>
-      <p class="mx-auto mt-7 max-w-3xl text-pretty text-base leading-8 text-white/78 sm:text-lg lg:text-xl">
+      <p class="hero-sequence-item mx-auto mt-7 max-w-3xl text-pretty text-base leading-8 text-white/78 sm:text-lg lg:text-xl [--hero-sequence-delay:320ms]">
         {heroContent.description}
       </p>
-      <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+      <div class="hero-sequence-item mt-9 flex flex-col justify-center gap-3 sm:flex-row [--hero-sequence-delay:320ms]">
         <Button href="#contacto">Cuentanos tu proyecto</Button>
         <Button href="#servicios" variant="secondary">Ver como trabajamos</Button>
       </div>
-      <div class="mx-auto mt-11 grid max-w-4xl gap-3 text-left sm:grid-cols-3">
+      <div class="hero-sequence-item mx-auto mt-11 grid max-w-4xl gap-3 text-left sm:grid-cols-3 [--hero-sequence-delay:680ms]">
         {
           heroContent.levels.map((level, index) => (
             <div

@@ -7,7 +7,7 @@ import { navigationItems } from "./navigation.data";
 
 <header class="site-header fixed inset-x-0 top-0 z-40 bg-kuroki-black" data-site-header>
   <Container class="flex h-20 items-center justify-between gap-5">
-    <a href="#inicio" class="flex items-center gap-3" aria-label="KUROKI inicio">
+    <a href="/#inicio" class="flex items-center gap-3" aria-label="KUROKI inicio">
       <img src={siteConfig.logo} alt="KUROKI" width="143" height="28" class="h-7 w-auto" />
     </a>
     <nav class="hidden items-center gap-7 lg:flex" aria-label="Navegacion principal">
@@ -16,7 +16,7 @@ import { navigationItems } from "./navigation.data";
       ))}
     </nav>
     <div class="hidden lg:block">
-      <Button href="#contacto">Cuentanos tu proyecto</Button>
+      <Button href="/#contacto">Cuentanos tu proyecto</Button>
     </div>
     <button
       class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-md border border-white/15 text-white lg:hidden"
@@ -34,7 +34,7 @@ import { navigationItems } from "./navigation.data";
       {navigationItems.map((item) => (
         <a class="rounded-md px-3 py-3 text-base font-semibold text-white hover:bg-white/5" href={item.href}>{item.label}</a>
       ))}
-      <Button href="#contacto" class="mt-2 w-full">Cuentanos tu proyecto</Button>
+      <Button href="/#contacto" class="mt-2 w-full">Cuentanos tu proyecto</Button>
     </div>
   </nav>
 </header>

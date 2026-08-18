@@ -1,5 +1,6 @@
 ---
 import SEO from "@shared/seo/SEO.astro";
+import { siteConfig } from "@shared/config/site.config";
 import "@styles/global.css";
 
 interface Props {
@@ -17,8 +18,9 @@ const { title, description, canonical } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" sizes="48x48" href={siteConfig.favicon} />
+    <link rel="shortcut icon" type="image/svg+xml" href={siteConfig.favicon} />
+    <link rel="apple-touch-icon" href={siteConfig.favicon} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -41,7 +43,7 @@ const { title, description, canonical } = Astro.props;
               observer.unobserve(entry.target);
             });
           },
-          { rootMargin: "0px 0px -22% 0px", threshold: 0.12 },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.02 },
         );
 
         revealElements.forEach((element) => observer.observe(element));
