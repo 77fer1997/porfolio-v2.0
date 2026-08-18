@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
+const galleryImages = project.data.galleryImages;
 ---
 
 <BaseLayout
@@ -46,5 +47,32 @@ const { Content } = await render(project);
         </article>
       </Container>
     </section>
+    {
+      galleryImages.length > 0 && (
+        <section class="bg-surface-light py-16 text-kuroki-black">
+          <Container>
+            <div class="max-w-3xl">
+              <p class="text-sm font-extrabold tracking-[0.16em] text-kuroki-orange">CAPTURAS</p>
+              <h2 class="mt-3 text-3xl font-extrabold">Mas pantallas del proyecto</h2>
+            </div>
+            <div class="mt-10 grid gap-6 md:grid-cols-2">
+              {galleryImages.map((image) => (
+                <figure class="overflow-hidden rounded-lg border border-border-light bg-white shadow-sm">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    width="960"
+                    height="620"
+                    loading="lazy"
+                    decoding="async"
+                    class="h-auto w-full object-contain"
+                  />
+                </figure>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )
+    }
   </main>
 </BaseLayout>

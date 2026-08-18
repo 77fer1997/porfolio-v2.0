@@ -15,6 +15,14 @@ const projects = defineCollection({
     technologies: z.array(z.string()),
     coverImage: z.string(),
     coverImageAlt: z.string(),
+    galleryImages: z
+      .array(
+        z.object({
+          src: z.string(),
+          alt: z.string(),
+        }),
+      )
+      .default([]),
     published: z.boolean(),
     featured: z.boolean(),
     isDemo: z.boolean(),

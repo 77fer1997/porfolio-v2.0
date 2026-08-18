@@ -9,8 +9,8 @@ scope: "Aplicacion web · Panel administrativo · Integraciones · Infraestructu
 technologies: ["Astro", "Node.js", "PostgreSQL", "APIs"]
 coverImage: "/images/projects/nexo-operativo.svg"
 coverImageAlt: "Mockup provisional de plataforma administrativa para gestionar operaciones"
-published: true
-featured: true
+published: false
+featured: false
 isDemo: true
 order: 1
 seoTitle: "Nexo Operativo | Caso de software a medida KUROKI"
@@ -20,4 +20,3 @@ seoDescription: "Caso provisional de plataforma administrativa desarrollada para
 Nexo Operativo muestra como KUROKI estructura una solucion a medida cuando una empresa necesita dejar de depender de archivos, mensajes dispersos y seguimiento manual.
 
 El enfoque del proyecto prioriza usuarios, permisos, registros trazables y reportes claros para que la operacion pueda crecer por etapas.
-

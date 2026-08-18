@@ -9,8 +9,8 @@ scope: "Landing · API · CRM · WhatsApp · Calendario"
 technologies: ["Astro", "TypeScript", "Webhooks", "CRM"]
 coverImage: "/images/projects/flujo-comercial.svg"
 coverImageAlt: "Mockup provisional de flujo automatizado entre formulario, CRM y calendario"
-published: true
-featured: true
+published: false
+featured: false
 isDemo: true
 order: 2
 seoTitle: "Flujo Comercial | Caso de automatizacion KUROKI"
@@ -20,4 +20,3 @@ seoDescription: "Caso provisional de automatizacion comercial con formularios, C
 Flujo Comercial representa un escenario donde la automatizacion reduce tareas repetitivas y mejora el seguimiento de nuevas oportunidades.
 
 El proyecto conecta puntos de entrada, reglas de notificacion y agenda para que el equipo pueda responder con mayor consistencia.
-
