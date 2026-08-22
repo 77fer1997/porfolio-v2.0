@@ -24,7 +24,7 @@ export const serviceLevels = [
     name: "SOFTWARE A MEDIDA",
     headline: "Cuando tu operacion necesita algo propio.",
     description:
-      "Disenamos plataformas para procesos que requieren reglas, usuarios, permisos, informacion y controles especificos.",
+      "Diseñamos plataformas para procesos que requieren reglas, usuarios, permisos, informacion y controles especificos.",
     tags: ["Plataformas", "Paneles", "Roles", "Reportes", "Integraciones"],
     ideal:
       "las herramientas existentes ya no se adaptan a tu operacion.",
