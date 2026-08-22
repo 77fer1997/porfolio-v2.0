@@ -1,25 +1,35 @@
 ---
-import Button from "@shared/ui/Button.astro";
-import Container from "@shared/ui/Container.astro";
 import { siteConfig } from "@shared/config/site.config";
 import { navigationItems } from "./navigation.data";
+
+interface Props {
+  tone?: "light" | "dark";
+}
+
+const { tone = "dark" } = Astro.props;
 ---
 
-<header class="site-header fixed inset-x-0 top-0 z-40 bg-kuroki-black" data-site-header>
-  <Container class="flex h-20 items-center justify-between gap-5">
-    <a href="/#inicio" class="flex items-center gap-3" aria-label="KUROKI inicio">
-      <img src={siteConfig.logo} alt="KUROKI" width="143" height="28" class="h-7 w-auto" />
+<header class="site-header absolute inset-x-0 top-0 z-40 bg-transparent" data-site-header data-tone={tone}>
+  <div class="mx-auto flex h-24 w-full max-w-[1720px] items-center justify-between gap-5 px-[clamp(24px,4vw,72px)]">
+    <a href="/#inicio" class="header-logo flex items-center gap-3" aria-label="KUROKI inicio">
+      {
+        tone === "light" ? (
+          <img src="/images/brand/logo-kuroki-dark.png" alt="KUROKI" width="163" height="32" class="h-7 w-auto sm:h-8" />
+        ) : (
+          <img src={siteConfig.logo} alt="KUROKI" width="163" height="32" class="h-7 w-auto sm:h-8" />
+        )
+      }
     </a>
-    <nav class="hidden items-center gap-7 lg:flex" aria-label="Navegacion principal">
+    <nav class="hidden items-center gap-9 lg:flex" aria-label="Navegacion principal">
       {navigationItems.map((item) => (
-        <a class="text-sm font-semibold text-text-secondary transition hover:text-kuroki-orange" href={item.href}>{item.label}</a>
+        <a class:list={["nav-link text-lg font-semibold transition", item.external && "nav-link--accent"]} href={item.href}>
+          {item.label}
+          {item.external && <span aria-hidden="true">&nearr;</span>}
+        </a>
       ))}
     </nav>
-    <div class="hidden lg:block">
-      <Button href="/#contacto">Cuentanos tu proyecto</Button>
-    </div>
     <button
-      class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-md border border-white/15 text-white lg:hidden"
+      class="header-menu-button inline-flex min-h-12 min-w-12 items-center justify-center rounded-md border lg:hidden"
       type="button"
       aria-label="Abrir menu"
       aria-expanded="false"
@@ -28,13 +38,15 @@ import { navigationItems } from "./navigation.data";
     >
       <span class="h-0.5 w-6 bg-current before:block before:h-0.5 before:w-6 before:-translate-y-2 before:bg-current before:content-[''] after:block after:h-0.5 after:w-6 after:translate-y-1.5 after:bg-current after:content-['']"></span>
     </button>
-  </Container>
-  <nav id="mobile-menu" class="hidden border-t border-white/10 bg-kuroki-black px-5 py-5 lg:hidden" aria-label="Navegacion movil" data-mobile-menu>
+  </div>
+  <nav id="mobile-menu" class="hidden border-t border-kuroki-black/10 bg-white px-5 py-5 lg:hidden" aria-label="Navegacion movil" data-mobile-menu>
     <div class="mx-auto flex max-w-7xl flex-col gap-2">
       {navigationItems.map((item) => (
-        <a class="rounded-md px-3 py-3 text-base font-semibold text-white hover:bg-white/5" href={item.href}>{item.label}</a>
+        <a class="rounded-md px-3 py-3 text-base font-semibold text-kuroki-black hover:bg-kuroki-black/5" href={item.href}>
+          {item.label}
+          {item.external && <span class="text-kuroki-orange" aria-hidden="true"> &nearr;</span>}
+        </a>
       ))}
-      <Button href="/#contacto" class="mt-2 w-full">Cuentanos tu proyecto</Button>
     </div>
   </nav>
 </header>

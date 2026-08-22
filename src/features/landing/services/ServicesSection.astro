@@ -18,8 +18,16 @@ import { serviceLevels } from "./services.data";
 
     <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
       {
-        serviceLevels.map((service) => (
-          <article class="flex h-full flex-col rounded-lg border border-white/10 bg-white/[0.035] p-7 sm:p-8" data-reveal>
+        serviceLevels.map((service) => {
+          const serviceId =
+            service.number === "01"
+              ? "servicio-web"
+              : service.number === "02"
+                ? "servicio-automatizacion"
+                : "servicio-software";
+
+          return (
+          <article id={serviceId} class="scroll-mt-24 flex h-full flex-col rounded-lg border border-white/10 bg-white/[0.035] p-7 sm:p-8" data-reveal>
             <div>
               <p class="text-sm font-extrabold text-kuroki-orange">{service.number}</p>
               <p class="mt-7 text-xs font-extrabold uppercase tracking-[0.18em] text-white/68">
@@ -49,7 +57,8 @@ import { serviceLevels } from "./services.data";
               </div>
             </div>
           </article>
-        ))
+          );
+        })
       }
     </div>
 

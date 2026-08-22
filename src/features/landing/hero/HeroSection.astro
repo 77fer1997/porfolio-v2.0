@@ -1,56 +1,125 @@
 ---
-import Button from "@shared/ui/Button.astro";
-import Container from "@shared/ui/Container.astro";
-import HeroAmbient from "./HeroAmbient.astro";
-import { heroContent } from "./hero.data";
+import HeroGeometry from "./HeroGeometry.astro";
 ---
 
-<section
-  id="inicio"
-  class="relative flex min-h-screen items-center overflow-hidden bg-kuroki-black bg-cover bg-center py-28 sm:py-32 lg:py-24"
-  style="background-image: url('/images/brand/fondo-kuroki.png');"
->
-  <div
-    class="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,13,13,.18),rgba(13,13,13,.58))]"
-    aria-hidden="true"
-  >
-  </div>
-  <HeroAmbient />
-  <Container class="relative w-full">
-    <div class="mx-auto max-w-5xl animate-[kuroki-rise_.7s_ease-out_both] text-center">
-      <p class="hero-sequence-item mb-5 text-xs font-extrabold uppercase tracking-[0.24em] text-kuroki-orange sm:text-sm [--hero-sequence-delay:0ms]">
-        {heroContent.eyebrow}
-      </p>
-      <h1 class="hero-sequence-item mx-auto max-w-[980px] text-balance text-4xl font-extrabold leading-tight text-white sm:text-6xl lg:text-7xl [--hero-sequence-delay:0ms]">
-        Convertimos tus procesos
-        <span class="text-kuroki-orange"> en software que trabaja por ti.</span>
+<section id="inicio" class="relative isolate overflow-hidden bg-white text-kuroki-black">
+  <div class="hero-intro relative mx-auto grid min-h-[68svh] w-full max-w-[1760px] items-center gap-8 px-[clamp(24px,5vw,96px)] pb-12 pt-28 sm:pt-32 lg:grid-cols-[1.14fr_0.86fr] lg:pb-14">
+    <div class="relative z-10 max-w-[980px] lg:-translate-y-6">
+      <h1 class="hero-title-reveal max-w-[980px] text-balance text-[3.15rem] font-bold leading-[0.96] tracking-normal sm:text-[4.35rem] md:text-[5rem] lg:text-[5.35rem] lg:leading-[0.92] xl:text-[5.8rem] 2xl:text-[6.15rem]">
+        <span class="block">Software útil</span>
+        <span class="hero-title-line--system">
+          <span>para empresas reales<span class="hero-title-period" data-hero-period>.</span></span>
+        </span>
       </h1>
-      <p class="hero-sequence-item mx-auto mt-7 max-w-3xl text-pretty text-base leading-8 text-white/78 sm:text-lg lg:text-xl [--hero-sequence-delay:320ms]">
-        {heroContent.description}
-      </p>
-      <div class="hero-sequence-item mt-9 flex flex-col justify-center gap-3 sm:flex-row [--hero-sequence-delay:320ms]">
-        <Button href="#contacto">Cuentanos tu proyecto</Button>
-        <Button href="#servicios" variant="secondary">Ver como trabajamos</Button>
-      </div>
-      <div class="hero-sequence-item mx-auto mt-11 grid max-w-4xl gap-3 text-left sm:grid-cols-3 [--hero-sequence-delay:680ms]">
-        {
-          heroContent.levels.map((level, index) => (
-            <div
-              class:list={[
-                "rounded-md border bg-white/[0.045] px-5 py-4",
-                index === 0 ? "border-kuroki-orange/70" : "border-white/12",
-              ]}
-            >
-              <p class="text-xs font-bold tracking-[0.18em] text-kuroki-orange">
-                {level.number}
-              </p>
-              <p class="mt-2 text-sm font-semibold text-white sm:text-base">
-                {level.title}
-              </p>
-            </div>
-          ))
-        }
+
+      <div class="mt-10 max-w-[650px] sm:mt-11">
+        <p class="hero-sequence-item text-lg leading-8 text-kuroki-gray sm:text-xl [--hero-sequence-delay:420ms]" data-hero-copy>
+          Diseñamos plataformas, automatizaciones y productos digitales para resolver operaciones reales.
+        </p>
+
+        <div class="hero-sequence-item mt-8 flex flex-wrap items-center gap-6 [--hero-sequence-delay:560ms]" data-hero-actions>
+          <a
+            href="#contacto"
+            class="hero-primary-cta inline-flex items-center gap-3 rounded-md bg-kuroki-orange px-5 py-3 text-sm font-bold text-white"
+            data-hero-cta
+          >
+            Iniciar un proyecto
+            <span aria-hidden="true">&nearr;</span>
+          </a>
+          <a href="#proyectos" class="hero-editorial-cta inline-flex items-center gap-3 text-sm font-bold text-kuroki-black" data-hero-secondary-cta>
+            Ver proyectos
+            <span aria-hidden="true">&darr;</span>
+          </a>
+        </div>
+
+        <div class="hero-benefits hero-sequence-item mt-9 flex flex-wrap gap-x-6 gap-y-3 text-xs font-semibold uppercase text-kuroki-black/52 [--hero-sequence-delay:680ms]" data-hero-benefits>
+          <span>Software personalizado</span>
+          <span>Automatización útil</span>
+          <span>Soporte real</span>
+        </div>
       </div>
     </div>
-  </Container>
+
+    <HeroGeometry />
+  </div>
 </section>
+
+<script>
+  import { gsap } from "gsap";
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const initHeroAnimation = () => {
+    const hero = document.querySelector<HTMLElement>("#inicio");
+    if (!hero) return;
+
+    const header = document.querySelector<HTMLElement>("[data-site-header]");
+    const title = hero.querySelector<HTMLElement>(".hero-title-reveal");
+    const period = hero.querySelector<HTMLElement>("[data-hero-period]");
+    const figure = hero.querySelector<HTMLElement>("[data-hero-figure]");
+    const visualLayers = gsap.utils.toArray<HTMLElement>("[data-hero-visual-layer]");
+    const copy = hero.querySelector<HTMLElement>("[data-hero-copy]");
+    const actions = hero.querySelector<HTMLElement>("[data-hero-actions]");
+    const benefits = hero.querySelector<HTMLElement>("[data-hero-benefits]");
+
+    gsap.killTweensOf([header, title, period, figure, copy, actions, benefits, ...visualLayers]);
+
+    if (reduceMotion.matches) {
+      gsap.set([header, title, copy, actions, benefits, figure, ...visualLayers], {
+        clearProps: "all",
+        opacity: 1,
+        y: 0,
+      });
+      return;
+    }
+
+    gsap.set(header, { opacity: 0, y: -6 });
+    gsap.set(title, { opacity: 0, y: 24, clipPath: "inset(0 0 100% 0)" });
+    gsap.set(period, { color: "#0D0D0D", scale: 1, transformOrigin: "50% 70%" });
+    gsap.set(figure, { opacity: 0, y: 18, scale: 0.985, transformOrigin: "50% 50%" });
+    gsap.set(visualLayers, { opacity: 0, y: 18, scale: 0.985, transformOrigin: "50% 50%" });
+    gsap.set(copy, { opacity: 0, y: 8 });
+    gsap.set(actions, { opacity: 0, y: 8, "--cta-line-scale": 0 });
+    gsap.set(benefits, { opacity: 0, y: 8 });
+
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    tl.to(header, { opacity: 1, y: 0, duration: 0.38 }, 0)
+      .to(title, { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)", duration: 0.65 }, 0.26)
+      .to(period, { color: "#FF5004", scale: 1.08, duration: 0.14, ease: "power2.out" }, 0.88)
+      .to(period, { color: "#0D0D0D", scale: 1, duration: 0.18, ease: "power2.inOut" }, 1.02)
+      .to(figure, { opacity: 1, y: 0, scale: 1, duration: 0.82 }, 0.98)
+      .to(visualLayers, { opacity: 1, y: 0, scale: 1, duration: 0.72, stagger: 0.1 }, 1.08)
+      .to(copy, { opacity: 1, y: 0, duration: 0.46 }, 1.58)
+      .to(actions, { opacity: 1, y: 0, "--cta-line-scale": 0.88, duration: 0.42 }, 1.78)
+      .to(benefits, { opacity: 1, y: 0, duration: 0.42 }, 1.94);
+
+    const sceneDrift = gsap.to(visualLayers, {
+      y: -6,
+      duration: 8,
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+      stagger: 0.24,
+    });
+
+    const onScroll = () => {
+      const progress = Math.min(window.scrollY / Math.max(hero.offsetHeight, 1), 1);
+      gsap.to(figure, { y: progress * 5, opacity: 1 - progress * 0.16, duration: 0.35, overwrite: true });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        tl.kill();
+        sceneDrift.kill();
+        window.removeEventListener("scroll", onScroll);
+      },
+      { once: true },
+    );
+  };
+
+  initHeroAnimation();
+</script>

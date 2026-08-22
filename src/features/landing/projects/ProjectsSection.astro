@@ -1,92 +1,220 @@
 ---
-import Button from "@shared/ui/Button.astro";
 import Container from "@shared/ui/Container.astro";
-import { featuredProjects } from "./projects.data";
 
-const projects = featuredProjects.filter((project) => project.published && project.featured);
+const projects = [
+  {
+    number: "01",
+    category: "Web / Diseno / Desarrollo",
+    name: "Klipp Studio",
+    slug: "klipp",
+    description: "Sitio digital para un estudio fotografico.",
+    variant: "klipp",
+    transitionName: "project-klipp",
+    image: "/images/projects/project-klipp-landing-2.png",
+  },
+  {
+    number: "02",
+    category: "Software / Web",
+    name: "SMS Fortuna",
+    slug: "fortuna",
+    description: "Plataforma digital para gestionar operaciones de mensajeria.",
+    variant: "sms",
+    transitionName: "project-sms-fortuna",
+    image: "/images/projects/project-sms-fortuna-landing-1.png",
+  },
+  {
+    number: "03",
+    category: "Dashboard / Inventario / Compras",
+    name: "El Pueblo",
+    slug: "botica",
+    description: "Panel operativo para controlar ventas, stock y compras.",
+    variant: "botica",
+    transitionName: "project-botica",
+    image: "/images/projects/project-botica-landing-3.png",
+  },
+] as const;
+
+const firstProjectRow = projects.slice(0, 2);
+const boticaProject = projects[2];
 ---
 
-<section id="proyectos" class="bg-surface-light py-24 text-kuroki-black sm:py-32">
-  <Container>
-    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-      <div class="max-w-3xl" data-reveal>
-        <p class="mb-4 text-sm font-bold tracking-[0.18em] text-kuroki-orange">PROYECTOS</p>
-        <h2 class="max-w-[680px] text-3xl font-extrabold leading-tight text-kuroki-black sm:text-4xl lg:text-[2.65rem]">
-          Soluciones construidas para operar de verdad
-        </h2>
-        <p class="mt-5 max-w-2xl text-base leading-8 text-kuroki-gray">
-          Diseñamos alrededor del problema, no de una plantilla.
-        </p>
-      </div>
-      <Button href="#contacto" variant="dark" class="w-full sm:w-auto">Cuéntanos tu proyecto</Button>
-    </div>
+<section id="proyectos" class="projects-section scroll-mt-24 bg-kuroki-black py-24 text-white sm:py-32 lg:py-36">
+  <Container class="projects-container max-w-[1680px]">
+    <a href="#proyectos" class="project-peek-label">
+      Proyectos
+      <span aria-hidden="true">&darr;</span>
+    </a>
 
-    <div class="mt-16 grid gap-16" data-reveal-group>
-      {
-        projects.map((project, index) => {
-          const reversed = index % 2 === 1;
+    <div class="project-editorial-list">
+      <div class="project-editorial-row project-editorial-row--pair">
+        {
+          firstProjectRow.map((project) => (
+            <article class:list={["project-editorial-item", `project-editorial-item--${project.variant}`]} data-project-card>
+              <a
+                href={`/proyectos/${project.slug}/`}
+                class="project-editorial-link"
+                aria-label={`Ver caso ${project.name}`}
+                data-project-link
+              >
+                <span
+                  class:list={["project-cover", `project-cover--${project.variant}`]}
+                  data-project-visual
+                  style={`view-transition-name: ${project.transitionName};`}
+                >
+                  <span class="project-cover__kicker">{project.number}</span>
+                  <img
+                    src={project.image}
+                    alt={`Portada de ${project.name}`}
+                    width="1400"
+                    height="1050"
+                    loading="lazy"
+                    decoding="async"
+                    class="project-cover__image"
+                  />
+                </span>
 
-          return (
-            <article
-              class:list={[
-                "grid gap-8 rounded-lg border border-border-light bg-white p-5 shadow-sm lg:items-center lg:p-7",
-                reversed ? "lg:grid-cols-[1.2fr_.8fr]" : "lg:grid-cols-[.8fr_1.2fr]",
-              ]}
-              data-reveal
-            >
-              <div class:list={["order-1", reversed && "lg:order-2"]}>
-                <p class="text-xs font-extrabold tracking-[0.16em] text-kuroki-orange">
-                  {project.number} / {project.category}
-                </p>
-                <h3 class="mt-4 text-3xl font-extrabold">{project.name}</h3>
-                <p class="mt-4 max-w-xl text-base leading-7 text-kuroki-gray">{project.description}</p>
+                <span class="project-editorial-meta" data-project-meta>
+                  <h3 data-project-meta-item>{project.name}</h3>
+                  <span data-project-meta-item>{project.description}</span>
+                </span>
 
-                <div class="mt-6 flex flex-wrap gap-2">
-                  {project.metrics.map((metric) => (
-                    <span class="rounded-sm border border-border-light bg-surface-light/70 px-3 py-1.5 text-xs font-bold text-kuroki-gray">
-                      {metric}
-                    </span>
-                  ))}
-                </div>
-
-                <dl class="mt-7 grid gap-4 text-sm">
-                  <div>
-                    <dt class="font-extrabold uppercase tracking-[0.08em] text-kuroki-black">Antes</dt>
-                    <dd class="mt-1 leading-7 text-kuroki-gray">{project.problem}</dd>
-                  </div>
-                  <div>
-                    <dt class="font-extrabold uppercase tracking-[0.08em] text-kuroki-black">Después</dt>
-                    <dd class="mt-1 leading-7 text-kuroki-gray">{project.solution}</dd>
-                  </div>
-                  <div>
-                    <dt class="font-extrabold uppercase tracking-[0.08em] text-kuroki-black">Impacto</dt>
-                    <dd class="mt-1 leading-7 text-kuroki-gray">{project.outcome}</dd>
-                  </div>
-                </dl>
-
-                <Button href={`/proyectos/${project.slug}/`} variant="dark" class="mt-7">Ver caso</Button>
-              </div>
-
-              <figure class:list={["order-2 overflow-hidden rounded-lg border border-border-light bg-white shadow-sm", reversed && "lg:order-1"]}>
-                <div class="flex gap-2 border-b border-border-light bg-white px-4 py-3">
-                  <span class="h-2.5 w-2.5 rounded-full bg-kuroki-orange"></span>
-                  <span class="h-2.5 w-2.5 rounded-full bg-kuroki-black/20"></span>
-                  <span class="h-2.5 w-2.5 rounded-full bg-kuroki-black/20"></span>
-                </div>
-                <img
-                  src={project.image}
-                  alt={project.imageAlt}
-                  width="960"
-                  height="620"
-                  loading="lazy"
-                  decoding="async"
-                  class="h-auto w-full object-contain"
-                />
-              </figure>
+                <span class="project-hover-cursor" aria-hidden="true">Ver caso</span>
+              </a>
             </article>
-          );
-        })
-      }
+          ))
+        }
+      </div>
+
+      <div class="project-editorial-row project-editorial-row--single">
+        <article class:list={["project-editorial-item", `project-editorial-item--${boticaProject.variant}`]} data-project-card>
+          <a
+            href={`/proyectos/${boticaProject.slug}/`}
+            class="project-editorial-link"
+            aria-label={`Ver caso ${boticaProject.name}`}
+            data-project-link
+          >
+            <span
+              class:list={["project-cover", `project-cover--${boticaProject.variant}`]}
+              data-project-visual
+              style={`view-transition-name: ${boticaProject.transitionName};`}
+            >
+              <span class="project-cover__kicker">{boticaProject.number}</span>
+              <img
+                src={boticaProject.image}
+                alt={`Portada de ${boticaProject.name}`}
+                width="1400"
+                height="1050"
+                loading="lazy"
+                decoding="async"
+                class="project-cover__image"
+              />
+            </span>
+
+            <span class="project-editorial-meta" data-project-meta>
+              <h3 data-project-meta-item>{boticaProject.name}</h3>
+              <span data-project-meta-item>{boticaProject.description}</span>
+            </span>
+
+            <span class="project-hover-cursor" aria-hidden="true">Ver caso</span>
+          </a>
+        </article>
+      </div>
+
+      <div class="project-editorial-footer" data-reveal>
+        <a href="/proyectos/" class="project-all-link">
+          Ver todos los proyectos
+          <span aria-hidden="true">&nearr;</span>
+        </a>
+      </div>
     </div>
   </Container>
 </section>
+
+<script>
+  import { gsap } from "gsap";
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const initProjectsMotion = () => {
+    const section = document.querySelector<HTMLElement>("#proyectos");
+    if (!section) return;
+
+    const cards = gsap.utils.toArray<HTMLElement>("[data-project-card]");
+    const visuals = gsap.utils.toArray<HTMLElement>("[data-project-visual]");
+    const metaItems = gsap.utils.toArray<HTMLElement>("[data-project-meta-item]");
+    const projectLinks = gsap.utils.toArray<HTMLElement>("[data-project-link]");
+
+    gsap.killTweensOf([...cards, ...visuals, ...metaItems]);
+
+    if (reduceMotion.matches) {
+      gsap.set([...cards, ...visuals, ...metaItems], { clearProps: "all", opacity: 1, y: 0, scale: 1, clipPath: "none" });
+      return;
+    }
+
+    gsap.set(visuals, { opacity: 0, y: 28, scale: 0.985, clipPath: "inset(10% 0 0 0)" });
+    gsap.set(metaItems, { opacity: 0, y: 12 });
+
+    const observers: IntersectionObserver[] = [];
+
+    if ("IntersectionObserver" in window) {
+      cards.forEach((card) => {
+        const visual = card.querySelector<HTMLElement>("[data-project-visual]");
+        const items = gsap.utils.toArray<HTMLElement>("[data-project-meta-item]", card);
+        if (!visual) return;
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+
+              const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+              tl.to(visual, { opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0 0 0)", duration: 0.85 })
+                .to(items, { opacity: 1, y: 0, duration: 0.48, stagger: 0.08 }, "-=0.28");
+
+              observer.unobserve(card);
+            });
+          },
+          { rootMargin: "0px 0px -12% 0px", threshold: 0.16 },
+        );
+
+        observer.observe(card);
+        observers.push(observer);
+      });
+    } else {
+      gsap.set(visuals, { opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0 0 0)" });
+      gsap.set(metaItems, { opacity: 1, y: 0 });
+    }
+
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+    projectLinks.forEach((link) => {
+      const cursor = link.querySelector<HTMLElement>(".project-hover-cursor");
+      if (!cursor || !finePointer.matches) return;
+
+      link.addEventListener("pointerenter", () => {
+        cursor.dataset.active = "true";
+      });
+
+      link.addEventListener("pointermove", (event) => {
+        const rect = link.getBoundingClientRect();
+        cursor.style.setProperty("--cursor-x", `${event.clientX - rect.left}px`);
+        cursor.style.setProperty("--cursor-y", `${event.clientY - rect.top}px`);
+      });
+
+      link.addEventListener("pointerleave", () => {
+        cursor.dataset.active = "false";
+      });
+    });
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        observers.forEach((observer) => observer.disconnect());
+        gsap.killTweensOf([...cards, ...visuals, ...metaItems]);
+      },
+      { once: true },
+    );
+  };
+
+  initProjectsMotion();
+</script>

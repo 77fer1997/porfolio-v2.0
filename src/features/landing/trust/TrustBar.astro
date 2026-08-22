@@ -1,24 +1,37 @@
 ---
 import Container from "@shared/ui/Container.astro";
 
-const trustItems = [
-  { value: "3 rutas", label: "web, automatizacion o software" },
-  { value: "1 diagnostico", label: "para ordenar alcance y prioridad" },
-  { value: "Entrega por etapas", label: "avances visibles, menos riesgo" },
+const companies = [
+  { name: "SMS FORTUNA", href: "/proyectos/fortuna/" },
+  { name: "BOTICA EL PUEBLO", href: "/proyectos/botica/" },
+  { name: "KLIPP STUDIO", href: "/proyectos/klipp/" },
+  { name: "PROXIMA MARCA", href: "#contacto" },
+  { name: "CLIENTE 05", href: "#contacto" },
+  { name: "CLIENTE 06", href: "#contacto" },
 ];
 ---
 
-<section class="border-y border-white/10 bg-kuroki-black py-8">
-  <Container>
-    <div class="grid gap-6 sm:grid-cols-3" data-reveal-group>
-      {
-        trustItems.map((item) => (
-          <div class="border-l border-white/12 pl-5" data-reveal>
-            <p class="text-base font-extrabold text-white">{item.value}</p>
-            <p class="mt-2 text-sm leading-6 text-text-secondary">{item.label}</p>
-          </div>
-        ))
-      }
+<section class="client-trust bg-white text-kuroki-black">
+  <Container class="max-w-[1680px]">
+    <div class="client-trust__layout" data-reveal-group>
+      <div class="client-trust__list">
+        {
+          companies.map((company) => (
+            <a
+              href={company.href}
+              class="client-trust__client"
+              data-reveal
+            >
+              {company.name}
+            </a>
+          ))
+        }
+      </div>
+
+      <a href="#proyectos" class="client-trust__link" data-reveal>
+        Ver todos los clientes
+        <span aria-hidden="true">&nearr;</span>
+      </a>
     </div>
   </Container>
 </section>

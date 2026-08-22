@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      width="48" height="48" viewBox="0 0 1024 1024"
      role="img" aria-label="Kuroki favicon">
+  <rect x="0" y="0" width="1024" height="1024" fill="#000000"/>
+
   <g transform="translate(174.78 92) scale(1.0408921933)" fill="#FF5004">
     <path fill-rule="evenodd" d="
       M 648 302.5

@@ -9,6 +9,7 @@ import { ProblemsSection } from "@features/landing/problems";
 import { ProcessSection } from "@features/landing/process";
 import { ProjectsSection } from "@features/landing/projects";
 import { ServicesSection } from "@features/landing/services";
+import { TrustBar } from "@features/landing/trust";
 import { WhyKurokiSection } from "@features/landing/why-kuroki";
 import { faqItems } from "@features/landing/faq/faq.data";
 import {
@@ -21,12 +22,13 @@ import {
 ---
 
 <BaseLayout>
-  <Header />
+  <Header tone="light" />
   <main id="contenido-principal">
     <HeroSection />
+    <ProjectsSection />
+    <TrustBar />
     <ProblemsSection />
     <ServicesSection />
-    <ProjectsSection />
     <ProcessSection />
     <WhyKurokiSection />
     <FaqSection />
