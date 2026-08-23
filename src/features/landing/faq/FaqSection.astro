@@ -1,45 +1,71 @@
 ---
 import Container from "@shared/ui/Container.astro";
-import SectionHeading from "@shared/ui/SectionHeading.astro";
 import { faqItems } from "./faq.data";
 ---
 
-<section id="preguntas" class="bg-surface-light py-20 text-kuroki-black sm:py-28">
-  <Container class="grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
-    <SectionHeading
-      eyebrow="PREGUNTAS"
-      title="Antes de empezar"
-      intro="Resolvemos las dudas más comunes antes de definir tu proyecto."
-    />
-    <div class="space-y-3" data-reveal-group>
-      {
-        faqItems.map((item) => (
-          <details class="group rounded-lg border border-border-light bg-white px-5 py-4 transition-colors hover:bg-white/80" data-faq-item data-reveal>
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-5 text-base font-bold leading-7 marker:hidden sm:text-lg">
-              <span>{item.question}</span>
-              <span class="shrink-0 text-xl font-semibold leading-none text-kuroki-black/70 group-open:hidden" aria-hidden="true">+</span>
-              <span class="hidden shrink-0 text-xl font-semibold leading-none text-kuroki-black/70 group-open:inline" aria-hidden="true">−</span>
-            </summary>
-            <p class="mt-4 max-w-2xl text-sm leading-7 text-kuroki-gray">{item.answer}</p>
-          </details>
-        ))
-      }
+<section id="preguntas" class="faq-editorial text-kuroki-black">
+  <Container class="max-w-[1680px]">
+    <div class="faq-editorial__layout">
+      <div class="faq-editorial__intro" data-reveal>
+        <p>PREGUNTAS</p>
+        <h2>Antes de empezar.</h2>
+      </div>
+
+      <div class="faq-editorial__list" data-faq-list data-reveal-group>
+        {
+          faqItems.map((item, index) => {
+            const panelId = `faq-panel-${index + 1}`;
+
+            return (
+              <div class:list={["faq-editorial__item", index === 0 && "is-open"]} data-faq-item data-reveal>
+                <button
+                  class="faq-editorial__trigger"
+                  type="button"
+                  aria-expanded={index === 0 ? "true" : "false"}
+                  aria-controls={panelId}
+                  data-faq-trigger
+                >
+                  <span>{item.question}</span>
+                  <span class="faq-editorial__icon" aria-hidden="true">+</span>
+                </button>
+                <div id={panelId} class="faq-editorial__panel" data-faq-panel>
+                  <div class="faq-editorial__answer">
+                    <p>{item.answer}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
     </div>
   </Container>
 </section>
 
 <script>
-  const faqItems = document.querySelectorAll("[data-faq-item]");
+  const initFaqAccordion = () => {
+    const lists = document.querySelectorAll<HTMLElement>("[data-faq-list]");
 
-  faqItems.forEach((item) => {
-    item.addEventListener("toggle", () => {
-      if (!(item instanceof HTMLDetailsElement) || !item.open) return;
+    lists.forEach((list) => {
+      const items = Array.from(list.querySelectorAll<HTMLElement>("[data-faq-item]"));
 
-      faqItems.forEach((otherItem) => {
-        if (otherItem !== item && otherItem instanceof HTMLDetailsElement) {
-          otherItem.open = false;
-        }
+      const setOpenItem = (activeItem: HTMLElement) => {
+        items.forEach((item) => {
+          const isOpen = item === activeItem;
+          const trigger = item.querySelector<HTMLButtonElement>("[data-faq-trigger]");
+
+          item.classList.toggle("is-open", isOpen);
+          trigger?.setAttribute("aria-expanded", String(isOpen));
+        });
+      };
+
+      items.forEach((item) => {
+        const trigger = item.querySelector<HTMLButtonElement>("[data-faq-trigger]");
+
+        trigger?.addEventListener("click", () => setOpenItem(item));
       });
     });
-  });
+  };
+
+  initFaqAccordion();
 </script>

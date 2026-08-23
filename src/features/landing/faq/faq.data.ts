@@ -2,26 +2,26 @@ export const faqItems = [
   {
     question: "¿Necesito saber qué solución necesito?",
     answer:
-      "No. Cuéntanos qué problema quieres resolver y evaluamos si necesitas mejorar tu presencia digital, automatizar un proceso o construir software a medida.",
+      "No. Empezamos entendiendo el problema y te ayudamos a definir qué solución tiene sentido antes de construir.",
   },
   {
     question: "¿Pueden trabajar con lo que ya utiliza mi empresa?",
     answer:
-      "Sí. Antes de reemplazar herramientas, evaluamos si podemos conectarlas, mejorarlas o aprovechar lo que ya funciona.",
+      "Sí. Podemos evaluar tus herramientas y sistemas actuales para integrarlos, mejorarlos o construir alrededor de ellos cuando sea viable.",
   },
   {
-    question: "¿También desarrollan aplicaciones móviles?",
+    question: "¿Cómo se define el costo de un proyecto?",
     answer:
-      "Sí, cuando el proyecto realmente lo requiere. Primero evaluamos si una aplicación móvil es la solución adecuada o si el objetivo puede resolverse de una forma más simple.",
-  },
-  {
-    question: "¿Cómo calculan el costo de un proyecto?",
-    answer:
-      "Depende del alcance, la complejidad y las integraciones necesarias. Primero definimos qué debe resolverse y luego presentamos una propuesta con entregables y costos claros.",
+      "El costo depende del alcance, complejidad y tiempo requerido. Primero definimos qué necesitas y luego proponemos una estimación clara.",
   },
   {
     question: "¿Cuánto tiempo toma desarrollar una solución?",
     answer:
-      "Depende del alcance. Trabajamos por etapas para entregar avances funcionales, validar temprano y evitar construir durante meses sin feedback.",
+      "Depende del alcance. Una landing puede tomar mucho menos tiempo que un sistema a medida. Definimos tiempos antes de comenzar.",
   },
-];
+  {
+    question: "¿Qué pasa después del lanzamiento?",
+    answer:
+      "Podemos acompañarte con soporte, ajustes y evolución del producto según lo que necesite tu operación.",
+  },
+] as const;

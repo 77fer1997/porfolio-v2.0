@@ -2,12 +2,26 @@
 import Container from "@shared/ui/Container.astro";
 
 const companies = [
-  { name: "SMS FORTUNA", href: "/proyectos/fortuna/" },
-  { name: "BOTICA EL PUEBLO", href: "/proyectos/botica/" },
-  { name: "KLIPP STUDIO", href: "/proyectos/klipp/" },
-  { name: "PROXIMA MARCA", href: "#contacto" },
-  { name: "CLIENTE 05", href: "#contacto" },
-  { name: "CLIENTE 06", href: "#contacto" },
+  {
+    name: "Botica El Pueblo",
+    href: "/proyectos/botica/",
+    logo: "/images/projects/client-botica-el-pueblo.webp",
+  },
+  {
+    name: "FCA",
+    href: "#contacto",
+    logo: "/images/projects/client-fca.webp",
+  },
+  {
+    name: "SMS Fortuna",
+    href: "/proyectos/fortuna/",
+    logo: "/images/projects/client-fortuna.webp",
+  },
+  {
+    name: "Klipp Studio",
+    href: "/proyectos/klipp/",
+    logo: "/images/projects/client-klipp.webp",
+  },
 ];
 ---
 
@@ -22,7 +36,7 @@ const companies = [
               class="client-trust__client"
               data-reveal
             >
-              {company.name}
+              <img src={company.logo} alt={company.name} loading="lazy" />
             </a>
           ))
         }

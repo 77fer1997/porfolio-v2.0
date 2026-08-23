@@ -1,58 +1,55 @@
 ---
 import Container from "@shared/ui/Container.astro";
-import SectionHeading from "@shared/ui/SectionHeading.astro";
 import { contactConfig } from "@shared/config/contact.config";
 ---
 
-<section id="contacto" class="relative overflow-hidden bg-kuroki-black py-16 sm:py-24">
-  <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.035)_1px,transparent_1px)] bg-[size:44px_44px] opacity-70"></div>
-  <Container class="relative grid items-start gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-14">
-    <div class="max-w-xl" data-reveal>
-      <SectionHeading
-        eyebrow="CONTACTO"
-        title="Cuéntanos qué quieres resolver"
-        intro="Explícanos brevemente qué está pasando hoy y qué resultado buscas. Nosotros te ayudamos a definir el siguiente paso."
-        dark
-      />
+<section id="contacto" class="contact-editorial bg-kuroki-black text-white">
+  <Container class="max-w-[1680px]">
+    <div class="contact-editorial__layout">
+      <div class="contact-editorial__intro" data-reveal>
+        <p>CONTACTO</p>
+        <h2>Cuéntanos qué quieres resolver.</h2>
+        <span>No necesitas llegar con la solución definida. Cuéntanos qué está pasando y veremos el siguiente paso.</span>
 
-      <p class="mt-6 text-sm font-semibold leading-6 text-white">Te respondemos con el siguiente paso recomendado.</p>
-
-      <address class="mt-6 grid gap-y-2 not-italic text-sm">
-        <p class="grid gap-x-4 gap-y-1 sm:grid-cols-[72px_1fr]">
-          <span class="font-semibold text-text-secondary">Correo</span>
-          <a class="font-semibold text-white/85 transition hover:text-kuroki-orange" href={`mailto:${contactConfig.email}`}>{contactConfig.email}</a>
-        </p>
-      </address>
-    </div>
-
-    <form class="h-fit w-full self-start rounded-lg border border-white/15 bg-white/[0.055] p-5 shadow-2xl shadow-black/20 sm:p-6" action={contactConfig.formEndpoint} method="post" data-reveal>
-      <div class="grid gap-4 sm:grid-cols-2">
-        <label class="grid gap-2 text-sm font-semibold text-white">
-          Nombre
-          <input required name="name" autocomplete="name" class="min-h-12 rounded-md border border-white/15 bg-kuroki-black px-4 text-white transition focus:border-kuroki-orange/70 focus:outline-none" />
-        </label>
-        <label class="grid gap-2 text-sm font-semibold text-white">
-          Correo
-          <input required type="email" name="email" autocomplete="email" class="min-h-12 rounded-md border border-white/15 bg-kuroki-black px-4 text-white transition focus:border-kuroki-orange/70 focus:outline-none" />
-        </label>
+        <address class="contact-editorial__email">
+          <span>Correo</span>
+          <a href={`mailto:${contactConfig.email}`}>{contactConfig.email}</a>
+        </address>
       </div>
-      <label class="mt-4 grid gap-2 text-sm font-semibold text-white">
-        ¿Qué quieres mejorar?
-        <select name="projectType" class="min-h-12 rounded-md border border-white/15 bg-kuroki-black px-4 text-white transition focus:border-kuroki-orange/70 focus:outline-none">
-          <option>No estoy seguro</option>
-          <option>Presencia digital</option>
-          <option>Automatización</option>
-          <option>Software a medida</option>
-          <option>Otro</option>
-        </select>
-      </label>
-      <label class="mt-4 grid gap-2 text-sm font-semibold text-white">
-        Contexto breve
-        <textarea required name="message" rows="3" class="rounded-md border border-white/15 bg-kuroki-black px-4 py-3 text-white placeholder:text-white/35 transition focus:border-kuroki-orange/70 focus:outline-none" placeholder="Qué pasa hoy y qué resultado buscas."></textarea>
-      </label>
-      <button class="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-md border border-kuroki-orange bg-kuroki-orange px-5 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-kuroki-black" type="submit">
-        Cuéntanos tu proyecto
-      </button>
-    </form>
+
+      <form class="contact-editorial__form" action={contactConfig.formEndpoint} method="post" data-reveal>
+        <div class="contact-editorial__grid">
+          <label class="contact-editorial__field">
+            <span>Nombre</span>
+            <input required name="name" autocomplete="name" />
+          </label>
+
+          <label class="contact-editorial__field">
+            <span>Correo</span>
+            <input required type="email" name="email" autocomplete="email" />
+          </label>
+        </div>
+
+        <label class="contact-editorial__field">
+          <span>¿Qué quieres mejorar?</span>
+          <select name="projectType">
+            <option>Landing</option>
+            <option>Automatización</option>
+            <option>Software a medida</option>
+            <option>No estoy seguro</option>
+          </select>
+        </label>
+
+        <label class="contact-editorial__field">
+          <span>Contexto breve</span>
+          <textarea required name="message" rows="4" placeholder="Qué pasa hoy y qué resultado buscas."></textarea>
+        </label>
+
+        <button class="contact-editorial__submit" type="submit">
+          <span>Cuéntanos tu proyecto</span>
+          <span aria-hidden="true">↗</span>
+        </button>
+      </form>
+    </div>
   </Container>
 </section>

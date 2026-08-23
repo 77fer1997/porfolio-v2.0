@@ -1,6 +1,7 @@
+import { contactConfig } from "@shared/config/contact.config";
+
 export const footerLinks = [
-  { label: "Servicios", href: "/#servicios" },
-  { label: "Proyectos", href: "/#proyectos" },
-  { label: "Metodo", href: "/#metodo" },
-  { label: "Contacto", href: "/#contacto" },
-];
+  { label: "LinkedIn", href: contactConfig.linkedin, icon: "linkedin" },
+  { label: "Instagram", href: "#", icon: "instagram" },
+  { label: "GitHub", href: "#", icon: "github" },
+] as const;
