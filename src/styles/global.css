@@ -77,6 +77,100 @@ body {
   border-color: color-mix(in srgb, currentColor 18%, transparent);
 }
 
+.whatsapp-float {
+  position: fixed;
+  right: clamp(36px, 2.6vw, 44px);
+  bottom: clamp(32px, 2.4vw, 40px);
+  z-index: 45;
+  display: inline-flex;
+  width: 64px;
+  min-width: 64px;
+  height: 64px;
+  min-height: 64px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #25d366;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  color: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+  text-decoration: none;
+  transform: translateY(8px);
+  transition:
+    width 270ms ease,
+    opacity 300ms ease,
+    transform 300ms ease,
+    box-shadow 220ms ease;
+}
+
+.whatsapp-float[data-visible="true"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.whatsapp-float__icon {
+  flex: 0 0 auto;
+  width: 33px;
+  height: 33px;
+}
+
+.whatsapp-float__label {
+  width: 0;
+  overflow: hidden;
+  color: currentColor;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  opacity: 0;
+  white-space: nowrap;
+  transition:
+    width 280ms ease,
+    margin-left 280ms ease,
+    opacity 220ms ease;
+}
+
+.whatsapp-float:focus-visible {
+  outline: 3px solid #ff5004;
+  outline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .whatsapp-float:hover {
+    width: 160px;
+    justify-content: flex-start;
+    padding-inline: 17px 20px;
+  }
+
+  .whatsapp-float:hover .whatsapp-float__label {
+    width: 82px;
+    margin-left: 12px;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .whatsapp-float {
+    right: max(24px, env(safe-area-inset-right));
+    bottom: max(22px, env(safe-area-inset-bottom));
+    width: 60px;
+    min-width: 60px;
+    height: 60px;
+    min-height: 60px;
+  }
+
+  .whatsapp-float__icon {
+    width: 31px;
+    height: 31px;
+  }
+
+  .whatsapp-float__label {
+    display: none;
+  }
+}
+
 .nav-link {
   position: relative;
   display: inline-flex;
@@ -2532,6 +2626,11 @@ body {
 
   .project-peek-label {
     animation: none !important;
+  }
+
+  .whatsapp-float,
+  .whatsapp-float__label {
+    transition: none !important;
   }
 
   .problem-accordion-panel p {

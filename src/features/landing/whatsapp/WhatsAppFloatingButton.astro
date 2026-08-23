@@ -1,0 +1,40 @@
+---
+import { contactConfig } from "@shared/config/contact.config";
+
+const whatsappMessage = "Hola, vengo desde la web de Kuroki y quisiera conversar sobre un proyecto.";
+const hrefSeparator = contactConfig.whatsappHref.includes("?") ? "&" : "?";
+const whatsappHref = `${contactConfig.whatsappHref}${hrefSeparator}text=${encodeURIComponent(whatsappMessage)}`;
+---
+
+<a
+  class="whatsapp-float"
+  href={whatsappHref}
+  target="_blank"
+  rel="noreferrer"
+  aria-label="Contactar por WhatsApp"
+  data-whatsapp-float
+  data-visible="false"
+>
+  <svg class="whatsapp-float__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path
+      fill="currentColor"
+      d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.58 2 2.14 6.43 2.14 11.89c0 1.74.46 3.45 1.33 4.95L2.05 22l5.29-1.39a9.9 9.9 0 0 0 4.7 1.19h.01c5.45 0 9.89-4.43 9.89-9.89a9.84 9.84 0 0 0-2.89-7m-7.01 15.22h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.14.82.84-3.06-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.23 8.25-8.23a8.2 8.2 0 0 1 5.83 2.42 8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.22-8.24 8.22m4.52-6.16c-.25-.12-1.47-.72-1.69-.8-.23-.08-.39-.12-.56.12-.16.25-.64.8-.78.96-.14.17-.29.19-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.45-1.37-1.7-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.23.25-.86.84-.86 2.04s.88 2.36 1 2.53c.12.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.28"
+    />
+  </svg>
+  <span class="whatsapp-float__label" aria-hidden="true">Escríbenos</span>
+</a>
+
+<script>
+  const whatsappButton = document.querySelector<HTMLElement>("[data-whatsapp-float]");
+
+  const updateWhatsAppButton = () => {
+    if (!whatsappButton) return;
+
+    whatsappButton.setAttribute("data-visible", String(window.scrollY > 320));
+
+  };
+
+  updateWhatsAppButton();
+  window.addEventListener("scroll", updateWhatsAppButton, { passive: true });
+  window.addEventListener("resize", updateWhatsAppButton);
+</script>
