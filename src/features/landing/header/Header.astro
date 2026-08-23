@@ -9,7 +9,7 @@ interface Props {
 const { tone = "dark" } = Astro.props;
 ---
 
-<header class="site-header absolute inset-x-0 top-0 z-40 bg-transparent" data-site-header data-tone={tone}>
+<header class="site-header fixed inset-x-0 top-0 z-40 bg-transparent" data-site-header data-tone={tone} data-hidden="false">
   <div class="mx-auto flex h-24 w-full max-w-[1720px] items-center justify-between gap-5 px-[clamp(24px,4vw,72px)]">
     <a href="/#inicio" class="header-logo flex items-center gap-3" aria-label="KUROKI inicio">
       {
@@ -55,17 +55,44 @@ const { tone = "dark" } = Astro.props;
   const button = document.querySelector("[data-menu-button]");
   const menu = document.querySelector("[data-mobile-menu]");
   const header = document.querySelector("[data-site-header]");
+  let lastScrollY = Math.max(window.scrollY, 0);
+  let ticking = false;
 
   const updateHeader = () => {
-    header?.setAttribute("data-scrolled", String(window.scrollY > 12));
+    const currentScrollY = Math.max(window.scrollY, 0);
+    const isMenuOpen = button?.getAttribute("aria-expanded") === "true";
+    const isScrollingDown = currentScrollY > lastScrollY + 4;
+    const isScrollingUp = currentScrollY < lastScrollY - 4;
+
+    header?.setAttribute("data-scrolled", String(currentScrollY > 12));
+
+    if (!isMenuOpen) {
+      if (currentScrollY <= 24 || isScrollingUp) {
+        header?.setAttribute("data-hidden", "false");
+      } else if (isScrollingDown) {
+        header?.setAttribute("data-hidden", "true");
+      }
+    }
+
+    if (Math.abs(currentScrollY - lastScrollY) > 4) {
+      lastScrollY = currentScrollY;
+    }
+
+    ticking = false;
   };
 
   updateHeader();
-  window.addEventListener("scroll", updateHeader, { passive: true });
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  }, { passive: true });
 
   button?.addEventListener("click", () => {
     const expanded = button.getAttribute("aria-expanded") === "true";
     button.setAttribute("aria-expanded", String(!expanded));
+    header?.setAttribute("data-hidden", "false");
     menu?.classList.toggle("hidden");
   });
 
