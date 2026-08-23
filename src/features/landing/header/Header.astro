@@ -12,13 +12,8 @@ const { tone = "dark" } = Astro.props;
 <header class="site-header fixed inset-x-0 top-0 z-40 bg-transparent" data-site-header data-tone={tone} data-hidden="false">
   <div class="mx-auto flex h-24 w-full max-w-[1720px] items-center justify-between gap-5 px-[clamp(24px,4vw,72px)]">
     <a href="/#inicio" class="header-logo flex items-center gap-3" aria-label="KUROKI inicio">
-      {
-        tone === "light" ? (
-          <img src="/images/brand/logo-kuroki-dark.png" alt="KUROKI" width="163" height="32" class="h-7 w-auto sm:h-8" />
-        ) : (
-          <img src={siteConfig.logo} alt="KUROKI" width="163" height="32" class="h-7 w-auto sm:h-8" />
-        )
-      }
+      <img src={siteConfig.logo} alt="KUROKI" width="163" height="32" class="header-logo__mark header-logo__mark--light h-7 w-auto sm:h-8" />
+      <img src="/images/brand/logo-kuroki-dark.png" alt="" width="163" height="32" class="header-logo__mark header-logo__mark--dark h-7 w-auto sm:h-8" aria-hidden="true" />
     </a>
     <nav class="hidden items-center gap-9 lg:flex" aria-label="Navegacion principal">
       {navigationItems.map((item) => (

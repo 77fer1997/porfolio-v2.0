@@ -72,6 +72,30 @@ body {
   pointer-events: none;
 }
 
+.header-logo {
+  position: relative;
+}
+
+.header-logo__mark {
+  transition: opacity 220ms ease;
+}
+
+.header-logo__mark--dark {
+  position: absolute;
+  inset: 0 auto auto 0;
+  opacity: 0;
+}
+
+.site-header[data-tone="light"] .header-logo__mark--light,
+.site-header[data-scrolled="true"] .header-logo__mark--light {
+  opacity: 0;
+}
+
+.site-header[data-tone="light"] .header-logo__mark--dark,
+.site-header[data-scrolled="true"] .header-logo__mark--dark {
+  opacity: 1;
+}
+
 .header-menu-button {
   color: currentColor;
   border-color: color-mix(in srgb, currentColor 18%, transparent);
@@ -2029,6 +2053,224 @@ body {
   transform: translate(3px, -3px);
 }
 
+.case-container {
+  padding-right: clamp(24px, 4vw, 72px);
+  padding-left: clamp(24px, 4vw, 72px);
+}
+
+.case-hero {
+  padding-top: clamp(118px, 12vw, 168px);
+  padding-bottom: clamp(72px, 8vw, 116px);
+}
+
+.case-hero__intro {
+  display: grid;
+  gap: clamp(20px, 2.3vw, 32px);
+  margin-top: clamp(54px, 7vw, 92px);
+}
+
+.case-hero__intro h1 {
+  max-width: 1180px;
+  margin: 0;
+  font-size: clamp(56px, 9vw, 164px);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+
+.case-hero__intro p {
+  max-width: 820px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(28px, 3.4vw, 58px);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.02;
+}
+
+.case-hero__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: clamp(42px, 5vw, 76px);
+  color: rgba(255, 255, 255, 0.64);
+  font-size: clamp(12px, 1vw, 14px);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.case-hero__meta span:last-child {
+  text-align: right;
+}
+
+.case-hero__media {
+  width: min(100%, 1500px);
+  margin: clamp(30px, 4vw, 58px) 0 0;
+  overflow: hidden;
+  background: #111111;
+  aspect-ratio: 4 / 3;
+}
+
+.case-hero[data-case-project="klipp"] .case-hero__intro {
+  margin-top: clamp(44px, 5.7vw, 76px);
+}
+
+.case-hero[data-case-project="klipp"] .case-hero__intro p {
+  max-width: 760px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: clamp(34px, 3vw, 44px);
+  font-weight: 500;
+  line-height: 1.12;
+}
+
+.case-hero[data-case-project="klipp"] .case-hero__intro,
+.case-hero[data-case-project="klipp"] .case-hero__meta {
+  animation: case-hero-content-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.case-hero[data-case-project="klipp"] .case-hero__intro {
+  animation-delay: 120ms;
+}
+
+.case-hero[data-case-project="klipp"] .case-hero__meta {
+  animation-delay: 170ms;
+}
+
+@keyframes case-hero-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.case-hero__media img,
+.case-gallery__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.case-overview {
+  padding-block: clamp(88px, 10vw, 150px);
+}
+
+.case-overview__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.64fr);
+  gap: clamp(48px, 8vw, 132px);
+  align-items: start;
+}
+
+.case-eyebrow {
+  display: block;
+  margin: 0;
+  color: #ff5004;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1;
+}
+
+.case-overview h2 {
+  max-width: 760px;
+  margin: 20px 0 0;
+  color: #0d0d0d;
+  font-size: clamp(36px, 4.2vw, 72px);
+  font-weight: 800;
+  line-height: 0.98;
+}
+
+.case-overview__copy {
+  display: grid;
+  gap: 24px;
+  color: rgba(13, 13, 13, 0.68);
+  font-size: clamp(18px, 1.35vw, 22px);
+  line-height: 1.62;
+}
+
+.case-overview__copy p {
+  margin: 0;
+}
+
+.case-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: clamp(28px, 4vw, 52px) 0 0;
+  padding-top: 28px;
+  border-top: 1px solid rgba(13, 13, 13, 0.14);
+}
+
+.case-facts div {
+  display: grid;
+  gap: 9px;
+}
+
+.case-facts dt {
+  color: rgba(13, 13, 13, 0.42);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.case-facts dd {
+  margin: 0;
+  color: #0d0d0d;
+  font-size: clamp(14px, 1vw, 16px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.case-gallery {
+  padding-block: clamp(76px, 10vw, 148px);
+}
+
+.case-gallery__grid {
+  display: grid;
+  gap: clamp(58px, 9vw, 136px);
+}
+
+.case-gallery__item {
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.case-gallery__item--1 {
+  width: min(100%, 1360px);
+  aspect-ratio: 16 / 10;
+}
+
+.case-gallery__item--2 {
+  width: min(58vw, 760px);
+  margin-left: auto;
+  aspect-ratio: 5 / 4;
+}
+
+::view-transition-group(project-klipp) {
+  animation-duration: 620ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(project-klipp),
+::view-transition-new(project-klipp) {
+  animation-duration: 620ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(project-sms-fortuna),
+::view-transition-new(project-sms-fortuna),
+::view-transition-old(project-botica),
+::view-transition-new(project-botica) {
+  animation-duration: 580ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @media (min-width: 1024px) {
   .hero-intro {
     --hero-block-offset: clamp(28px, 5svh, 54px);
@@ -2411,6 +2653,87 @@ body {
     display: none;
   }
 
+  .case-hero {
+    padding-top: 112px;
+    padding-bottom: 72px;
+  }
+
+  .case-hero__intro {
+    margin-top: 52px;
+  }
+
+  .case-hero__intro h1 {
+    font-size: clamp(48px, 16vw, 78px);
+    line-height: 0.9;
+  }
+
+  .case-hero__intro p {
+    font-size: clamp(27px, 8.6vw, 42px);
+    line-height: 1.02;
+  }
+
+  .case-hero__meta {
+    display: grid;
+    gap: 10px;
+    margin-top: 38px;
+  }
+
+  .case-hero__meta span:last-child {
+    text-align: left;
+  }
+
+  .case-hero[data-case-project="klipp"] .case-hero__intro {
+    margin-top: 42px;
+  }
+
+  .case-hero[data-case-project="klipp"] .case-hero__intro p {
+    font-size: clamp(24px, 6.8vw, 32px);
+    line-height: 1.18;
+  }
+
+  .case-hero__media,
+  .case-gallery__item--1,
+  .case-gallery__item--2 {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .case-overview {
+    padding-block: 78px;
+  }
+
+  .case-overview__layout {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .case-overview h2 {
+    font-size: clamp(34px, 10vw, 48px);
+  }
+
+  .case-overview__copy {
+    gap: 20px;
+    font-size: 17px;
+    line-height: 1.66;
+  }
+
+  .case-facts {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .case-gallery {
+    padding-block: 72px;
+  }
+
+  .case-gallery__grid {
+    gap: 42px;
+  }
+
+  .case-gallery__item--2 {
+    margin-left: 0;
+  }
+
   .project-editorial-link:hover {
     transform: none;
   }
@@ -2628,9 +2951,24 @@ body {
     animation: none !important;
   }
 
+  ::view-transition-old(project-klipp),
+  ::view-transition-new(project-klipp),
+  ::view-transition-group(project-klipp),
+  ::view-transition-old(project-sms-fortuna),
+  ::view-transition-new(project-sms-fortuna),
+  ::view-transition-old(project-botica),
+  ::view-transition-new(project-botica) {
+    animation: none !important;
+  }
+
   .whatsapp-float,
   .whatsapp-float__label {
     transition: none !important;
+  }
+
+  .case-hero[data-case-project="klipp"] .case-hero__intro,
+  .case-hero[data-case-project="klipp"] .case-hero__meta {
+    animation: none !important;
   }
 
   .problem-accordion-panel p {

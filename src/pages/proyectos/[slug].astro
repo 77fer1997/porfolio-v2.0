@@ -1,8 +1,7 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { Header } from "@features/landing/header";
-import Button from "@shared/ui/Button.astro";
 import Container from "@shared/ui/Container.astro";
 import { siteConfig } from "@shared/config/site.config";
 
@@ -15,8 +14,74 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { Content } = await render(project);
 const galleryImages = project.data.galleryImages;
+const projects = (await getCollection("projects", ({ data }) => data.published)).sort((a, b) => a.data.order - b.data.order);
+
+const projectDetails = {
+  klipp: {
+    displayTitle: "Klipp Studio",
+    headline: "Una experiencia digital para mostrar el trabajo del estudio.",
+    category: "WEB · DISEÑO · DESARROLLO",
+    year: "2026",
+    role: "Diseño y desarrollo",
+    deliverables: "Sitio web · UX · Frontend",
+    intro: "Una presencia digital construida alrededor del trabajo visual de Klipp.",
+    body:
+      "El objetivo era organizar sus servicios, mostrar el portafolio con claridad y hacer que explorar el trabajo del estudio fuera inmediato.",
+    result: "La página prioriza imagen, ritmo y navegación directa para que cada visita se sienta cercana al universo visual del estudio.",
+    heroImage: "/images/projects/project-klipp-landing-2.png",
+    heroAlt: "Portada visual del proyecto Klipp Studio",
+    transitionName: "project-klipp",
+    nextSlug: "fortuna",
+  },
+  fortuna: {
+    displayTitle: "SMS Fortuna",
+    headline: "Plataforma para gestionar operaciones de mensajería.",
+    category: "SOFTWARE · WEB",
+    year: "2026",
+    role: "Diseño y desarrollo",
+    deliverables: "Landing · Backoffice · Frontend",
+    intro: project.data.summary,
+    body: project.data.solution,
+    result: "Un entorno más claro para presentar el servicio y sostener la operación diaria.",
+    heroImage: "/images/projects/project-sms-fortuna-landing-1.png",
+    heroAlt: "Portada visual del proyecto SMS Fortuna",
+    transitionName: "project-sms-fortuna",
+    nextSlug: "botica",
+  },
+  botica: {
+    displayTitle: "El Pueblo",
+    headline: "Un panel operativo para controlar ventas, stock y compras.",
+    category: "DASHBOARD · INVENTARIO · COMPRAS",
+    year: "2026",
+    role: "Diseño y desarrollo",
+    deliverables: "Dashboard · Inventario · Frontend",
+    intro: "Controla ventas, inventario y compras desde un solo panel.",
+    body: project.data.solution,
+    result: "Una operación más visible para tomar decisiones desde una sola pantalla.",
+    heroImage: "/images/projects/project-botica-landing-3.png",
+    heroAlt: "Portada visual del proyecto El Pueblo",
+    transitionName: "project-botica",
+    nextSlug: "klipp",
+  },
+} as const;
+
+const currentDetail = projectDetails[project.data.slug as keyof typeof projectDetails] ?? {
+  displayTitle: project.data.title,
+  headline: project.data.summary,
+  category: project.data.scope.replaceAll(" - ", " · ").toUpperCase(),
+  year: "2026",
+  role: "Diseño y desarrollo",
+  deliverables: project.data.scope.replaceAll(" - ", " · "),
+  intro: project.data.summary,
+  body: project.data.solution,
+  result: project.data.problem,
+  heroImage: project.data.coverImage,
+  heroAlt: project.data.coverImageAlt,
+  transitionName: `project-${project.data.slug}`,
+  nextSlug: projects[0]?.data.slug ?? project.data.slug,
+};
+
 ---
 
 <BaseLayout
@@ -25,49 +90,74 @@ const galleryImages = project.data.galleryImages;
   canonical={`${siteConfig.url}/proyectos/${project.data.slug}/`}
 >
   <Header />
-  <main id="contenido-principal" class="bg-kuroki-black">
-    <section class="pt-16">
-      <Container class="py-16 sm:py-24">
-        <Button href="/#proyectos" variant="secondary">Volver a proyectos</Button>
-        <p class="mt-10 text-sm font-extrabold tracking-[0.16em] text-kuroki-orange">{project.data.serviceLevel}</p>
-        <h1 class="mt-4 max-w-4xl text-4xl font-extrabold leading-tight text-white sm:text-5xl">{project.data.title}</h1>
-        <p class="mt-6 max-w-3xl text-lg leading-8 text-text-secondary">{project.data.summary}</p>
-        <figure class="mt-10 overflow-hidden rounded-lg border border-white/10 bg-white">
-          <img src={project.data.coverImage} alt={project.data.coverImageAlt} width="1200" height="720" class="h-auto w-full" />
+  <main id="contenido-principal" class="bg-white">
+    <section class="case-hero bg-kuroki-black text-white" data-case-project={project.data.slug}>
+      <Container class="case-container max-w-[1680px]">
+        <div class="case-hero__intro">
+          <h1>{currentDetail.displayTitle}</h1>
+          <p>{currentDetail.headline}</p>
+        </div>
+        <div class="case-hero__meta" aria-label="Datos principales del proyecto">
+          <span>{currentDetail.category}</span>
+          <span>{currentDetail.year}</span>
+        </div>
+        <figure class="case-hero__media" transition:name={currentDetail.transitionName}>
+          <img
+            src={currentDetail.heroImage}
+            alt={currentDetail.heroAlt}
+            width="1400"
+            height="1050"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
         </figure>
       </Container>
     </section>
-    <section class="bg-white py-16 text-kuroki-black">
-      <Container class="grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
-        <dl class="space-y-6">
-          <div><dt class="font-bold">Problema</dt><dd class="mt-2 leading-7 text-kuroki-gray">{project.data.problem}</dd></div>
-          <div><dt class="font-bold">Solucion</dt><dd class="mt-2 leading-7 text-kuroki-gray">{project.data.solution}</dd></div>
-          <div><dt class="font-bold">Alcance</dt><dd class="mt-2 leading-7 text-kuroki-gray">{project.data.scope}</dd></div>
-        </dl>
-        <article class="prose max-w-none">
-          <Content />
-        </article>
+
+    <section class="case-overview bg-white text-kuroki-black">
+      <Container class="case-container max-w-[1680px]">
+        <div class="case-overview__layout">
+          <div>
+            <p class="case-eyebrow">EL PROYECTO</p>
+            <h2>{currentDetail.intro}</h2>
+          </div>
+          <div class="case-overview__copy">
+            <p>{currentDetail.body}</p>
+            <p>{currentDetail.result}</p>
+            <dl class="case-facts">
+              <div>
+                <dt>ROL</dt>
+                <dd>{currentDetail.role}</dd>
+              </div>
+              <div>
+                <dt>ENTREGABLES</dt>
+                <dd>{currentDetail.deliverables}</dd>
+              </div>
+              <div>
+                <dt>AÑO</dt>
+                <dd>{currentDetail.year}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
       </Container>
     </section>
+
     {
       galleryImages.length > 0 && (
-        <section class="bg-surface-light py-16 text-kuroki-black">
-          <Container>
-            <div class="max-w-3xl">
-              <p class="text-sm font-extrabold tracking-[0.16em] text-kuroki-orange">CAPTURAS</p>
-              <h2 class="mt-3 text-3xl font-extrabold">Mas pantallas del proyecto</h2>
-            </div>
-            <div class="mt-10 grid gap-6 md:grid-cols-2">
-              {galleryImages.map((image) => (
-                <figure class="overflow-hidden rounded-lg border border-border-light bg-white shadow-sm">
+        <section class="case-gallery bg-surface-light text-kuroki-black">
+          <Container class="case-container max-w-[1680px]">
+            <div class="case-gallery__grid">
+              {galleryImages.map((image, index) => (
+                <figure class:list={["case-gallery__item", `case-gallery__item--${index + 1}`]}>
                   <img
                     src={image.src}
                     alt={image.alt}
-                    width="960"
-                    height="620"
+                    width={index === 0 ? "1200" : "920"}
+                    height={index === 0 ? "760" : "1080"}
                     loading="lazy"
                     decoding="async"
-                    class="h-auto w-full object-contain"
                   />
                 </figure>
               ))}
