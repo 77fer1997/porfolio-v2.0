@@ -4,24 +4,31 @@ import Container from "@shared/ui/Container.astro";
 const services = [
   {
     id: "web",
-    label: "LANDINGS",
-    statement: "Convierte visitas en oportunidades.",
+    label: "DESARROLLO WEB",
+    statement: "Presencia digital clara, profesional y administrada.",
     description:
-      "Diseñamos landing pages y sitios web claros, rápidos y enfocados en convertir.",
+      "Diseñamos, desarrollamos y mantenemos sitios web profesionales enfocados en presentar tu negocio y convertir visitas en oportunidades.",
+    note: "Planes desde S/99 al mes",
+    cta: "Ver servicio",
+    href: "/servicios/desarrollo-web",
   },
   {
     id: "automatizacion",
     label: "AUTOMATIZACIÓN",
     statement: "Menos tareas repetitivas. Más tiempo para lo importante.",
     description:
-      "Automatizamos procesos y conectamos herramientas para reducir trabajo manual.",
+      "Automatizamos procesos repetitivos para reducir trabajo manual y mejorar la eficiencia de tu negocio.",
+    cta: "Conocer más",
+    href: "#contacto",
   },
   {
     id: "software",
     label: "SOFTWARE A MEDIDA",
     statement: "Cuando lo genérico ya no alcanza.",
     description:
-      "Construimos sistemas adaptados a los procesos, reglas y necesidades de tu operación.",
+      "Desarrollamos soluciones digitales adaptadas a los procesos y necesidades específicas de tu negocio.",
+    cta: "Cotizar proyecto",
+    href: "#contacto",
   },
 ] as const;
 ---
@@ -30,21 +37,22 @@ const services = [
   <Container class="max-w-[1680px]">
     <div class="services-editorial__header" data-reveal>
       <p>SERVICIOS</p>
-      <h2>Construimos lo que tu operacion realmente necesita.</h2>
+      <h2>Construimos lo que tu operación realmente necesita.</h2>
     </div>
 
     <div class="services-editorial__list" data-reveal-group>
       {
         services.map((service) => (
-          <a id={service.id} href={`#${service.id}`} class="service-row scroll-mt-24" data-reveal>
+          <a id={service.id} href={service.href} class="service-row scroll-mt-24" data-reveal>
             <span class="service-row__label">{service.label}</span>
             <span class="service-row__main">
               <span class="service-row__statement">{service.statement}</span>
+              {"note" in service && <span class="service-row__note">{service.note}</span>}
             </span>
             <span class="service-row__side">
               <span class="service-row__description">{service.description}</span>
               <span class="service-row__action">
-                <span class="service-row__action-text">Ver servicio</span>
+                <span class="service-row__action-text">{service.cta}</span>
                 <span aria-hidden="true">&nearr;</span>
               </span>
             </span>

@@ -1,0 +1,222 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { Footer } from "@features/landing/footer";
+import { Header } from "@features/landing/header";
+import { PricingSection } from "@features/landing/pricing";
+import { WhatsAppFloatingButton } from "@features/landing/whatsapp";
+import Container from "@shared/ui/Container.astro";
+import { contactConfig } from "@shared/config/contact.config";
+import { siteConfig } from "@shared/config/site.config";
+import { organizationJsonLd, websiteJsonLd } from "@shared/seo/structured-data";
+
+const title = "Desarrollo Web administrado | KUROKI";
+const description =
+  "Diseñamos, desarrollamos y mantenemos sitios web profesionales con dominio, hosting, SSL y soporte incluidos desde S/99 al mes.";
+const canonical = `${siteConfig.url}/servicios/desarrollo-web`;
+const separator = contactConfig.whatsappHref.includes("?") ? "&" : "?";
+const whatsappHref = `${contactConfig.whatsappHref}${separator}text=${encodeURIComponent(
+  "Hola Kuroki, quiero conversar sobre el servicio de Desarrollo Web.",
+)}`;
+
+const problems = [
+  "Inversiones iniciales elevadas para empezar.",
+  "Webs que quedan abandonadas después de ser entregadas.",
+  "Problemas técnicos que el cliente no sabe resolver.",
+  "Costos separados de hosting, dominio y mantenimiento.",
+  "Dificultad para actualizar textos, fotos o precios.",
+  "Sitios que no funcionan correctamente en mobile.",
+] as const;
+
+const valueBenefits = [
+  "Sin una gran inversión inicial",
+  "Diseño personalizado",
+  "Desarrollo profesional",
+  "Hosting administrado",
+  "Dominio incluido",
+  "SSL incluido",
+  "Mantenimiento técnico",
+  "Actualizaciones de contenido",
+  "Soporte Kuroki",
+] as const;
+
+const webProcess = [
+  {
+    number: "01",
+    title: "Conocemos tu negocio",
+    description: "Recopilamos información, objetivos, referencias y contenido.",
+  },
+  {
+    number: "02",
+    title: "Diseñamos",
+    description: "Creamos una propuesta visual adaptada a la identidad del negocio.",
+  },
+  {
+    number: "03",
+    title: "Desarrollamos",
+    description: "Construimos y optimizamos la landing para desktop, tablet y mobile.",
+  },
+  {
+    number: "04",
+    title: "Publicamos y mantenemos",
+    description: "Kuroki administra hosting, dominio, mantenimiento y actualizaciones.",
+  },
+] as const;
+
+const serviceFaqs = [
+  {
+    question: "¿Tengo que pagar por el desarrollo inicialmente?",
+    answer: "No. El desarrollo inicial está incluido dentro del servicio mensual según las condiciones del plan contratado.",
+  },
+  {
+    question: "¿El dominio es mío?",
+    answer: "Sí. El dominio pertenece al cliente y puede transferirse si finaliza el servicio.",
+  },
+  {
+    question: "¿Qué pasa si necesito una funcionalidad nueva?",
+    answer: "Las nuevas funcionalidades o desarrollos que estén fuera del alcance del plan se cotizan aparte.",
+  },
+  {
+    question: "¿Puedo cambiar textos o imágenes?",
+    answer: "Sí. Cada plan incluye una determinada cantidad de actualizaciones mensuales.",
+  },
+  {
+    question: "¿Kuroki se encarga del hosting?",
+    answer: "Sí. Hosting, SSL y mantenimiento técnico están incluidos.",
+  },
+  {
+    question: "¿Mi página funcionará en celular?",
+    answer: "Sí. Todas las páginas se desarrollan con diseño responsive para desktop, tablet y mobile.",
+  },
+] as const;
+---
+
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <Header tone="light" />
+  <main id="contenido-principal">
+    <section class="web-service-hero bg-white text-kuroki-black">
+      <Container class="max-w-[1680px]">
+        <div class="web-service-hero__layout">
+          <div class="web-service-hero__content" data-reveal>
+            <p>DESARROLLO WEB</p>
+            <h1>Tu negocio merece una web que trabaje por ti</h1>
+            <span>Diseñamos, desarrollamos y mantenemos tu presencia digital para que puedas concentrarte en tu negocio.</span>
+            <strong>Desde S/99 al mes</strong>
+            <div class="web-service-hero__actions">
+              <a href="#planes">Ver planes<span aria-hidden="true">&darr;</span></a>
+              <a href={whatsappHref}>Hablar con nosotros<span aria-hidden="true">&nearr;</span></a>
+            </div>
+          </div>
+
+          <div class="web-service-hero__visual" aria-hidden="true" data-reveal>
+            <div class="web-service-panel web-service-panel--main">
+              <span>Landing activa</span>
+              <strong>Captación web</strong>
+              <div>
+                <i></i>
+                <i></i>
+                <i></i>
+              </div>
+            </div>
+            <div class="web-service-panel web-service-panel--metric">
+              <span>Incluido</span>
+              <strong>Dominio + hosting + SSL</strong>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <section class="web-problems bg-kuroki-black text-white">
+      <Container class="max-w-[1680px]">
+        <div class="web-problems__layout">
+          <div class="web-problems__intro" data-reveal>
+            <p>EL PROBLEMA</p>
+            <h2>Hacer una web no debería convertirse en otro pendiente.</h2>
+          </div>
+          <div class="web-problems__list" data-reveal-group>
+            {problems.map((problem, index) => (
+              <article data-reveal>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <p>{problem}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <section class="web-value bg-white text-kuroki-black">
+      <Container class="max-w-[1680px]">
+        <div class="web-value__layout">
+          <div class="web-value__statement" data-reveal>
+            <p>PROPUESTA</p>
+            <h2>Tu web, dominio, hosting y mantenimiento en un solo servicio.</h2>
+          </div>
+          <div class="web-value__benefits" data-reveal-group>
+            {valueBenefits.map((benefit) => (
+              <span data-reveal>
+                <i aria-hidden="true"></i>
+                {benefit}
+              </span>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <section class="web-process bg-white text-kuroki-black">
+      <Container class="max-w-[1680px]">
+        <div class="web-process__header" data-reveal>
+          <p>CÓMO FUNCIONA</p>
+          <h2>Un proceso simple para salir a internet con claridad.</h2>
+        </div>
+        <div class="web-process__steps" data-reveal-group>
+          {webProcess.map((step) => (
+            <article data-reveal>
+              <span>{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <PricingSection />
+
+    <section class="web-service-faq bg-[#f7f7f5] text-kuroki-black">
+      <Container class="max-w-[1680px]">
+        <div class="web-service-faq__intro" data-reveal>
+          <p>PREGUNTAS</p>
+          <h2>Antes de contratar tu web.</h2>
+        </div>
+        <div class="web-service-faq__list" data-reveal-group>
+          {serviceFaqs.map((item) => (
+            <article data-reveal>
+              <h3>{item.question}</h3>
+              <p>{item.answer}</p>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="web-service-final bg-kuroki-black text-white">
+      <Container class="max-w-[1680px]">
+        <div class="web-service-final__content" data-reveal>
+          <p>EMPEZAR</p>
+          <h2>Tu presencia digital puede empezar hoy</h2>
+          <span>Nosotros nos encargamos del diseño, desarrollo y mantenimiento. Tú concéntrate en hacer crecer tu negocio.</span>
+          <div class="web-service-final__actions">
+            <a href={whatsappHref}>Empezar ahora<span aria-hidden="true">&nearr;</span></a>
+            <a href="/#contacto">Hablar con Kuroki<span aria-hidden="true">&nearr;</span></a>
+          </div>
+        </div>
+      </Container>
+    </section>
+  </main>
+  <WhatsAppFloatingButton />
+  <Footer />
+  <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
+</BaseLayout>

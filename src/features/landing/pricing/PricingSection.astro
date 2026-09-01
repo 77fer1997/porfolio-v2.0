@@ -1,0 +1,88 @@
+---
+import Container from "@shared/ui/Container.astro";
+import { contactConfig } from "@shared/config/contact.config";
+import { pricingComparisonRows, pricingPlans } from "./pricing.data";
+
+const whatsappHref = (message: string) => {
+  const separator = contactConfig.whatsappHref.includes("?") ? "&" : "?";
+  return `${contactConfig.whatsappHref}${separator}text=${encodeURIComponent(message)}`;
+};
+---
+
+<section id="planes" class="pricing-editorial bg-white text-kuroki-black">
+  <Container class="max-w-[1680px]">
+    <div class="pricing-editorial__header" data-reveal>
+      <p>PLANES</p>
+      <h2>Una landing lista para trabajar con tu negocio.</h2>
+    </div>
+
+    <div class="pricing-grid" data-reveal-group>
+      {
+        pricingPlans.map((plan) => (
+          <article class:list={["pricing-card", plan.recommended && "pricing-card--recommended"]} data-reveal>
+            <div class="pricing-card__topline">
+              {plan.recommended && <strong>RECOMENDADO</strong>}
+              <span>{plan.name}</span>
+            </div>
+
+            <div class="pricing-card__price">
+              <strong>{plan.price}</strong>
+              <span>{plan.period}</span>
+            </div>
+
+            <p class="pricing-card__description">{plan.description}</p>
+
+            <ul class="pricing-card__features">
+              {plan.features.map((feature) => (
+                <li>
+                  <span aria-hidden="true">✓</span>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            <div class="pricing-card__footer">
+              <a class="pricing-card__cta" href={whatsappHref(plan.message)}>
+                <span>{plan.cta}</span>
+                <span aria-hidden="true">&nearr;</span>
+              </a>
+              <small>{plan.permanence}</small>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <details class="pricing-comparison" data-reveal>
+      <summary>
+        <span>Comparar todos los planes</span>
+        <span aria-hidden="true">+</span>
+      </summary>
+
+      <div class="pricing-comparison__table" role="table" aria-label="Comparación completa de planes">
+        <div class="pricing-comparison__head" role="row">
+          <span role="columnheader">Detalle</span>
+          <span role="columnheader">Esencial</span>
+          <span role="columnheader">Negocio</span>
+          <span role="columnheader">Pro</span>
+        </div>
+
+        {
+          pricingComparisonRows.map((row) => (
+            <div class="pricing-comparison__row" role="row">
+              <span role="rowheader">{row.feature}</span>
+              <span role="cell" data-plan="Esencial">{row.esencial}</span>
+              <span role="cell" data-plan="Negocio">{row.negocio}</span>
+              <span role="cell" data-plan="Pro">{row.pro}</span>
+            </div>
+          ))
+        }
+      </div>
+    </details>
+
+    <div class="pricing-domain-note" data-reveal>
+      <h3>¿El dominio está incluido?</h3>
+      <p>Este punto queda preparado para completar cuando se defina comercialmente el alcance final del dominio.</p>
+    </div>
+  </Container>
+</section>
