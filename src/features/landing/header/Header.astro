@@ -47,54 +47,78 @@ const { tone = "dark" } = Astro.props;
 </header>
 
 <script>
-  const button = document.querySelector("[data-menu-button]");
-  const menu = document.querySelector("[data-mobile-menu]");
-  const header = document.querySelector("[data-site-header]");
-  let lastScrollY = Math.max(window.scrollY, 0);
-  let ticking = false;
-
-  const updateHeader = () => {
-    const currentScrollY = Math.max(window.scrollY, 0);
-    const isMenuOpen = button?.getAttribute("aria-expanded") === "true";
-    const isScrollingDown = currentScrollY > lastScrollY + 4;
-    const isScrollingUp = currentScrollY < lastScrollY - 4;
-
-    header?.setAttribute("data-scrolled", String(currentScrollY > 12));
-
-    if (!isMenuOpen) {
-      if (currentScrollY <= 24 || isScrollingUp) {
-        header?.setAttribute("data-hidden", "false");
-      } else if (isScrollingDown) {
-        header?.setAttribute("data-hidden", "true");
-      }
-    }
-
-    if (Math.abs(currentScrollY - lastScrollY) > 4) {
-      lastScrollY = currentScrollY;
-    }
-
-    ticking = false;
+  const windowWithHeader = window as typeof window & {
+    __kurokiHeaderCleanup?: () => void;
   };
 
-  updateHeader();
-  window.addEventListener("scroll", () => {
-    if (!ticking) {
-      window.requestAnimationFrame(updateHeader);
-      ticking = true;
+  const initHeader = () => {
+    windowWithHeader.__kurokiHeaderCleanup?.();
+
+    const button = document.querySelector<HTMLButtonElement>("[data-menu-button]");
+    const menu = document.querySelector<HTMLElement>("[data-mobile-menu]");
+    const header = document.querySelector<HTMLElement>("[data-site-header]");
+
+    if (!header) {
+      return;
     }
-  }, { passive: true });
 
-  button?.addEventListener("click", () => {
-    const expanded = button.getAttribute("aria-expanded") === "true";
-    button.setAttribute("aria-expanded", String(!expanded));
-    header?.setAttribute("data-hidden", "false");
-    menu?.classList.toggle("hidden");
-  });
+    let lastScrollY = Math.max(window.scrollY, 0);
+    let ticking = false;
 
-  menu?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
+    const updateHeader = () => {
+      const currentScrollY = Math.max(window.scrollY, 0);
+      const isMenuOpen = button?.getAttribute("aria-expanded") === "true";
+      const isScrollingDown = currentScrollY > lastScrollY + 4;
+      const isScrollingUp = currentScrollY < lastScrollY - 4;
+
+      header.setAttribute("data-scrolled", String(currentScrollY > 12));
+
+      if (!isMenuOpen) {
+        if (currentScrollY <= 24 || isScrollingUp) {
+          header.setAttribute("data-hidden", "false");
+        } else if (isScrollingDown) {
+          header.setAttribute("data-hidden", "true");
+        }
+      }
+
+      if (Math.abs(currentScrollY - lastScrollY) > 4) {
+        lastScrollY = currentScrollY;
+      }
+
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    };
+
+    const handleMenuClick = () => {
+      const expanded = button?.getAttribute("aria-expanded") === "true";
+      button?.setAttribute("aria-expanded", String(!expanded));
+      header.setAttribute("data-hidden", "false");
+      menu?.classList.toggle("hidden");
+    };
+
+    const menuLinks = Array.from(menu?.querySelectorAll<HTMLAnchorElement>("a") ?? []);
+    const closeMenu = () => {
       button?.setAttribute("aria-expanded", "false");
-      menu.classList.add("hidden");
-    });
-  });
+      menu?.classList.add("hidden");
+    };
+
+    updateHeader();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    button?.addEventListener("click", handleMenuClick);
+    menuLinks.forEach((link) => link.addEventListener("click", closeMenu));
+
+    windowWithHeader.__kurokiHeaderCleanup = () => {
+      window.removeEventListener("scroll", handleScroll);
+      button?.removeEventListener("click", handleMenuClick);
+      menuLinks.forEach((link) => link.removeEventListener("click", closeMenu));
+    };
+  };
+
+  document.addEventListener("astro:page-load", initHeader);
 </script>

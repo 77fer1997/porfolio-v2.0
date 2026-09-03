@@ -4,13 +4,15 @@ import Container from "@shared/ui/Container.astro";
 const services = [
   {
     id: "web",
-    label: "DESARROLLO WEB",
-    statement: "Presencia digital clara, profesional y administrada.",
+    label: "LANDINGS",
+    statement: "Convierte visitas en oportunidades.",
     description:
       "Diseñamos, desarrollamos y mantenemos sitios web profesionales enfocados en presentar tu negocio y convertir visitas en oportunidades.",
     note: "Planes desde S/99 al mes",
     cta: "Ver servicio",
-    href: "/servicios/desarrollo-web",
+    href: "/servicios/landings",
+    labelTransitionName: "service-landings-label",
+    titleTransitionName: "service-landings-title",
   },
   {
     id: "automatizacion",
@@ -20,6 +22,8 @@ const services = [
       "Automatizamos procesos repetitivos para reducir trabajo manual y mejorar la eficiencia de tu negocio.",
     cta: "Conocer más",
     href: "#contacto",
+    labelTransitionName: "service-automation-label",
+    titleTransitionName: "service-automation-title",
   },
   {
     id: "software",
@@ -29,6 +33,8 @@ const services = [
       "Desarrollamos soluciones digitales adaptadas a los procesos y necesidades específicas de tu negocio.",
     cta: "Cotizar proyecto",
     href: "#contacto",
+    labelTransitionName: "service-software-label",
+    titleTransitionName: "service-software-title",
   },
 ] as const;
 ---
@@ -44,9 +50,13 @@ const services = [
       {
         services.map((service) => (
           <a id={service.id} href={service.href} class="service-row scroll-mt-24" data-reveal>
-            <span class="service-row__label">{service.label}</span>
+            <span class="service-row__label" style={`view-transition-name: ${service.labelTransitionName};`}>
+              {service.label}
+            </span>
             <span class="service-row__main">
-              <span class="service-row__statement">{service.statement}</span>
+              <span class="service-row__statement" style={`view-transition-name: ${service.titleTransitionName};`}>
+                {service.statement}
+              </span>
               {"note" in service && <span class="service-row__note">{service.note}</span>}
             </span>
             <span class="service-row__side">

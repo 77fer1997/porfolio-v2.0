@@ -34,24 +34,28 @@ const { title, description, canonical } = Astro.props;
     </a>
     <slot />
     <script>
-      const revealElements = document.querySelectorAll("[data-reveal]");
+      const initRevealElements = () => {
+        const revealElements = document.querySelectorAll("[data-reveal]:not([data-revealed='true'])");
 
-      if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (!entry.isIntersecting) return;
-              entry.target.setAttribute("data-revealed", "true");
-              observer.unobserve(entry.target);
-            });
-          },
-          { rootMargin: "0px 0px -8% 0px", threshold: 0.02 },
-        );
+        if ("IntersectionObserver" in window) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.setAttribute("data-revealed", "true");
+                observer.unobserve(entry.target);
+              });
+            },
+            { rootMargin: "0px 0px -8% 0px", threshold: 0.02 },
+          );
 
-        revealElements.forEach((element) => observer.observe(element));
-      } else {
-        revealElements.forEach((element) => element.setAttribute("data-revealed", "true"));
-      }
+          revealElements.forEach((element) => observer.observe(element));
+        } else {
+          revealElements.forEach((element) => element.setAttribute("data-revealed", "true"));
+        }
+      };
+
+      document.addEventListener("astro:page-load", initRevealElements);
     </script>
   </body>
 </html>

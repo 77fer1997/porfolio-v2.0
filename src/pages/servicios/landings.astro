@@ -9,31 +9,25 @@ import { contactConfig } from "@shared/config/contact.config";
 import { siteConfig } from "@shared/config/site.config";
 import { organizationJsonLd, websiteJsonLd } from "@shared/seo/structured-data";
 
-const title = "Desarrollo Web administrado | KUROKI";
+const title = "Landings administradas | KUROKI";
 const description =
   "Diseñamos, desarrollamos y mantenemos sitios web profesionales con dominio, hosting, SSL y soporte incluidos desde S/99 al mes.";
-const canonical = `${siteConfig.url}/servicios/desarrollo-web`;
+const canonical = `${siteConfig.url}/servicios/landings`;
 const separator = contactConfig.whatsappHref.includes("?") ? "&" : "?";
 const whatsappHref = `${contactConfig.whatsappHref}${separator}text=${encodeURIComponent(
-  "Hola Kuroki, quiero conversar sobre el servicio de Desarrollo Web.",
+  "Hola Kuroki, quiero conversar sobre el servicio de Landings.",
 )}`;
 
 const problems = [
-  "Inversiones iniciales elevadas para empezar.",
-  "Webs que quedan abandonadas después de ser entregadas.",
-  "Problemas técnicos que el cliente no sabe resolver.",
-  "Costos separados de hosting, dominio y mantenimiento.",
-  "Dificultad para actualizar textos, fotos o precios.",
-  "Sitios que no funcionan correctamente en mobile.",
+  "Costos iniciales difíciles de asumir.",
+  "Webs que se publican y luego se abandonan.",
+  "Demasiados proveedores para mantener una sola web.",
 ] as const;
 
 const valueBenefits = [
-  "Sin una gran inversión inicial",
   "Diseño personalizado",
   "Desarrollo profesional",
-  "Hosting administrado",
-  "Dominio incluido",
-  "SSL incluido",
+  "Dominio + hosting + SSL",
   "Mantenimiento técnico",
   "Actualizaciones de contenido",
   "Soporte Kuroki",
@@ -91,17 +85,20 @@ const serviceFaqs = [
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical}>
-  <Header tone="light" />
+  <Header tone="dark" />
   <main id="contenido-principal">
-    <section class="web-service-hero bg-white text-kuroki-black">
+    <section class="web-service-hero bg-kuroki-black text-white">
       <Container class="max-w-[1680px]">
         <div class="web-service-hero__layout">
-          <div class="web-service-hero__content" data-reveal>
-            <p>DESARROLLO WEB</p>
-            <h1>Tu negocio merece una web que trabaje por ti</h1>
-            <span>Diseñamos, desarrollamos y mantenemos tu presencia digital para que puedas concentrarte en tu negocio.</span>
-            <strong>Desde S/99 al mes</strong>
-            <div class="web-service-hero__actions">
+          <div class="web-service-hero__content">
+            <p style="view-transition-name: service-landings-label;">LANDINGS</p>
+            <h1 style="view-transition-name: service-landings-title;">
+              Convierte visitas
+              <br />en oportunidades.
+            </h1>
+            <span data-reveal>Landing pages claras, rápidas y enfocadas en generar contactos.</span>
+            <strong data-reveal>Desde S/99 al mes</strong>
+            <div class="web-service-hero__actions" data-reveal>
               <a href="#planes">Ver planes<span aria-hidden="true">&darr;</span></a>
               <a href={whatsappHref}>Hablar con nosotros<span aria-hidden="true">&nearr;</span></a>
             </div>
@@ -109,29 +106,48 @@ const serviceFaqs = [
 
           <div class="web-service-hero__visual" aria-hidden="true" data-reveal>
             <div class="web-service-panel web-service-panel--main">
-              <span>Landing activa</span>
-              <strong>Captación web</strong>
-              <div>
+              <div class="web-service-panel__bar">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="web-service-panel__hero">
+                <span>Oferta clara</span>
+                <strong>Landing page</strong>
                 <i></i>
                 <i></i>
+              </div>
+              <div class="web-service-panel__content">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="web-service-panel__form">
+                <span>Contacto</span>
                 <i></i>
               </div>
             </div>
             <div class="web-service-panel web-service-panel--metric">
-              <span>Incluido</span>
-              <strong>Dominio + hosting + SSL</strong>
+              <span>Desde</span>
+              <strong>S/99</strong>
+              <small>al mes</small>
+            </div>
+            <div class="web-service-panel web-service-panel--path">
+              <span>Visita</span>
+              <i></i>
+              <span>Contacto</span>
             </div>
           </div>
         </div>
       </Container>
     </section>
 
-    <section class="web-problems bg-kuroki-black text-white">
+    <section class="web-problems bg-[#F5F5F2] text-kuroki-black">
       <Container class="max-w-[1680px]">
         <div class="web-problems__layout">
           <div class="web-problems__intro" data-reveal>
             <p>EL PROBLEMA</p>
-            <h2>Hacer una web no debería convertirse en otro pendiente.</h2>
+            <h2>Tu web no debería ser otro pendiente.</h2>
           </div>
           <div class="web-problems__list" data-reveal-group>
             {problems.map((problem, index) => (
@@ -150,7 +166,7 @@ const serviceFaqs = [
         <div class="web-value__layout">
           <div class="web-value__statement" data-reveal>
             <p>PROPUESTA</p>
-            <h2>Tu web, dominio, hosting y mantenimiento en un solo servicio.</h2>
+            <h2>Todo lo que tu web necesita, en un solo servicio.</h2>
           </div>
           <div class="web-value__benefits" data-reveal-group>
             {valueBenefits.map((benefit) => (
@@ -164,7 +180,7 @@ const serviceFaqs = [
       </Container>
     </section>
 
-    <section class="web-process bg-white text-kuroki-black">
+    <section class="web-process bg-kuroki-black text-white">
       <Container class="max-w-[1680px]">
         <div class="web-process__header" data-reveal>
           <p>CÓMO FUNCIONA</p>
