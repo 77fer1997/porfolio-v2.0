@@ -1,7 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { Footer } from "@features/landing/footer";
 import { Header } from "@features/landing/header";
+import CaseGalleryCarousel from "@features/projects/CaseGalleryCarousel.astro";
 import Container from "@shared/ui/Container.astro";
 import { siteConfig } from "@shared/config/site.config";
 
@@ -14,7 +16,6 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const galleryImages = project.data.galleryImages;
 const projects = (await getCollection("projects", ({ data }) => data.published)).sort((a, b) => a.data.order - b.data.order);
 
 const projectDetails = {
@@ -25,7 +26,7 @@ const projectDetails = {
     year: "2026",
     role: "Diseño y desarrollo",
     deliverables: "Sitio web · UX · Frontend",
-    intro: "Una presencia digital construida alrededor del trabajo visual de Klipp.",
+    intro: "Una presencia digital alrededor del trabajo visual.",
     body:
       "El objetivo era organizar sus servicios, mostrar el portafolio con claridad y hacer que explorar el trabajo del estudio fuera inmediato.",
     result: "La página prioriza imagen, ritmo y navegación directa para que cada visita se sienta cercana al universo visual del estudio.",
@@ -41,7 +42,7 @@ const projectDetails = {
     year: "2026",
     role: "Diseño y desarrollo",
     deliverables: "Landing · Backoffice · Frontend",
-    intro: project.data.summary,
+    intro: "Control y mensajería desde un solo panel.",
     body: project.data.solution,
     result: "Un entorno más claro para presentar el servicio y sostener la operación diaria.",
     heroImage: "/images/projects/project-sms-fortuna-landing-1.webp",
@@ -56,7 +57,7 @@ const projectDetails = {
     year: "2026",
     role: "Diseño y desarrollo",
     deliverables: "Dashboard · Inventario · Frontend",
-    intro: "Controla ventas, inventario y compras desde un solo panel.",
+    intro: "Ventas, inventario y compras en un solo panel.",
     body: project.data.solution,
     result: "Una operación más visible para tomar decisiones desde una sola pantalla.",
     heroImage: "/images/projects/project-botica-landing-3.png",
@@ -81,6 +82,55 @@ const currentDetail = projectDetails[project.data.slug as keyof typeof projectDe
   transitionName: `project-${project.data.slug}`,
   nextSlug: projects[0]?.data.slug ?? project.data.slug,
 };
+
+const projectGalleries = {
+  klipp: [
+    {
+      src: "/images/projects/project-klipp-principal.webp",
+      alt: "Pantalla principal del proyecto Klipp Studio",
+    },
+    {
+      src: "/images/projects/project-klipp-sesion.webp",
+      alt: "Pantalla de inicio de sesión del proyecto Klipp Studio",
+    },
+    {
+      src: "/images/projects/project-klipp-cumpleaños.webp",
+      alt: "Vista de cumpleaños y beneficios del proyecto Klipp Studio",
+    },
+  ],
+  fortuna: [
+    {
+      src: "/images/projects/project-sms-fortuna-landing.webp",
+      alt: "Landing del proyecto SMS Fortuna",
+    },
+    {
+      src: "/images/projects/project-sms-fortuna-backoffice.webp",
+      alt: "Dashboard operativo del proyecto SMS Fortuna",
+    },
+    {
+      src: "/images/projects/project-sms-fortuna-recargas.webp",
+      alt: "Pantalla de recargas del proyecto SMS Fortuna",
+    },
+  ],
+  botica: [
+    {
+      src: "/images/projects/project-botica-dashboard.webp",
+      alt: "Dashboard principal del proyecto Botica El Pueblo",
+    },
+    {
+      src: "/images/projects/project-botica-compras.webp",
+      alt: "Vista de compras del proyecto Botica El Pueblo",
+    },
+    {
+      src: "/images/projects/project-botica-login.webp",
+      alt: "Pantalla de acceso del sistema Botica El Pueblo",
+    },
+  ],
+} as const;
+
+const galleryImages =
+  projectGalleries[project.data.slug as keyof typeof projectGalleries] ??
+  project.data.galleryImages;
 
 ---
 
@@ -144,27 +194,7 @@ const currentDetail = projectDetails[project.data.slug as keyof typeof projectDe
       </Container>
     </section>
 
-    {
-      galleryImages.length > 0 && (
-        <section class="case-gallery bg-surface-light text-kuroki-black">
-          <Container class="case-container max-w-[1680px]">
-            <div class="case-gallery__grid">
-              {galleryImages.map((image, index) => (
-                <figure class:list={["case-gallery__item", `case-gallery__item--${index + 1}`]}>
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    width={index === 0 ? "1200" : "920"}
-                    height={index === 0 ? "760" : "1080"}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </figure>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )
-    }
+    <CaseGalleryCarousel images={galleryImages} />
   </main>
+  <Footer />
 </BaseLayout>

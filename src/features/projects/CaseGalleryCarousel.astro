@@ -1,0 +1,182 @@
+---
+import Container from "@shared/ui/Container.astro";
+
+type GalleryImage = {
+  src: string;
+  alt: string;
+};
+
+type Props = {
+  images: readonly GalleryImage[];
+};
+
+const { images } = Astro.props;
+const total = images.length;
+const formattedTotal = String(total).padStart(2, "0");
+---
+
+{
+  total > 0 && (
+    <section class="case-gallery bg-surface-light text-kuroki-black">
+      <Container class="case-container max-w-[1680px]">
+        <div
+          class="case-gallery__carousel"
+          data-case-carousel
+          aria-label="Galería del proyecto"
+          tabindex="0"
+        >
+          <p class="case-gallery__eyebrow">GALERÍA</p>
+
+          <div class="case-gallery__viewport">
+            <div class="case-gallery__track" data-case-carousel-track>
+              {images.map((image, index) => (
+                <figure class="case-gallery__slide" data-case-carousel-slide>
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    width="1400"
+                    height="900"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                    draggable="false"
+                  />
+                </figure>
+              ))}
+            </div>
+          </div>
+
+          <div class="case-gallery__controls">
+            <span class="case-gallery__counter" aria-live="polite">
+              <span data-case-carousel-current>01</span> / {formattedTotal}
+            </span>
+            <div class="case-gallery__arrows">
+              <button type="button" aria-label="Imagen anterior" data-case-carousel-prev>
+                &larr;
+              </button>
+              <button type="button" aria-label="Imagen siguiente" data-case-carousel-next>
+                &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+  )
+}
+
+<script>
+  const initCaseCarousels = () => {
+    const carousels = document.querySelectorAll<HTMLElement>("[data-case-carousel]");
+
+    carousels.forEach((carousel) => {
+      if (carousel.dataset.caseCarouselReady === "true") {
+        return;
+      }
+
+      carousel.dataset.caseCarouselReady = "true";
+
+      const track = carousel.querySelector<HTMLElement>("[data-case-carousel-track]");
+      const slides = Array.from(carousel.querySelectorAll<HTMLElement>("[data-case-carousel-slide]"));
+      const current = carousel.querySelector<HTMLElement>("[data-case-carousel-current]");
+      const previousButton = carousel.querySelector<HTMLButtonElement>("[data-case-carousel-prev]");
+      const nextButton = carousel.querySelector<HTMLButtonElement>("[data-case-carousel-next]");
+
+      if (!track || !slides.length || !current) {
+        return;
+      }
+
+      let activeIndex = 0;
+      let dragStartX = 0;
+      let dragOffset = 0;
+      let isDragging = false;
+
+      const formatIndex = (index: number) => String(index + 1).padStart(2, "0");
+
+      const getStep = () => {
+        const firstSlide = slides[0];
+        const styles = window.getComputedStyle(track);
+        const gap = Number.parseFloat(styles.columnGap || styles.gap || "0");
+        return firstSlide.getBoundingClientRect().width + gap;
+      };
+
+      const update = (nextIndex = activeIndex, offset = 0) => {
+        activeIndex = Math.max(0, Math.min(nextIndex, slides.length - 1));
+        track.style.transform = `translate3d(${activeIndex * -getStep() + offset}px, 0, 0)`;
+        current.textContent = formatIndex(activeIndex);
+        previousButton?.toggleAttribute("disabled", activeIndex === 0);
+        nextButton?.toggleAttribute("disabled", activeIndex === slides.length - 1);
+      };
+
+      const goTo = (index: number) => {
+        track.dataset.dragging = "false";
+        update(index);
+      };
+
+      const onPointerDown = (event: PointerEvent) => {
+        isDragging = true;
+        dragStartX = event.clientX;
+        dragOffset = 0;
+        track.dataset.dragging = "true";
+        track.setPointerCapture(event.pointerId);
+      };
+
+      const onPointerMove = (event: PointerEvent) => {
+        if (!isDragging) {
+          return;
+        }
+
+        dragOffset = event.clientX - dragStartX;
+        update(activeIndex, dragOffset);
+      };
+
+      const onPointerUp = (event: PointerEvent) => {
+        if (!isDragging) {
+          return;
+        }
+
+        isDragging = false;
+        track.releasePointerCapture(event.pointerId);
+
+        const threshold = Math.min(160, getStep() * 0.18);
+        if (dragOffset < -threshold) {
+          goTo(activeIndex + 1);
+          return;
+        }
+
+        if (dragOffset > threshold) {
+          goTo(activeIndex - 1);
+          return;
+        }
+
+        goTo(activeIndex);
+      };
+
+      previousButton?.addEventListener("click", () => goTo(activeIndex - 1));
+      nextButton?.addEventListener("click", () => goTo(activeIndex + 1));
+
+      carousel.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          goTo(activeIndex - 1);
+        }
+
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          goTo(activeIndex + 1);
+        }
+      });
+
+      track.addEventListener("pointerdown", onPointerDown);
+      track.addEventListener("pointermove", onPointerMove);
+      track.addEventListener("pointerup", onPointerUp);
+      track.addEventListener("pointercancel", onPointerUp);
+      track.addEventListener("dragstart", (event) => event.preventDefault());
+      window.addEventListener("resize", () => update());
+
+      update();
+    });
+  };
+
+  initCaseCarousels();
+  document.addEventListener("astro:page-load", initCaseCarousels);
+</script>
