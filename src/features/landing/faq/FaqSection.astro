@@ -47,6 +47,12 @@ import { faqItems } from "./faq.data";
     const lists = document.querySelectorAll<HTMLElement>("[data-faq-list]");
 
     lists.forEach((list) => {
+      if (list.dataset.faqReady === "true") {
+        return;
+      }
+
+      list.dataset.faqReady = "true";
+
       const items = Array.from(list.querySelectorAll<HTMLElement>("[data-faq-item]"));
 
       const setOpenItem = (activeItem: HTMLElement) => {
@@ -68,4 +74,5 @@ import { faqItems } from "./faq.data";
   };
 
   initFaqAccordion();
+  document.addEventListener("astro:page-load", initFaqAccordion);
 </script>

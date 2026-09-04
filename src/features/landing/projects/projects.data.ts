@@ -47,7 +47,7 @@ export const featuredProjects = [
     outcome: "Servicio mas visible y operacion interna mas ordenada.",
     metrics: ["Landing", "Backoffice", "Recargas"],
     technologies: ["Astro", "TypeScript", "UI responsive", "Panel admin"],
-    image: "/images/projects/project-sms-fortuna-landing-1.png",
+    image: "/images/projects/project-sms-fortuna-landing-1.webp",
     imageAlt: "Backoffice del proyecto SMS Fortuna",
     published: true,
     featured: true,
