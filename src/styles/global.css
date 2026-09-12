@@ -2629,17 +2629,6 @@ body {
   transform: none;
 }
 
-.project-cover__kicker {
-  position: absolute;
-  z-index: 6;
-  top: 24px;
-  left: 24px;
-  color: rgba(255, 255, 255, 0.76);
-  font-size: 12px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
 .project-cover__image {
   position: absolute;
   inset: 0;
@@ -2709,10 +2698,6 @@ body {
 
 .project-editorial-link:hover .project-cover::after {
   opacity: 0.72;
-}
-
-.project-cover--botica .project-cover__kicker {
-  color: rgba(13, 13, 13, 0.52);
 }
 
 .project-cover--klipp .project-cover__image {
@@ -3794,12 +3779,6 @@ body {
   .project-cover--sms,
   .project-cover--botica {
     aspect-ratio: 4 / 3;
-  }
-
-  .project-cover__kicker {
-    top: 16px;
-    left: 16px;
-    font-size: 11px;
   }
 
   .project-editorial-link {

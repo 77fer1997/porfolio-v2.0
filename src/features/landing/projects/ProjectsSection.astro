@@ -3,7 +3,6 @@ import Container from "@shared/ui/Container.astro";
 
 const projects = [
   {
-    number: "01",
     category: "Web / Diseno / Desarrollo",
     name: "Klipp Studio",
     slug: "klipp",
@@ -13,7 +12,6 @@ const projects = [
     image: "/images/projects/project-klipp-landing-2.png",
   },
   {
-    number: "02",
     category: "Software / Web",
     name: "SMS Fortuna",
     slug: "fortuna",
@@ -23,7 +21,6 @@ const projects = [
     image: "/images/projects/project-sms-fortuna-landing-1.webp",
   },
   {
-    number: "03",
     category: "Dashboard / Inventario / Compras",
     name: "El Pueblo",
     slug: "botica",
@@ -61,7 +58,6 @@ const boticaProject = projects[2];
                   data-project-visual
                   style={`view-transition-name: ${project.transitionName};`}
                 >
-                  <span class="project-cover__kicker">{project.number}</span>
                   <img
                     src={project.image}
                     alt={`Portada de ${project.name}`}
@@ -98,7 +94,6 @@ const boticaProject = projects[2];
               data-project-visual
               style={`view-transition-name: ${boticaProject.transitionName};`}
             >
-              <span class="project-cover__kicker">{boticaProject.number}</span>
               <img
                 src={boticaProject.image}
                 alt={`Portada de ${boticaProject.name}`}
