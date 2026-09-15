@@ -2552,7 +2552,32 @@ body {
 }
 
 .projects-section {
-  padding-top: clamp(34px, 4vw, 48px);
+  padding-top: clamp(100px, 10vw, 140px);
+}
+
+.project-section-heading {
+  display: grid;
+  gap: clamp(14px, 1.6vw, 20px);
+  max-width: 980px;
+  margin-bottom: clamp(54px, 5.4vw, 76px);
+}
+
+.project-section-heading p {
+  margin: 0;
+  color: #ff5004;
+  font-size: clamp(12px, 0.86vw, 14px);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1;
+}
+
+.project-section-heading h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(40px, 6vw, 96px);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 0.94;
 }
 
 .project-editorial-list {
@@ -2764,7 +2789,11 @@ body {
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .projects-section {
-    padding-top: 48px;
+    padding-top: 104px;
+  }
+
+  .project-section-heading {
+    margin-bottom: 64px;
   }
 
   .project-editorial-list {
@@ -3729,12 +3758,21 @@ body {
   }
 
   .projects-section {
-    padding-top: 32px;
+    padding-top: 84px;
   }
 
   .projects-container {
     padding-right: 0;
     padding-left: 0;
+  }
+
+  .project-section-heading {
+    margin-bottom: 54px;
+    padding-inline: 1.25rem;
+  }
+
+  .project-section-heading h2 {
+    font-size: clamp(36px, 11.4vw, 50px);
   }
 
   .project-editorial-row--pair,
