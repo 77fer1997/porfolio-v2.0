@@ -1,0 +1,71 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { Footer } from "@features/landing/footer";
+import { Header } from "@features/landing/header";
+import Container from "@shared/ui/Container.astro";
+import { siteConfig } from "@shared/config/site.config";
+
+const cases = (await getCollection("projects", ({ data }) => data.published)).sort((a, b) => a.data.order - b.data.order);
+
+const caseSummaries = {
+  klipp: {
+    image: "/images/projects/project-klipp-landing-2.png",
+    description: "Una presencia digital que organiza y muestra el trabajo del estudio.",
+  },
+  "sms-fortuna": {
+    image: "/images/projects/project-sms-fortuna-landing-1.webp",
+    description: "Una plataforma central para gestionar usuarios, recargas y mensajería.",
+  },
+  "el-pueblo": {
+    image: "/images/projects/project-botica-landing-3.png",
+    description: "Ventas, inventario y compras reunidos en una sola operación digital.",
+  },
+} as const;
+---
+
+<BaseLayout
+  title="Casos de éxito | KUROKI"
+  description="Casos de éxito de KUROKI con plataformas, sitios y sistemas digitales desarrollados para operaciones reales."
+  canonical={`${siteConfig.url}/casos-de-exito/`}
+>
+  <Header />
+  <main id="contenido-principal" class="bg-kuroki-black text-white">
+    <section class="py-28 sm:py-32 lg:py-40">
+      <Container class="max-w-[1680px]">
+        <div class="max-w-4xl">
+          <p class="mb-5 text-sm font-bold uppercase tracking-[0.18em] text-white/48">Casos de éxito</p>
+          <h1 class="text-balance text-5xl font-bold leading-none sm:text-7xl lg:text-8xl">Trabajo real para operaciones reales.</h1>
+        </div>
+
+        <div class="mt-20 grid gap-16 lg:grid-cols-3">
+          {
+            cases.map((project) => {
+              const summary = caseSummaries[project.data.slug as keyof typeof caseSummaries];
+              return (
+                <a href={`/casos-de-exito/${project.data.slug}/`} class="group grid gap-5 text-white no-underline">
+                  <span class="relative block aspect-[4/3] overflow-hidden bg-white/8">
+                    <img
+                      src={summary?.image ?? project.data.coverImage}
+                      alt={project.data.coverImageAlt}
+                      width="1400"
+                      height="1050"
+                      loading="lazy"
+                      decoding="async"
+                      class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
+                    />
+                  </span>
+                  <span class="grid gap-2">
+                    <span class="text-3xl font-bold leading-none">{project.data.title}</span>
+                    <span class="max-w-xl text-lg leading-8 text-white/64">{summary?.description ?? project.data.summary}</span>
+                  </span>
+                </a>
+              );
+            })
+          }
+        </div>
+      </Container>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

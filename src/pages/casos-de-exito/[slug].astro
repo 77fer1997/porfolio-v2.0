@@ -33,9 +33,9 @@ const projectDetails = {
     heroImage: "/images/projects/project-klipp-landing-2.png",
     heroAlt: "Portada visual del proyecto Klipp Studio",
     transitionName: "project-klipp",
-    nextSlug: "fortuna",
+    nextSlug: "sms-fortuna",
   },
-  fortuna: {
+  "sms-fortuna": {
     displayTitle: "SMS Fortuna",
     headline: "Plataforma para gestionar operaciones de mensajería.",
     category: "SOFTWARE · WEB",
@@ -48,9 +48,9 @@ const projectDetails = {
     heroImage: "/images/projects/project-sms-fortuna-landing-1.webp",
     heroAlt: "Portada visual del proyecto SMS Fortuna",
     transitionName: "project-sms-fortuna",
-    nextSlug: "botica",
+    nextSlug: "el-pueblo",
   },
-  botica: {
+  "el-pueblo": {
     displayTitle: "El Pueblo",
     headline: "Un panel operativo para controlar ventas, stock y compras.",
     category: "DASHBOARD · INVENTARIO · COMPRAS",
@@ -98,7 +98,7 @@ const projectGalleries = {
       alt: "Vista de cumpleaños y beneficios del proyecto Klipp Studio",
     },
   ],
-  fortuna: [
+  "sms-fortuna": [
     {
       src: "/images/projects/project-sms-fortuna-landing.webp",
       alt: "Landing del proyecto SMS Fortuna",
@@ -112,7 +112,7 @@ const projectGalleries = {
       alt: "Pantalla de recargas del proyecto SMS Fortuna",
     },
   ],
-  botica: [
+  "el-pueblo": [
     {
       src: "/images/projects/project-botica-dashboard.webp",
       alt: "Dashboard principal del proyecto Botica El Pueblo",
@@ -137,7 +137,7 @@ const galleryImages =
 <BaseLayout
   title={project.data.seoTitle}
   description={project.data.seoDescription}
-  canonical={`${siteConfig.url}/proyectos/${project.data.slug}/`}
+  canonical={`${siteConfig.url}/casos-de-exito/${project.data.slug}/`}
 >
   <Header />
   <main id="contenido-principal" class="bg-white">
@@ -147,7 +147,7 @@ const galleryImages =
           <h1>{currentDetail.displayTitle}</h1>
           <p>{currentDetail.headline}</p>
         </div>
-        <div class="case-hero__meta" aria-label="Datos principales del proyecto">
+        <div class="case-hero__meta" aria-label="Datos principales del caso">
           <span>{currentDetail.category}</span>
           <span>{currentDetail.year}</span>
         </div>
@@ -169,7 +169,7 @@ const galleryImages =
       <Container class="case-container max-w-[1680px]">
         <div class="case-overview__layout">
           <div>
-            <p class="case-eyebrow">EL PROYECTO</p>
+            <p class="case-eyebrow">EL CASO</p>
             <h2>{currentDetail.intro}</h2>
           </div>
           <div class="case-overview__copy">

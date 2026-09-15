@@ -1,6 +1,6 @@
 ---
 title: "SMS Fortuna"
-slug: "fortuna"
+slug: "sms-fortuna"
 summary: "Landing y sistema operativo para presentar servicios SMS, gestionar recargas y administrar operaciones internas."
 serviceLevel: "SMS y recargas"
 problem: "El servicio necesitaba comunicar su propuesta con claridad y ordenar la gestion interna desde una plataforma practica."

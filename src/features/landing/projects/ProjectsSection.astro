@@ -6,7 +6,7 @@ const projects = [
     category: "Web / Diseno / Desarrollo",
     name: "Klipp Studio",
     slug: "klipp",
-    description: "Sitio digital para un estudio fotografico.",
+    description: "Una presencia digital que organiza y muestra el trabajo del estudio.",
     variant: "klipp",
     transitionName: "project-klipp",
     image: "/images/projects/project-klipp-landing-2.png",
@@ -14,8 +14,8 @@ const projects = [
   {
     category: "Software / Web",
     name: "SMS Fortuna",
-    slug: "fortuna",
-    description: "Plataforma digital para gestionar operaciones de mensajeria.",
+    slug: "sms-fortuna",
+    description: "Una plataforma central para gestionar usuarios, recargas y mensajería.",
     variant: "sms",
     transitionName: "project-sms-fortuna",
     image: "/images/projects/project-sms-fortuna-landing-1.webp",
@@ -23,8 +23,8 @@ const projects = [
   {
     category: "Dashboard / Inventario / Compras",
     name: "El Pueblo",
-    slug: "botica",
-    description: "Panel operativo para controlar ventas, stock y compras.",
+    slug: "el-pueblo",
+    description: "Ventas, inventario y compras reunidos en una sola operación digital.",
     variant: "botica",
     transitionName: "project-botica",
     image: "/images/projects/project-botica-landing-3.png",
@@ -35,20 +35,15 @@ const firstProjectRow = projects.slice(0, 2);
 const boticaProject = projects[2];
 ---
 
-<section id="proyectos" class="projects-section scroll-mt-24 bg-kuroki-black py-24 text-white sm:py-32 lg:py-36">
+<section id="casos-de-exito" class="projects-section scroll-mt-24 bg-kuroki-black py-24 text-white sm:py-32 lg:py-36">
   <Container class="projects-container max-w-[1680px]">
-    <a href="#proyectos" class="project-peek-label">
-      Proyectos
-      <span aria-hidden="true">&darr;</span>
-    </a>
-
     <div class="project-editorial-list">
       <div class="project-editorial-row project-editorial-row--pair">
         {
           firstProjectRow.map((project) => (
             <article class:list={["project-editorial-item", `project-editorial-item--${project.variant}`]} data-project-card>
               <a
-                href={`/proyectos/${project.slug}/`}
+                href={`/casos-de-exito/${project.slug}/`}
                 class="project-editorial-link"
                 aria-label={`Ver caso ${project.name}`}
                 data-project-link
@@ -84,7 +79,7 @@ const boticaProject = projects[2];
       <div class="project-editorial-row project-editorial-row--single">
         <article class:list={["project-editorial-item", `project-editorial-item--${boticaProject.variant}`]} data-project-card>
           <a
-            href={`/proyectos/${boticaProject.slug}/`}
+            href={`/casos-de-exito/${boticaProject.slug}/`}
             class="project-editorial-link"
             aria-label={`Ver caso ${boticaProject.name}`}
             data-project-link
@@ -116,8 +111,8 @@ const boticaProject = projects[2];
       </div>
 
       <div class="project-editorial-footer" data-reveal>
-        <a href="/proyectos/" class="project-all-link">
-          Ver todos los proyectos
+        <a href="/casos-de-exito/" class="project-all-link">
+          Ver todos los casos de éxito
           <span aria-hidden="true">&nearr;</span>
         </a>
       </div>
@@ -131,7 +126,7 @@ const boticaProject = projects[2];
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const initProjectsMotion = () => {
-    const section = document.querySelector<HTMLElement>("#proyectos");
+    const section = document.querySelector<HTMLElement>("#casos-de-exito");
     if (!section) return;
 
     const cards = gsap.utils.toArray<HTMLElement>("[data-project-card]");

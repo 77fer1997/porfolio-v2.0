@@ -1,6 +1,6 @@
 ---
 title: "El Pueblo"
-slug: "botica"
+slug: "el-pueblo"
 summary: "Sistema administrativo para controlar ventas, inventario, compras y actividad diaria desde un panel central."
 serviceLevel: "Sistema administrativo"
 problem: "La botica necesitaba mejorar el control de productos, compras y movimientos sin depender de registros aislados."

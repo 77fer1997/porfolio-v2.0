@@ -3,7 +3,7 @@ import HeroGeometry from "./HeroGeometry.astro";
 ---
 
 <section id="inicio" class="relative isolate overflow-hidden bg-white text-kuroki-black">
-  <div class="hero-intro relative mx-auto grid min-h-[68svh] w-full max-w-[1760px] items-center gap-8 px-[clamp(24px,5vw,96px)] pb-12 pt-28 sm:pt-32 lg:grid-cols-[1.14fr_0.86fr] lg:pb-14">
+  <div class="hero-intro relative mx-auto grid min-h-[100svh] w-full max-w-[1760px] items-center gap-8 px-[clamp(24px,5vw,96px)] pb-12 pt-28 sm:pt-32 lg:grid-cols-[1.14fr_0.86fr] lg:pb-14">
     <div class="relative z-10 max-w-[980px] lg:-translate-y-6">
       <h1 class="hero-title-reveal max-w-[980px] text-balance text-[3.15rem] font-bold leading-[0.96] tracking-normal sm:text-[4.35rem] md:text-[5rem] lg:text-[5.35rem] lg:leading-[0.92] xl:text-[5.8rem] 2xl:text-[6.15rem]">
         <span class="block">Software útil</span>
@@ -26,8 +26,8 @@ import HeroGeometry from "./HeroGeometry.astro";
             Iniciar un proyecto
             <span aria-hidden="true">&nearr;</span>
           </a>
-          <a href="#proyectos" class="hero-editorial-cta inline-flex items-center gap-3 text-sm font-bold text-kuroki-black" data-hero-secondary-cta>
-            Ver proyectos
+          <a href="#casos-de-exito" class="hero-editorial-cta inline-flex items-center gap-3 text-sm font-bold text-kuroki-black" data-hero-secondary-cta>
+            Ver casos de éxito
             <span aria-hidden="true">&darr;</span>
           </a>
         </div>
@@ -42,6 +42,13 @@ import HeroGeometry from "./HeroGeometry.astro";
 
     <HeroGeometry />
   </div>
+  <a href="#casos-de-exito" class="hero-explore-link" aria-label="Explorar casos de éxito">
+    <span>Explorar</span>
+    <svg class="hero-explore-link__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="m7 6 5 5 5-5" />
+      <path d="m7 13 5 5 5-5" />
+    </svg>
+  </a>
 </section>
 
 <script>
