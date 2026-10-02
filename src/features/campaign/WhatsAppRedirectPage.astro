@@ -1,0 +1,75 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { siteConfig } from "@shared/config/site.config";
+
+interface Props {
+  sourceName: string;
+  message: string;
+  path: `/${string}`;
+}
+
+const { sourceName, message, path } = Astro.props;
+const whatsappNumber = "51977960940";
+const whatsappBaseUrl = `https://wa.me/${whatsappNumber}`;
+const whatsappHref = `${whatsappBaseUrl}?text=${encodeURIComponent(message)}`;
+const title = `WhatsApp | ${sourceName} | KUROKI`;
+const description = "Consulta por el servicio de Kuroki y Respaldo.";
+const canonical = `${siteConfig.url}${path}`;
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} noindex>
+  <main
+    id="contenido-principal"
+    class="grid min-h-screen place-items-center bg-kuroki-black px-6 py-16 text-white"
+    data-whatsapp-redirect
+    data-whatsapp-base-url={whatsappBaseUrl}
+    data-whatsapp-message={message}
+  >
+    <section class="w-full max-w-2xl text-center">
+      <img
+        src={siteConfig.logo}
+        alt="KUROKI"
+        width="188"
+        height="47"
+        class="mx-auto h-auto w-36 sm:w-44"
+        decoding="async"
+      />
+      <p class="mt-10 text-sm font-bold uppercase tracking-[0.18em] text-kuroki-orange">WhatsApp</p>
+      <h1 class="mt-5 text-balance text-4xl font-bold leading-none sm:text-6xl">
+        Te estamos llevando a WhatsApp
+      </h1>
+      <p class="mx-auto mt-6 max-w-xl text-pretty text-lg leading-8 text-white/70">
+        Consulta por el servicio de Kuroki y Respaldo.
+      </p>
+      <a
+        href={whatsappHref}
+        class="mt-10 inline-flex min-h-14 items-center justify-center rounded-full bg-kuroki-orange px-7 text-base font-bold text-white no-underline transition hover:bg-[#e94803] focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-kuroki-orange"
+      >
+        Abrir WhatsApp
+      </a>
+    </section>
+  </main>
+
+  <script>
+    const redirectToWhatsApp = () => {
+      const redirectPage = document.querySelector("[data-whatsapp-redirect]");
+
+      if (!(redirectPage instanceof HTMLElement)) return;
+
+      const baseUrl = redirectPage.dataset.whatsappBaseUrl;
+      const message = redirectPage.dataset.whatsappMessage;
+
+      if (!baseUrl || !message) return;
+
+      window.location.replace(`${baseUrl}?text=${encodeURIComponent(message)}`);
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", redirectToWhatsApp, { once: true });
+    } else {
+      redirectToWhatsApp();
+    }
+
+    document.addEventListener("astro:page-load", redirectToWhatsApp);
+  </script>
+</BaseLayout>

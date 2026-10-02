@@ -3,10 +3,17 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
+const site = 'https://kuroki.com.pe';
+const sitemapExcludedUrls = new Set([`${site}/mistiano/`, `${site}/la-red/`]);
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://kuroki.com.pe',
-  integrations: [sitemap()],
+  site,
+  integrations: [
+    sitemap({
+      filter: (page) => !sitemapExcludedUrls.has(page),
+    }),
+  ],
   redirects: {
     '/proyectos': '/casos-de-exito',
     '/proyectos/klipp': '/casos-de-exito/klipp',
