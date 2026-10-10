@@ -1,0 +1,36 @@
+---
+import { contactConfig } from "@shared/config/contact.config";
+
+const supportHref = `${contactConfig.whatsappHref}?text=${encodeURIComponent(contactConfig.whatsappMessages.support)}`;
+---
+
+<section id="soporte" class="home-section home-section--sand">
+  <div class="home-container support-grid">
+    <div class="home-section__intro">
+      <p class="home-eyebrow">Soporte mensual</p>
+      <h2>Publicar la web es el inicio del cuidado.</h2>
+      <p>
+        Después del lanzamiento seguimos a cargo de la base técnica y de los cambios acordados. Si actualizas un servicio, una fotografía o tus datos de contacto, sabes con quién coordinarlo.
+      </p>
+      <a class="home-text-link" href={supportHref} target="_blank" rel="noreferrer">Consultar el mantenimiento</a>
+    </div>
+
+    <div class="support-scope">
+      <article>
+        <h3>Infraestructura</h3>
+        <p>Gestión del alojamiento y certificado SSL según el plan.</p>
+      </article>
+      <article>
+        <h3>Soporte técnico</h3>
+        <p>Revisión y corrección de incidencias menores dentro del alcance.</p>
+      </article>
+      <article>
+        <h3>Contenido al día</h3>
+        <p>Cambios de textos, imágenes y datos acordados en el mantenimiento.</p>
+      </article>
+      <p class="home-note">
+        La implementación se cotiza al inicio. El mantenimiento se paga mensualmente. Nuevas funciones y rediseños se cotizan aparte.
+      </p>
+    </div>
+  </div>
+</section>

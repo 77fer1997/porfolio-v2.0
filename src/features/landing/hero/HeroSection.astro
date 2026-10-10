@@ -1,132 +1,204 @@
 ---
-import HeroGeometry from "./HeroGeometry.astro";
+import { contactConfig } from "@shared/config/contact.config";
+import HeroProjectCarousel from "./HeroProjectCarousel.astro";
+import { heroContent, heroProjectSlides } from "./hero.data";
+
+const whatsappHref = `${contactConfig.whatsappHref}?text=${encodeURIComponent(heroContent.whatsappMessage)}`;
 ---
 
-<section id="inicio" class="relative isolate overflow-hidden bg-white text-kuroki-black">
-  <div class="hero-intro relative mx-auto grid min-h-[100svh] w-full max-w-[1760px] items-center gap-8 px-[clamp(24px,5vw,96px)] pb-12 pt-28 sm:pt-32 lg:grid-cols-[1.14fr_0.86fr] lg:pb-14">
-    <div class="relative z-10 max-w-[980px] lg:-translate-y-6">
-      <h1 class="hero-title-reveal max-w-[980px] text-balance text-[3.15rem] font-bold leading-[0.96] tracking-normal sm:text-[4.35rem] md:text-[5rem] lg:text-[5.35rem] lg:leading-[0.92] xl:text-[5.8rem] 2xl:text-[6.15rem]">
-        <span class="block">Software útil</span>
-        <span class="hero-title-line--system">
-          <span>para empresas reales<span class="hero-title-period" data-hero-period>.</span></span>
-        </span>
+<section id="inicio" class="hero-web" data-hero-web>
+  <div class="hero-web__container">
+    <div class="hero-web__content">
+      <p class="hero-web__eyebrow">{heroContent.eyebrow}</p>
+      <h1>
+        Una página <wbr />web a la altura de <span>tu negocio.</span>
       </h1>
+      <p class="hero-web__description">{heroContent.description}</p>
 
-      <div class="mt-10 max-w-[650px] sm:mt-11">
-        <p class="hero-sequence-item text-lg leading-8 text-kuroki-gray sm:text-xl [--hero-sequence-delay:420ms]" data-hero-copy>
-          Diseñamos plataformas, automatizaciones y software a medida para simplificar procesos y mejorar tu operación.
-        </p>
-
-        <div class="hero-sequence-item mt-8 flex flex-wrap items-center gap-6 [--hero-sequence-delay:560ms]" data-hero-actions>
-          <a
-            href="#contacto"
-            class="hero-primary-cta inline-flex items-center gap-3 rounded-md bg-kuroki-orange px-5 py-3 text-sm font-bold text-white"
-            data-hero-cta
-          >
-            Iniciar un proyecto
-            <span aria-hidden="true">&nearr;</span>
-          </a>
-          <a href="#casos-de-exito" class="hero-editorial-cta inline-flex items-center gap-3 text-sm font-bold text-kuroki-black" data-hero-secondary-cta>
-            Ver casos de éxito
-            <span aria-hidden="true">&darr;</span>
-          </a>
-        </div>
-
-        <div class="hero-benefits hero-sequence-item mt-9 flex flex-wrap gap-x-6 gap-y-3 text-xs font-semibold uppercase text-kuroki-black/52 [--hero-sequence-delay:680ms]" data-hero-benefits>
-          <span>Software a medida</span>
-          <span>Automatización</span>
-          <span>Soporte real</span>
-        </div>
+      <div class="hero-web__actions">
+        <a href={whatsappHref} class="hero-web__primary" target="_blank" rel="noreferrer">
+          {heroContent.primaryCta}
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a href="#casos-de-exito" class="hero-web__secondary">
+          {heroContent.secondaryCta}
+          <span aria-hidden="true">↓</span>
+        </a>
       </div>
+
+      <p class="hero-web__note">{heroContent.supportText}</p>
     </div>
 
-    <HeroGeometry />
+    <HeroProjectCarousel slides={heroProjectSlides} />
   </div>
-  <a href="#casos-de-exito" class="hero-explore-link" aria-label="Explorar casos de éxito">
-    <span>Explorar</span>
-    <svg class="hero-explore-link__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="m7 6 5 5 5-5" />
-      <path d="m7 13 5 5 5-5" />
-    </svg>
-  </a>
 </section>
 
-<script>
-  import { gsap } from "gsap";
+<style>
+  .hero-web {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background: #12100e;
+    color: #f5f3ef;
+  }
 
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  .hero-web::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 78% 28%, rgba(255, 80, 4, 0.16), transparent 34%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 34%);
+    content: "";
+  }
 
-  const initHeroAnimation = () => {
-    const hero = document.querySelector<HTMLElement>("#inicio");
-    if (!hero) return;
+  .hero-web__container {
+    display: grid;
+    width: 100%;
+    max-width: 1440px;
+    min-height: clamp(720px, 92svh, 880px);
+    margin: 0 auto;
+    grid-template-columns: minmax(0, 0.96fr) minmax(440px, 1.04fr);
+    align-items: center;
+    gap: clamp(48px, 5vw, 64px);
+    padding: clamp(136px, 15svh, 168px) clamp(32px, 5vw, 64px) clamp(64px, 8svh, 88px);
+  }
 
-    const header = document.querySelector<HTMLElement>("[data-site-header]");
-    const title = hero.querySelector<HTMLElement>(".hero-title-reveal");
-    const period = hero.querySelector<HTMLElement>("[data-hero-period]");
-    const figure = hero.querySelector<HTMLElement>("[data-hero-figure]");
-    const visualLayers = gsap.utils.toArray<HTMLElement>("[data-hero-visual-layer]");
-    const copy = hero.querySelector<HTMLElement>("[data-hero-copy]");
-    const actions = hero.querySelector<HTMLElement>("[data-hero-actions]");
-    const benefits = hero.querySelector<HTMLElement>("[data-hero-benefits]");
+  .hero-web__content {
+    max-width: 650px;
+    min-width: 0;
+  }
 
-    gsap.killTweensOf([header, title, period, figure, copy, actions, benefits, ...visualLayers]);
+  .hero-web__eyebrow {
+    margin: 0 0 22px;
+    color: #ff5004;
+    font-size: clamp(0.78rem, 1.05vw, 0.92rem);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    line-height: 1.35;
+  }
 
-    if (reduceMotion.matches) {
-      gsap.set([header, title, copy, actions, benefits, figure, ...visualLayers], {
-        clearProps: "all",
-        opacity: 1,
-        y: 0,
-      });
-      return;
+  .hero-web h1 {
+    max-width: 760px;
+    margin: 0;
+    color: #f5f3ef;
+    font-size: clamp(3.5rem, 5.2vw, 4.75rem);
+    font-weight: 800;
+    line-height: 0.96;
+    overflow-wrap: break-word;
+  }
+
+  .hero-web h1 span {
+    color: #ff5004;
+  }
+
+  .hero-web__description {
+    max-width: 620px;
+    margin: 28px 0 0;
+    color: #c9c5c0;
+    font-size: clamp(1rem, 1.22vw, 1.16rem);
+    font-weight: 500;
+    line-height: 1.78;
+    overflow-wrap: break-word;
+  }
+
+  .hero-web__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 34px;
+  }
+
+  .hero-web__primary,
+  .hero-web__secondary {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 8px;
+    padding: 0.88rem 1.08rem;
+    font-size: 0.92rem;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .hero-web__primary {
+    border: 1px solid rgba(255, 80, 4, 0.96);
+    background: #ff5004;
+    color: #ffffff;
+    box-shadow: 0 18px 38px rgba(255, 80, 4, 0.24);
+  }
+
+  .hero-web__secondary {
+    border: 1px solid rgba(245, 243, 239, 0.16);
+    color: #f5f3ef;
+  }
+
+  .hero-web__primary:hover,
+  .hero-web__secondary:hover {
+    transform: translateY(-2px);
+  }
+
+  .hero-web__primary:hover {
+    background: #e94803;
+  }
+
+  .hero-web__secondary:hover {
+    border-color: rgba(255, 80, 4, 0.8);
+    color: #ff5004;
+  }
+
+  .hero-web__note {
+    margin: 22px 0 0;
+    color: rgba(201, 197, 192, 0.78);
+    font-size: 0.86rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 1023px) {
+    .hero-web__container {
+      min-height: 0;
+      grid-template-columns: 1fr;
+      gap: 44px;
+      padding-top: 128px;
     }
 
-    gsap.set(header, { opacity: 0, y: -6 });
-    gsap.set(title, { opacity: 0, y: 24, clipPath: "inset(0 0 100% 0)" });
-    gsap.set(period, { color: "#0D0D0D", scale: 1, transformOrigin: "50% 70%" });
-    gsap.set(figure, { opacity: 0, y: 18, scale: 0.985, transformOrigin: "50% 50%" });
-    gsap.set(visualLayers, { opacity: 0, y: 18, scale: 0.985, transformOrigin: "50% 50%" });
-    gsap.set(copy, { opacity: 0, y: 8 });
-    gsap.set(actions, { opacity: 0, y: 8, "--cta-line-scale": 0 });
-    gsap.set(benefits, { opacity: 0, y: 8 });
+    .hero-web__content,
+    .hero-web__description {
+      max-width: 720px;
+    }
+  }
 
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+  @media (max-width: 767px) {
+    .hero-web__container {
+      padding-top: 116px;
+      padding-right: 20px;
+      padding-bottom: 60px;
+      padding-left: 20px;
+    }
 
-    tl.to(header, { opacity: 1, y: 0, duration: 0.38 }, 0)
-      .to(title, { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)", duration: 0.65 }, 0.26)
-      .to(period, { color: "#FF5004", scale: 1.08, duration: 0.14, ease: "power2.out" }, 0.88)
-      .to(period, { color: "#0D0D0D", scale: 1, duration: 0.18, ease: "power2.inOut" }, 1.02)
-      .to(figure, { opacity: 1, y: 0, scale: 1, duration: 0.82 }, 0.98)
-      .to(visualLayers, { opacity: 1, y: 0, scale: 1, duration: 0.72, stagger: 0.1 }, 1.08)
-      .to(copy, { opacity: 1, y: 0, duration: 0.46 }, 1.58)
-      .to(actions, { opacity: 1, y: 0, "--cta-line-scale": 0.88, duration: 0.42 }, 1.78)
-      .to(benefits, { opacity: 1, y: 0, duration: 0.42 }, 1.94);
+    .hero-web h1 {
+      font-size: clamp(2.25rem, 10.2vw, 2.65rem);
+      line-height: 1.02;
+    }
 
-    const sceneDrift = gsap.to(visualLayers, {
-      y: -6,
-      duration: 8,
-      ease: "sine.inOut",
-      repeat: -1,
-      yoyo: true,
-      stagger: 0.24,
-    });
+    .hero-web__description {
+      margin-top: 22px;
+      font-size: 1rem;
+      line-height: 1.68;
+    }
 
-    const onScroll = () => {
-      const progress = Math.min(window.scrollY / Math.max(hero.offsetHeight, 1), 1);
-      gsap.to(figure, { y: progress * 5, opacity: 1 - progress * 0.16, duration: 0.35, overwrite: true });
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    document.addEventListener(
-      "astro:before-swap",
-      () => {
-        tl.kill();
-        sceneDrift.kill();
-        window.removeEventListener("scroll", onScroll);
-      },
-      { once: true },
-    );
-  };
-
-  initHeroAnimation();
-</script>
+    .hero-web__actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-top: 28px;
+    }
+  }
+</style>
