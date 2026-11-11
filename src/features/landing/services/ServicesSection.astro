@@ -24,11 +24,15 @@ const services = [
 ];
 ---
 <section id="servicios" class="studio-services" aria-labelledby="services-title">
+  <div class="services-heading-band">
+    <div class="studio-wrap">
+      <header class="services-heading">
+        <div><p class="section-label">LO QUE HACEMOS</p><h2 id="services-title">De tu idea a una<br />solución que funciona.</h2></div>
+        <p class="services-heading__note">Webs para presentar tu oferta.<br />Automatización y sistemas para trabajar mejor.</p>
+      </header>
+    </div>
+  </div>
   <div class="studio-wrap">
-    <header class="services-heading">
-      <div><p class="section-label">LO QUE HACEMOS</p><h2 id="services-title">De tu idea a una<br />solución que funciona.</h2></div>
-      <p class="services-heading__note">Webs para presentar tu oferta.<br />Automatización y sistemas para trabajar mejor.</p>
-    </header>
     <div class="services-list">
       {services.map((service) => (
         <article id={service.id} class="service-entry">
@@ -49,19 +53,20 @@ const services = [
   </div>
 </section>
 <style>
-  .studio-services { background: #f5f5f3; color: #171717; padding-block: 96px 40px; scroll-margin-top: 80px; }
+  .studio-services { background: #f5f5f3; color: #171717; padding-bottom: 40px; scroll-margin-top: 80px; }
   .studio-wrap { width: calc(100% - clamp(48px, 8vw, 144px)); max-width: 1576px; margin-inline: auto; }
-  .services-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 64px; }
-  .section-label { margin: 0 0 24px; color: #126d84; font-size: 12px; font-weight: 600; line-height: 1.5; }
-  .services-heading h2 { margin: 0; font-size: 48px; line-height: 1.15; font-weight: 500; }
-  .services-heading__note { margin: 0 0 4px; color: #636363; font-size: 17px; line-height: 1.65; }
-  .service-entry { display: grid; grid-template-columns: minmax(0, 1fr); padding-block: 48px; border-top: 1px solid #17171726; scroll-margin-top: 96px; }
+  .services-heading-band { border-top: 3px solid #3dbddf; background: #06101e; color: #f5f5f5; padding-block: clamp(60px, 7vw, 104px); }
+  .services-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; }
+  .section-label { margin: 0 0 24px; color: #3dbddf; font-size: 12px; font-weight: 600; letter-spacing: .12em; line-height: 1.5; }
+  .services-heading h2 { max-width: 780px; margin: 0; color: #fff; font-size: clamp(44px, 4vw, 64px); line-height: 1.08; font-weight: 500; }
+  .services-heading__note { margin: 0 0 4px; color: #b5b5b5; font-size: 17px; line-height: 1.65; }
+  .service-entry { display: grid; grid-template-columns: minmax(0, 1fr); padding-block: 56px; border-top: 1px solid #17171730; scroll-margin-top: 96px; }
   .service-entry__copy { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(40px, 7vw, 112px); align-items: center; }
   .service-entry__heading { max-width: 560px; }
   .service-entry__details { max-width: 720px; }
   .service-entry__label { display: flex; gap: 20px; align-items: center; margin: 0 0 22px; font-size: 12px; font-weight: 600; color: #555; }
   .service-entry__label span { color: #126d84; font-variant-numeric: tabular-nums; }
-  .service-entry h3 { margin: 0; font-size: 34px; line-height: 1.22; font-weight: 500; }
+  .service-entry h3 { margin: 0; font-size: clamp(34px, 3vw, 42px); line-height: 1.18; font-weight: 500; }
   .service-entry__description { margin: 0; color: #555; font-size: 16px; line-height: 1.75; }
   .service-entry ul { display: grid; gap: 8px; margin: 24px 0 28px; padding: 0; list-style: none; color: #454545; font-size: 14px; line-height: 1.5; }
   .service-entry li { display: flex; align-items: baseline; gap: 12px; }
@@ -70,11 +75,12 @@ const services = [
   .service-entry__action span { color: #126d84; font-size: 22px; }
   .service-entry__action:hover { border-color: #126d84; }
   a:focus-visible { outline: 2px solid #126d84; outline-offset: 6px; }
-  @media (max-width: 1023px) { .service-entry__copy { gap: 36px; } .services-heading h2 { font-size: 40px; } .service-entry h3 { font-size: 28px; } }
+  @media (max-width: 1023px) { .service-entry__copy { gap: 36px; } .services-heading h2 { font-size: 48px; } .service-entry h3 { font-size: 32px; } }
   @media (max-width: 767px) {
-    .studio-services { padding-block: 64px 24px; }
-    .services-heading { display: block; margin-bottom: 36px; }
-    .services-heading h2 { font-size: 32px; }
+    .studio-services { padding-bottom: 24px; }
+    .services-heading-band { padding-block: 56px; }
+    .services-heading { display: block; }
+    .services-heading h2 { font-size: 36px; }
     .services-heading__note { margin-top: 22px; font-size: 16px; }
     .service-entry { padding-block: 36px; }
     .service-entry__copy { grid-template-columns: 1fr; gap: 22px; }
