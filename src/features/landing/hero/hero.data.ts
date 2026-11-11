@@ -2,7 +2,7 @@ export const heroContent = {
   eyebrow: "DISEÑO Y DESARROLLO WEB · AREQUIPA",
   description:
     "Diseñamos y desarrollamos webs para presentar tu negocio y facilitar que tus clientes te contacten.",
-  primaryCta: "Hablemos por WhatsApp",
+  primaryCta: "Conversemos por WhatsApp",
   secondaryCta: "Ver proyectos",
   supportText: "Implementación inicial + mantenimiento mensual",
   whatsappMessage: "Hola, quiero cotizar una página web para mi negocio.",

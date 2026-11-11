@@ -11,7 +11,7 @@ directWhatsApp.searchParams.set("text", "Hola, quisiera conversar sobre un proye
       <p>Cuéntanos qué tienes en mente.<br />Encontraremos el siguiente paso juntos.</p>
     </div>
     <div class="contact-channels">
-      <a class="contact-whatsapp" href={directWhatsApp.href} target="_blank" rel="noreferrer">Hablemos por WhatsApp <span aria-hidden="true">&nearr;</span></a>
+      <a class="contact-whatsapp" href={directWhatsApp.href} target="_blank" rel="noreferrer">Conversemos por WhatsApp <span aria-hidden="true">&nearr;</span></a>
       <a class="contact-email" href={"mailto:" + contactConfig.email}>{contactConfig.email}<span aria-hidden="true">&nearr;</span></a>
     </div>
     <details class="contact-brief">
@@ -60,10 +60,10 @@ directWhatsApp.searchParams.set("text", "Hola, quisiera conversar sobre un proye
   h2 { margin: 0; max-width: 900px; font-size: 56px; font-weight: 500; line-height: 1.15; }
   .contact-heading p { margin: 0 0 6px; color: #aaa; font-size: 16px; line-height: 1.75; }
   .contact-channels { display: flex; justify-content: space-between; align-items: center; gap: 32px; margin: 40px 0 64px; flex-wrap: wrap; }
-  .contact-whatsapp { display: inline-flex; align-items: center; gap: 32px; padding: 16px 22px; min-height: 56px; border: 1px solid #285865; border-radius: 4px; background: #151a1c; font-size: 17px; font-weight: 500; }
+  .contact-whatsapp { display: inline-flex; align-items: center; gap: 24px; padding: 16px 22px; min-height: 56px; border: 1px solid #3dbddf; border-radius: 4px; background: transparent; font-size: 17px; font-weight: 500; }
   a { text-decoration: none; color: inherit; }
   .contact-whatsapp span { color: #3dbddf; font-size: 25px; }
-  .contact-whatsapp:hover { background: #17272c; border-color: #3dbddf; }
+  .contact-whatsapp:hover { background: transparent; }
   .contact-email { display: inline-flex; align-items: center; gap: 20px; color: #bcbcbc; font-size: 16px; overflow-wrap: anywhere; }
   .contact-email span { color: #3dbddf; }
   .contact-email:hover { color: #fff; }

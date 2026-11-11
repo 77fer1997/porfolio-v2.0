@@ -7,7 +7,7 @@ export const siteConfig = {
   url: "https://kuroki.com.pe",
   locale: "es_PE",
   logo: "/images/brand/logo-kuroki.png",
-  favicon: "/images/brand/favicon-48x48.svg",
+  favicon: "/images/brand/favicon-48x48.svg?v=3dbddf",
   ogImage: "/og-kuroki.svg",
   themeColor: "#3DBDDF",
   isPlaceholder: false,
