@@ -7,8 +7,8 @@ problem: "La información profesional y las áreas de práctica necesitaban una 
 solution: "Se organizó la presentación del abogado, sus áreas de práctica y los accesos para coordinar consultas por WhatsApp."
 scope: "Diseño web · Desarrollo responsive · Áreas de práctica · WhatsApp"
 technologies: []
-coverImage: "/images/projects/project-saul-guzman-home.png"
-coverImageAlt: "Portada del sitio web del abogado Wilfredo Saúl Guzmán Vásquez"
+coverImage: "/images/projects/project-saul-guzman-devices.png"
+coverImageAlt: "Sitio de Wilfredo Saúl Guzmán presentado en una laptop y un teléfono móvil"
 published: true
 featured: true
 isDemo: false
