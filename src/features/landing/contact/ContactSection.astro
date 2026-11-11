@@ -1,5 +1,6 @@
 ---
 import { contactConfig } from "@shared/config/contact.config";
+import Select from "@shared/ui/Select.astro";
 const directWhatsApp = new URL(contactConfig.whatsappHref);
 directWhatsApp.searchParams.set("text", "Hola, quisiera conversar sobre un proyecto para mi negocio.");
 ---
@@ -14,18 +15,26 @@ directWhatsApp.searchParams.set("text", "Hola, quisiera conversar sobre un proye
       <a class="contact-whatsapp" href={directWhatsApp.href} target="_blank" rel="noreferrer">Conversemos por WhatsApp <span aria-hidden="true">&nearr;</span></a>
       <a class="contact-email" href={"mailto:" + contactConfig.email}>{contactConfig.email}<span aria-hidden="true">&nearr;</span></a>
     </div>
-    <details class="contact-brief">
-      <summary><span>Prefiero contarte mi proyecto</span><i aria-hidden="true"></i></summary>
+    <div class="contact-form-area">
+      <div class="contact-form-heading">
+        <h3>Cuéntanos un poco más</h3>
+        <p>Con esos detalles te ayudamos a encontrar el siguiente paso.</p>
+      </div>
       <form action={contactConfig.isPlaceholder ? contactConfig.whatsappHref : contactConfig.formEndpoint} method={contactConfig.isPlaceholder ? "get" : "post"} data-contact-form data-whatsapp={contactConfig.isPlaceholder ? contactConfig.whatsappHref : undefined}>
         <div class="brief-grid">
           <label><span>Nombre</span><input required name="name" autocomplete="name" /></label>
           <label><span>Correo (opcional)</span><input type="email" name="email" autocomplete="email" /></label>
-          <label><span>¿Qué necesitas?</span><select name="projectType"><option>No estoy seguro</option><option>Página web</option><option>Automatización</option><option>Software a medida</option></select></label>
+          <Select
+            id="project-type"
+            name="projectType"
+            label="¿Qué necesitas?"
+            options={["No estoy seguro", "Página web", "Automatización", "Software a medida"]}
+          />
         </div>
         <label><span>Cuéntanos un poco</span><textarea required name="message" rows="3"></textarea></label>
         <button type="submit">{contactConfig.isPlaceholder ? "Continuar en WhatsApp" : "Cuéntanos tu proyecto"} <span aria-hidden="true">&nearr;</span></button>
       </form>
-    </details>
+    </div>
   </div>
 </section>
 <script>
@@ -59,7 +68,7 @@ directWhatsApp.searchParams.set("text", "Hola, quisiera conversar sobre un proye
   .contact-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; }
   h2 { margin: 0; max-width: 900px; font-size: 56px; font-weight: 500; line-height: 1.15; }
   .contact-heading p { margin: 0 0 6px; color: #aaa; font-size: 16px; line-height: 1.75; }
-  .contact-channels { display: flex; justify-content: space-between; align-items: center; gap: 32px; margin: 40px 0 64px; flex-wrap: wrap; }
+  .contact-channels { display: flex; justify-content: space-between; align-items: center; gap: 32px; margin: 40px 0 48px; flex-wrap: wrap; }
   .contact-whatsapp { display: inline-flex; align-items: center; gap: 24px; padding: 16px 22px; min-height: 56px; border: 1px solid #3dbddf; border-radius: 4px; background: transparent; font-size: 17px; font-weight: 500; }
   a { text-decoration: none; color: inherit; }
   .contact-whatsapp span { color: #3dbddf; font-size: 25px; }
@@ -67,24 +76,21 @@ directWhatsApp.searchParams.set("text", "Hola, quisiera conversar sobre un proye
   .contact-email { display: inline-flex; align-items: center; gap: 20px; color: #bcbcbc; font-size: 16px; overflow-wrap: anywhere; }
   .contact-email span { color: #3dbddf; }
   .contact-email:hover { color: #fff; }
-  .contact-brief { border-top: 1px solid #ffffff30; border-bottom: 1px solid #ffffff30; }
-  summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; list-style: none; padding-block: 24px; color: #ccc; font-size: 16px; cursor: pointer; }
-  summary::-webkit-details-marker { display: none; }
-  summary i { position: relative; width: 20px; height: 20px; flex-shrink: 0; }
-  summary i::before, summary i::after { content: ''; position: absolute; top: 9px; left: 2px; width: 16px; height: 1px; background: #3dbddf; }
-  summary i::after { transform: rotate(90deg); }
-  details[open] summary i::after { transform: none; }
-  form { display: grid; gap: 24px; padding-block: 12px 32px; }
+  .contact-form-area { padding-top: 30px; border-top: 1px solid #ffffff30; }
+  .contact-form-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+  .contact-form-heading h3 { margin: 0; font-size: 20px; font-weight: 500; line-height: 1.35; }
+  .contact-form-heading p { margin: 0; color: #9da9b7; font-size: 14px; line-height: 1.6; }
+  form { display: grid; gap: 20px; padding-block: 0; }
   .brief-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   label { display: grid; gap: 10px; min-width: 0; }
   label > span { color: #c5c5c5; font-size: 13px; line-height: 1.5; }
-  input, select, textarea { box-sizing: border-box; width: 100%; min-width: 0; padding: 14px 16px; border: 1px solid #ffffff40; border-radius: 4px; background: #151515; color: #fff; font: inherit; font-size: 16px; line-height: 1.5; color-scheme: dark; }
+  input, textarea { box-sizing: border-box; width: 100%; min-width: 0; padding: 14px 16px; border: 1px solid #ffffff40; border-radius: 4px; background: #151515; color: #fff; font: inherit; font-size: 16px; line-height: 1.5; color-scheme: dark; }
   textarea { resize: vertical; }
   button { justify-self: start; display: inline-flex; align-items: center; gap: 28px; min-height: 52px; padding: 14px 20px; border: 1px solid #285865; border-radius: 4px; background: #151a1c; color: #fff; font: inherit; font-size: 15px; cursor: pointer; }
   button span { color: #3dbddf; }
   button:hover { background: #17272c; }
-  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #3dbddf; outline-offset: 5px; }
-  @media (max-width: 1023px) { .contact-heading { display: block; } h2 { font-size: 48px; } .contact-heading p { margin-top: 24px; } }
-  @media (max-width: 767px) { .project-contact { padding-block: 64px 48px; } h2 { font-size: 34px; } .contact-channels { align-items: start; flex-direction: column; gap: 28px; margin-block: 32px 44px; } .contact-whatsapp { gap: 20px; font-size: 15px; padding-inline: 18px; } .contact-email { font-size: 14px; } .brief-grid { grid-template-columns: 1fr; } }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid #3dbddf; outline-offset: 5px; }
+  @media (max-width: 1023px) { .contact-heading { display: block; } h2 { font-size: 48px; } .contact-heading p { margin-top: 24px; } .contact-form-heading { display: block; } .contact-form-heading p { margin-top: 8px; } .brief-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 767px) { .project-contact { padding-block: 64px 48px; } h2 { font-size: 34px; } .contact-channels { align-items: start; flex-direction: column; gap: 28px; margin-block: 32px 36px; } .contact-whatsapp { gap: 20px; font-size: 15px; padding-inline: 18px; } .contact-email { font-size: 14px; } .brief-grid { grid-template-columns: 1fr; gap: 18px; } .contact-form-area { padding-top: 24px; } }
   @media (max-width: 374px) { h2 { font-size: 29px; } .contact-whatsapp { font-size: 14px; gap: 14px; padding-inline: 14px; } .contact-whatsapp span { font-size: 22px; } }
 </style>

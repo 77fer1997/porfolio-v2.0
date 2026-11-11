@@ -1,0 +1,184 @@
+---
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  options: string[];
+  initialValue?: string;
+}
+
+const { id, name, label, options, initialValue = options[0] ?? "" } = Astro.props;
+const selectedIndex = Math.max(0, options.indexOf(initialValue));
+const labelId = `${id}-label`;
+const valueId = `${id}-value`;
+const listboxId = `${id}-listbox`;
+---
+
+<kuroki-select class="select-field" data-custom-select>
+  <span class="select-field__label" id={labelId}>{label}</span>
+  <input type="hidden" name={name} value={options[selectedIndex] ?? ""} data-select-value />
+  <button
+    class="select-field__trigger"
+    type="button"
+    role="combobox"
+    aria-labelledby={`${labelId} ${valueId}`}
+    aria-controls={listboxId}
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    data-select-trigger
+  >
+    <span id={valueId} data-select-current>{options[selectedIndex] ?? ""}</span>
+    <svg aria-hidden="true" viewBox="0 0 16 16" focusable="false"><path d="m3 6 5 5 5-5" /></svg>
+  </button>
+  <div class="select-field__list" id={listboxId} role="listbox" aria-labelledby={labelId} hidden data-select-list>
+    {options.map((option, index) => (
+      <div
+        class="select-field__option"
+        id={`${id}-option-${index}`}
+        role="option"
+        aria-selected={index === selectedIndex ? "true" : "false"}
+        data-value={option}
+        data-select-option
+      >
+        {option}
+      </div>
+    ))}
+  </div>
+</kuroki-select>
+
+<script>
+  class KurokiSelect extends HTMLElement {
+    private trigger: HTMLButtonElement | null = null;
+    private listbox: HTMLElement | null = null;
+    private valueInput: HTMLInputElement | null = null;
+    private currentValue: HTMLElement | null = null;
+    private options: HTMLElement[] = [];
+    private activeIndex = 0;
+    private searchTerm = "";
+    private searchTimeout = 0;
+    private listeners?: AbortController;
+
+    connectedCallback() {
+      if (this.dataset.ready === "true") return;
+      this.dataset.ready = "true";
+
+      this.trigger = this.querySelector<HTMLButtonElement>("[data-select-trigger]");
+      this.listbox = this.querySelector<HTMLElement>("[data-select-list]");
+      this.valueInput = this.querySelector<HTMLInputElement>("[data-select-value]");
+      this.currentValue = this.querySelector<HTMLElement>("[data-select-current]");
+      this.options = Array.from(this.querySelectorAll<HTMLElement>("[data-select-option]"));
+      this.listeners = new AbortController();
+      const { signal } = this.listeners;
+
+      this.trigger?.addEventListener("click", () => this.isOpen() ? this.close() : this.open(), { signal });
+      this.trigger?.addEventListener("keydown", (event) => this.onKeyDown(event), { signal });
+      this.options.forEach((option, index) => {
+        option.addEventListener("click", () => this.choose(index), { signal });
+        option.addEventListener("pointermove", () => this.setActive(index), { signal });
+      });
+      document.addEventListener("pointerdown", (event) => {
+        if (!this.contains(event.target as Node)) this.close();
+      }, { signal });
+    }
+
+    disconnectedCallback() {
+      this.listeners?.abort();
+      window.clearTimeout(this.searchTimeout);
+    }
+
+    private isOpen() {
+      return this.trigger?.getAttribute("aria-expanded") === "true";
+    }
+
+    private selectedIndex() {
+      return Math.max(0, this.options.findIndex((option) => option.getAttribute("aria-selected") === "true"));
+    }
+
+    private open(index = this.selectedIndex()) {
+      if (!this.trigger || !this.listbox) return;
+      this.activeIndex = index;
+      this.listbox.hidden = false;
+      this.trigger.setAttribute("aria-expanded", "true");
+      this.setActive(index);
+    }
+
+    private close() {
+      if (!this.trigger || !this.listbox) return;
+      this.listbox.hidden = true;
+      this.trigger.setAttribute("aria-expanded", "false");
+      this.trigger.removeAttribute("aria-activedescendant");
+      this.options.forEach((option) => option.classList.remove("is-active"));
+    }
+
+    private setActive(index: number) {
+      if (!this.trigger || !this.options.length) return;
+      this.activeIndex = (index + this.options.length) % this.options.length;
+      this.options.forEach((option, optionIndex) => option.classList.toggle("is-active", optionIndex === this.activeIndex));
+      this.trigger.setAttribute("aria-activedescendant", this.options[this.activeIndex].id);
+    }
+
+    private choose(index: number) {
+      const option = this.options[index];
+      if (!option || !this.valueInput || !this.currentValue) return;
+      const value = option.dataset.value ?? option.textContent?.trim() ?? "";
+      this.valueInput.value = value;
+      this.currentValue.textContent = value;
+      this.options.forEach((entry, optionIndex) => entry.setAttribute("aria-selected", String(optionIndex === index)));
+      this.setActive(index);
+      this.close();
+      this.valueInput.dispatchEvent(new Event("input", { bubbles: true }));
+      this.valueInput.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    private onKeyDown(event: KeyboardEvent) {
+      const selected = this.selectedIndex();
+
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        const step = event.key === "ArrowDown" ? 1 : -1;
+        this.open(this.isOpen() ? this.activeIndex + step : selected + step);
+      } else if (event.key === "Home" || event.key === "End") {
+        event.preventDefault();
+        this.open(event.key === "Home" ? 0 : this.options.length - 1);
+      } else if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        if (this.isOpen()) this.choose(this.activeIndex);
+        else this.open();
+      } else if (event.key === "Escape" && this.isOpen()) {
+        event.preventDefault();
+        this.close();
+      } else if (event.key === "Tab") {
+        this.close();
+      } else if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+        this.searchTerm += event.key.toLocaleLowerCase();
+        window.clearTimeout(this.searchTimeout);
+        this.searchTimeout = window.setTimeout(() => this.searchTerm = "", 650);
+        const start = this.isOpen() ? this.activeIndex + 1 : selected + 1;
+        const match = [...this.options.slice(start), ...this.options.slice(0, start)].findIndex((option) =>
+          option.textContent?.trim().toLocaleLowerCase().startsWith(this.searchTerm),
+        );
+        if (match >= 0) {
+          event.preventDefault();
+          this.open((start + match) % this.options.length);
+        }
+      }
+    }
+  }
+
+  if (!customElements.get("kuroki-select")) customElements.define("kuroki-select", KurokiSelect);
+</script>
+
+<style>
+  .select-field { position: relative; display: grid; min-width: 0; gap: 10px; }
+  .select-field__label { color: #c5c5c5; font-size: 13px; line-height: 1.5; }
+  .select-field__trigger { box-sizing: border-box; display: flex; width: 100%; min-height: 54px; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px; border: 1px solid #ffffff40; border-radius: 4px; background: #151515; color: #fff; font: inherit; font-size: 16px; line-height: 1.5; text-align: left; cursor: pointer; }
+  .select-field__trigger svg { width: 16px; height: 16px; flex: 0 0 16px; fill: none; stroke: #3dbddf; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; transition: transform 220ms ease; }
+  .select-field__trigger[aria-expanded="true"] svg { transform: rotate(180deg); }
+  .select-field__trigger:focus-visible { outline: 2px solid #3dbddf; outline-offset: 5px; border-color: #3dbddf; }
+  .select-field__list { position: absolute; z-index: 8; top: calc(100% + 8px); right: 0; left: 0; overflow: hidden; padding: 6px; border: 1px solid #ffffff30; border-radius: 6px; background: #111922; box-shadow: 0 16px 36px #0008; }
+  .select-field__list[hidden] { display: none; }
+  .select-field__option { padding: 12px 10px; border-radius: 3px; color: #d7dde4; font-size: 14px; line-height: 1.4; cursor: pointer; }
+  .select-field__option:hover, .select-field__option.is-active { background: #1a3440; color: #fff; }
+  .select-field__option[aria-selected="true"] { color: #3dbddf; }
+  @media (prefers-reduced-motion: reduce) { .select-field__trigger svg { transition: none; } }
+</style>

@@ -65,10 +65,13 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
   <div class="hero-web__container">
     <div class="hero-web__content">
       <p class="hero-web__eyebrow">{heroContent.eyebrow}</p>
-      <h1><span>Diseñamos y desarrollamos </span><span>tu próxima web.</span></h1>
+      <h1><span>Soluciones digitales</span><span>para tu negocio.</span></h1>
       <div class="hero-web__details">
         <p class="hero-web__description">{heroContent.description}</p>
-        <a href={whatsappHref} class="hero-web__primary" target="_blank" rel="noreferrer">{heroContent.primaryCta} <span aria-hidden="true">&nearr;</span></a>
+        <div class="hero-web__actions">
+          <a href={whatsappHref} class="hero-web__primary" target="_blank" rel="noreferrer">{heroContent.primaryCta} <span aria-hidden="true">&nearr;</span></a>
+          <a href="#casos-de-exito" class="hero-web__secondary">{heroContent.secondaryCta} <span aria-hidden="true">&darr;</span></a>
+        </div>
       </div>
     </div>
     <div class="hero-web__footer">
@@ -99,11 +102,17 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
   .hero-web h1 > span { display: block; }
   .hero-web__details { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; max-width: 640px; margin-top: 36px; }
   .hero-web__description { max-width: 580px; margin: 0; color: #b5b5b5; font-size: 20px; line-height: 1.6; }
+  .hero-web__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; }
   .hero-web__primary { display: inline-flex; flex-shrink: 0; min-height: 56px; align-items: center; gap: 28px; padding: 16px 22px; border: 1px solid #3dbddf; border-radius: 4px; background: transparent; color: #f5f5f5; font-size: 16px; font-weight: 500; line-height: 1.4; text-decoration: none; transition: border-color 250ms ease, color 250ms ease; }
   .hero-web__primary > span { color: #3dbddf; font-size: 24px; transition: transform 350ms var(--motion-ease); }
   .hero-web__primary:is(:hover, :focus-visible) { background: transparent; color: #ffffff; }
   .hero-web__primary:focus-visible, .hero-web__footer a:focus-visible { outline: 2px solid #3dbddf; outline-offset: 6px; }
   .hero-web__primary:is(:hover, :focus-visible) > span { transform: translate(3px, -3px); }
+  .hero-web__secondary { display: inline-flex; min-height: 48px; align-items: center; gap: 12px; color: #c4c4c4; font-size: 15px; font-weight: 500; text-decoration: none; transition: color 220ms ease; }
+  .hero-web__secondary span { color: #3dbddf; font-size: 20px; transition: transform 220ms ease; }
+  .hero-web__secondary:hover { color: #fff; }
+  .hero-web__secondary:hover span { transform: translateY(3px); }
+  .hero-web__secondary:focus-visible { outline: 2px solid #3dbddf; outline-offset: 6px; }
   .hero-web__footer { position: absolute; bottom: 0; inset-inline: 0; display: flex; min-height: 88px; align-items: center; justify-content: center; }
   .hero-web__footer a { display: grid; width: 48px; height: 48px; place-items: center; color: #858585; text-decoration: none; transition: color 250ms ease; }
   .hero-web__mouse { position: relative; display: block; width: 22px; height: 34px; border: 1px solid currentColor; border-radius: 12px; }
@@ -119,8 +128,10 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
     .hero-web__content { max-width: 100%; }
     .hero-web__particles { top: auto; bottom: 70px; right: 12px; width: 120px; height: 100px; opacity: 0.6; }
     .hero-web__eyebrow { max-width: 310px; margin-bottom: 22px; font-size: 11px; }
-    .hero-web h1 { font-size: 38px; line-height: 1.14; }
-    .hero-web__details { align-items: flex-start; flex-direction: column; gap: 28px; margin-top: 28px; }
+    .hero-web h1 { font-size: 34px; line-height: 1.14; }
+    .hero-web__details { align-items: flex-start; flex-direction: column; gap: 24px; margin-top: 28px; }
+    .hero-web__actions { gap: 8px 20px; }
+    .hero-web__secondary { min-height: 44px; font-size: 14px; }
     .hero-web__description { max-width: 360px; font-size: 16px; }
     .hero-web__primary { min-height: 52px; padding: 12px 18px; gap: 20px; font-size: 15px; }
     .hero-web__footer { min-height: 80px; }

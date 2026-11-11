@@ -27,9 +27,7 @@ const projectDetails = {
     role: "Diseño y desarrollo",
     deliverables: "Sitio web · UX · Frontend",
     intro: "Una presencia digital alrededor del trabajo visual.",
-    body:
-      "El objetivo era organizar sus servicios, mostrar el portafolio con claridad y hacer que explorar el trabajo del estudio fuera inmediato.",
-    result: "La página prioriza imagen, ritmo y navegación directa para que cada visita se sienta cercana al universo visual del estudio.",
+    result: "El sitio ordena los servicios y el portafolio en una navegación directa que mantiene el trabajo visual como protagonista.",
     heroImage: "/images/projects/project-klipp-devices.png",
     heroAlt: "Sitio web de Klipp Studio mostrado en una laptop y un teléfono móvil",
     transitionName: "project-klipp",
@@ -43,8 +41,7 @@ const projectDetails = {
     role: "Diseño y desarrollo",
     deliverables: "Landing · Backoffice · Frontend",
     intro: "Control y mensajería desde un solo panel.",
-    body: project.data.solution,
-    result: "Un entorno más claro para presentar el servicio y sostener la operación diaria.",
+    result: "La landing explica el servicio y sus vías de integración; el backoffice reúne usuarios, saldo y recargas para la gestión diaria.",
     heroImage: "/images/projects/project-sms-fortuna-devices.png",
     heroAlt: "Plataforma web de SMS Fortuna mostrada en una laptop y un teléfono móvil",
     transitionName: "project-sms-fortuna",
@@ -58,8 +55,7 @@ const projectDetails = {
     role: "Diseño y desarrollo",
     deliverables: "Dashboard · Inventario · Frontend",
     intro: "Ventas, inventario y compras en un solo panel.",
-    body: project.data.solution,
-    result: "Una operación más visible para tomar decisiones desde una sola pantalla.",
+    result: "Ventas, compras, inventario y actividad del día quedan reunidos en el panel operativo de la botica.",
     heroImage: "/images/projects/project-botica-devices.png",
     heroAlt: "Sistema de Botica El Pueblo mostrado en una laptop y un teléfono móvil",
     transitionName: "project-botica",
@@ -73,8 +69,7 @@ const projectDetails = {
     role: "Diseño y desarrollo",
     deliverables: "Sitio web · Áreas de práctica · Contacto por WhatsApp",
     intro: "Un sitio profesional para presentar sus áreas de práctica.",
-    body: project.data.solution,
-    result: "La web reúne información profesional, servicios legales y acceso para coordinar consultas en una estructura clara.",
+    result: "La presentación profesional, las áreas de práctica y el contacto por WhatsApp quedan accesibles desde computadora y móvil.",
     heroImage: "/images/projects/project-saul-guzman-devices.png",
     heroAlt: "Sitio web de Wilfredo Saúl Guzmán Vásquez en una laptop y un teléfono móvil",
     transitionName: "project-saul-guzman",
@@ -90,7 +85,6 @@ const currentDetail = projectDetails[project.data.slug as keyof typeof projectDe
   role: "Diseño y desarrollo",
   deliverables: project.data.scope.replaceAll(" - ", " · "),
   intro: project.data.summary,
-  body: project.data.solution,
   result: project.data.problem,
   heroImage: project.data.coverImage,
   heroAlt: project.data.coverImageAlt,
@@ -192,8 +186,20 @@ const nextDetail = nextProject && projectDetails[nextProject.data.slug as keyof 
             <h2>{currentDetail.intro}</h2>
           </div>
           <div class="case-overview__copy">
-            <p>{currentDetail.body}</p>
-            <p>{currentDetail.result}</p>
+            <div class="case-story" aria-label="Resumen del caso">
+              <div class="case-story__item">
+                <span>01 · EL RETO</span>
+                <p>{project.data.problem}</p>
+              </div>
+              <div class="case-story__item">
+                <span>02 · LA RESPUESTA</span>
+                <p>{project.data.solution}</p>
+              </div>
+              <div class="case-story__item">
+                <span>03 · EL APORTE</span>
+                <p>{currentDetail.result}</p>
+              </div>
+            </div>
             {project.data.slug === "saul-guzman" && (
               <a class="case-project-link" href="https://saulguzman.com/" target="_blank" rel="noopener noreferrer">
                 Visitar sitio web <span aria-hidden="true">&nearr;</span>

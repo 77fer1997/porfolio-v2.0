@@ -2681,6 +2681,33 @@ body {
   margin: 0;
 }
 
+.case-story {
+  display: grid;
+}
+
+.case-story__item {
+  display: grid;
+  grid-template-columns: minmax(112px, 0.4fr) minmax(0, 1fr);
+  gap: 20px;
+  padding-block: 20px;
+  border-top: 1px solid rgba(13, 13, 13, 0.14);
+}
+
+.case-story__item > span {
+  padding-top: 3px;
+  color: #126d84;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+}
+
+.case-story__item p {
+  color: rgba(13, 13, 13, 0.72);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
 .case-project-link {
   display: inline-flex;
   width: fit-content;
@@ -3535,6 +3562,11 @@ body {
     gap: 20px;
     font-size: 17px;
     line-height: 1.66;
+  }
+
+  .case-story__item {
+    grid-template-columns: minmax(100px, 0.35fr) minmax(0, 1fr);
+    gap: 14px;
   }
 
   .case-facts {
