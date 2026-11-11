@@ -1,36 +1,84 @@
 ---
-import { contactConfig } from "@shared/config/contact.config";
-
-const supportHref = `${contactConfig.whatsappHref}?text=${encodeURIComponent(contactConfig.whatsappMessages.support)}`;
+const ongoingServices = [
+  {
+    number: "01",
+    title: "Infraestructura",
+    description: "Mantenimiento del alojamiento y certificado SSL, según lo acordado para el proyecto.",
+  },
+  {
+    number: "02",
+    title: "Soporte técnico",
+    description: "Acompañamiento ante incidencias dentro del alcance acordado.",
+  },
+  {
+    number: "03",
+    title: "Actualizaciones y mejoras",
+    description: "Ajustes para que la solución acompañe los cambios de tu negocio.",
+  },
+  {
+    number: "04",
+    title: "Capacitación",
+    description: "Orientación para que tu equipo aproveche las herramientas implementadas.",
+  },
+] as const;
 ---
 
-<section id="soporte" class="home-section home-section--sand">
-  <div class="home-container support-grid">
-    <div class="home-section__intro">
-      <p class="home-eyebrow">Soporte mensual</p>
-      <h2>Publicar la web es el inicio del cuidado.</h2>
-      <p>
-        Después del lanzamiento seguimos a cargo de la base técnica y de los cambios acordados. Si actualizas un servicio, una fotografía o tus datos de contacto, sabes con quién coordinarlo.
-      </p>
-      <a class="home-text-link" href={supportHref} target="_blank" rel="noreferrer">Consultar el mantenimiento</a>
-    </div>
+<section id="acompanamiento" class="continuity-section" aria-labelledby="continuity-title">
+  <div class="continuity-wrap">
+    <header class="continuity-heading">
+      <div>
+        <p class="continuity-label">ACOMPAÑAMIENTO CONTINUO</p>
+        <h2 id="continuity-title">La solución evoluciona junto con tu negocio.</h2>
+      </div>
+      <div class="continuity-intro">
+        <p>
+          Después del lanzamiento, seguimos disponibles para ayudarte a mantener la solución, resolver incidencias y planificar mejoras.
+        </p>
+        <a href="#contacto" class="continuity-cta">Conversemos sobre el acompañamiento <span aria-hidden="true">&nearr;</span></a>
+      </div>
+    </header>
 
-    <div class="support-scope">
-      <article>
-        <h3>Infraestructura</h3>
-        <p>Gestión del alojamiento y certificado SSL según el plan.</p>
-      </article>
-      <article>
-        <h3>Soporte técnico</h3>
-        <p>Revisión y corrección de incidencias menores dentro del alcance.</p>
-      </article>
-      <article>
-        <h3>Contenido al día</h3>
-        <p>Cambios de textos, imágenes y datos acordados en el mantenimiento.</p>
-      </article>
-      <p class="home-note">
-        La implementación se cotiza al inicio. El mantenimiento se paga mensualmente. Nuevas funciones y rediseños se cotizan aparte.
-      </p>
+    <div class="continuity-services" data-reveal-group>
+      {ongoingServices.map((service) => (
+        <article data-reveal>
+          <span>{service.number}</span>
+          <h3>{service.title}</h3>
+          <p>{service.description}</p>
+        </article>
+      ))}
     </div>
+    <p class="continuity-note">El alcance del mantenimiento, el soporte y las nuevas funcionalidades se acuerda para cada proyecto.</p>
   </div>
 </section>
+
+<style>
+  .continuity-section { background: #fff; color: #171717; padding-block: clamp(84px, 8vw, 128px); }
+  .continuity-wrap { width: calc(100% - clamp(48px, 8vw, 144px)); max-width: 1576px; margin-inline: auto; }
+  .continuity-heading { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(48px, 7vw, 112px); align-items: end; }
+  .continuity-label { margin: 0 0 24px; color: #126d84; font-size: 12px; font-weight: 600; letter-spacing: .08em; }
+  .continuity-heading h2 { max-width: 660px; margin: 0; font-size: clamp(40px, 4.5vw, 68px); font-weight: 500; line-height: 1.08; }
+  .continuity-intro p { max-width: 650px; margin: 0; color: #555; font-size: 17px; line-height: 1.75; }
+  .continuity-cta { display: inline-flex; align-items: center; gap: 18px; margin-top: 26px; border-bottom: 1px solid #17171770; padding-bottom: 8px; color: #171717; font-size: 15px; text-decoration: none; transition: border-color 220ms ease, color 220ms ease; }
+  .continuity-cta span { color: #126d84; font-size: 21px; }
+  .continuity-cta:hover { border-color: #126d84; color: #126d84; }
+  .continuity-services { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 clamp(24px, 3vw, 48px); margin-top: clamp(56px, 6vw, 88px); }
+  .continuity-services article { border-top: 1px solid #17171730; padding-top: 22px; }
+  .continuity-services article > span { color: #126d84; font-size: 12px; font-variant-numeric: tabular-nums; }
+  .continuity-services h3 { margin: 34px 0 12px; font-size: 21px; font-weight: 500; line-height: 1.3; }
+  .continuity-services article p { margin: 0; color: #555; font-size: 14px; line-height: 1.75; }
+  .continuity-note { margin: 44px 0 0; border-top: 1px solid #17171720; padding-top: 18px; color: #666; font-size: 13px; line-height: 1.6; }
+  .continuity-cta:focus-visible { outline: 2px solid #126d84; outline-offset: 5px; }
+  @media (max-width: 1023px) {
+    .continuity-heading { gap: 40px; }
+    .continuity-services { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 36px; }
+  }
+  @media (max-width: 767px) {
+    .continuity-section { padding-block: 64px; }
+    .continuity-heading { grid-template-columns: 1fr; gap: 24px; }
+    .continuity-heading h2 { font-size: 34px; }
+    .continuity-intro p { font-size: 16px; }
+    .continuity-services { grid-template-columns: 1fr; row-gap: 28px; margin-top: 42px; }
+    .continuity-services h3 { margin-top: 20px; }
+    .continuity-note { margin-top: 32px; }
+  }
+</style>
