@@ -98,7 +98,7 @@ const remainingProjects = projects.slice(2);
 
       {
         remainingProjects.map((project) => (
-          <div class="project-editorial-row project-editorial-row--single">
+          <div class:list={["project-editorial-row", "project-editorial-row--single", project.slug === "saul-guzman" && "project-editorial-row--saul"]}>
             <article class:list={["project-editorial-item", `project-editorial-item--${project.variant}`]} data-project-card>
               <a
                 href={`/casos-de-exito/${project.slug}/`}

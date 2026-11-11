@@ -2232,6 +2232,10 @@ body {
   margin-left: 0;
 }
 
+.project-editorial-row--saul {
+  margin-top: clamp(-72px, -5vw, -40px);
+}
+
 .project-editorial-link {
   position: relative;
   display: grid;
@@ -2317,9 +2321,11 @@ body {
 }
 
 .project-cover--saul {
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 4 / 3;
   background: #06101e;
 }
+
+.project-cover--saul .project-cover__image { object-fit: contain; }
 
 .project-cover--botica::after {
   position: absolute;
@@ -3554,7 +3560,8 @@ body {
 .case-back-link:is(:hover, :focus-visible) { color: #3dbddf; }
 .case-hero[data-case-project="sms-fortuna"] .case-hero__media img { object-position: center 65%; }
 .case-hero[data-case-project="klipp"] .case-hero__media img { object-position: center 60%; }
-.case-hero[data-case-project="saul-guzman"] .case-hero__media { aspect-ratio: 3 / 2; }
+.case-hero[data-case-project="saul-guzman"] .case-hero__media { aspect-ratio: 4 / 3; background: #06101e; }
+.case-hero[data-case-project="saul-guzman"] .case-hero__media img { object-fit: contain; }
 .case-next { padding-block: 80px; }
 .case-next__link { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 20px; align-items: center; color: #fff; text-decoration: none; }
 .case-next__eyebrow { grid-column: 1 / -1; font-size: 12px; color: #b5b5b5; }
