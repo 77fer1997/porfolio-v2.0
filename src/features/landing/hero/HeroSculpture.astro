@@ -5,7 +5,7 @@
   .hero-sculpture__fallback { position: absolute; inset: 22% 20%; transform: rotate(-18deg); }
   .hero-sculpture__fallback i { position: absolute; inset: 0; border: 12px solid #292c2e; border-radius: 8px; }
   .hero-sculpture__fallback i:nth-child(2) { transform: translate(12px, -16px); }
-  .hero-sculpture__fallback i:nth-child(3) { transform: translate(24px, -32px); border-top-color: #a0441d; }
+  .hero-sculpture__fallback i:nth-child(3) { transform: translate(24px, -32px); border-top-color: #126d84; }
   @media (max-width: 1199px) { .hero-sculpture { top: auto; right: 0; bottom: 88px; width: 100%; height: 290px; transform: none; } }
   @media (max-width: 767px) { .hero-sculpture { bottom: 66px; height: 185px; } .hero-sculpture__fallback { inset: 20% 34%; } }
 </style>
@@ -58,7 +58,7 @@
     const geometry = new THREE.ExtrudeGeometry(outline, { depth: 0.18, bevelEnabled: true, bevelThickness: 0.04, bevelSize: 0.04, bevelSegments: 4, curveSegments: 16 });
     geometry.center();
     const materials = [0x242729, 0x303436, 0x3b4043].map(color => new THREE.MeshStandardMaterial({ color, metalness: 0.45, roughness: 0.48, envMapIntensity: 0.6 }));
-    const orange = new THREE.MeshStandardMaterial({ color: 0xe45d25, metalness: 0.25, roughness: 0.5 });
+    const orange = new THREE.MeshStandardMaterial({ color: 0x3dbddf, metalness: 0.25, roughness: 0.5 });
     const accentGeometry = new RoundedBoxGeometry(0.9, 0.045, 0.025, 3, 0.01);
     const sculpture = new THREE.Group();
     const layers = materials.map((material, index) => {

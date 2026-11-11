@@ -21,10 +21,10 @@ import { faqItems } from "./faq.data";
 <style>
   .studio-faq { padding-block: 80px; background: #f5f5f3; color: #171717; scroll-margin-top: 80px; }
   .faq-wrap { width: calc(100% - 96px); max-width: 1360px; margin-inline: auto; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 80px; }
-  .faq-label { color: #a33b13; margin: 0 0 24px; font-size: 12px; font-weight: 600; }
+  .faq-label { color: #126d84; margin: 0 0 24px; font-size: 12px; font-weight: 600; }
   h2 { margin: 0; font-size: 40px; font-weight: 500; line-height: 1.2; }
   header a { display: inline-flex; align-items: center; gap: 16px; margin-top: 30px; color: #555; font-size: 14px; line-height: 1.6; text-decoration: none; }
-  header a span { color: #a33b13; font-size: 20px; }
+  header a span { color: #126d84; font-size: 20px; }
   .faq-questions { border-top: 1px solid #17171730; min-width: 0; }
   details { border-bottom: 1px solid #17171730; }
   summary { display: flex; justify-content: space-between; gap: 28px; align-items: start; padding-block: 23px; cursor: pointer; list-style: none; font-size: 19px; font-weight: 500; line-height: 1.45; }
@@ -32,11 +32,11 @@ import { faqItems } from "./faq.data";
   summary i { position: relative; display: block; width: 20px; height: 20px; flex: 0 0 20px; margin-top: 3px; }
   summary i::before, summary i::after { content: ''; position: absolute; top: 9px; left: 2px; width: 16px; height: 1px; background: currentColor; }
   summary i::after { transform: rotate(90deg); }
-  details[open] summary i { color: #a33b13; }
+  details[open] summary i { color: #126d84; }
   details[open] summary i::after { transform: none; }
   details p { max-width: 600px; margin: 0; padding: 0 44px 24px 0; color: #555; font-size: 15px; line-height: 1.8; }
-  summary:hover, header a:hover { color: #a33b13; }
-  a:focus-visible, summary:focus-visible { outline: 2px solid #a33b13; outline-offset: 5px; }
+  summary:hover, header a:hover { color: #126d84; }
+  a:focus-visible, summary:focus-visible { outline: 2px solid #126d84; outline-offset: 5px; }
   @media (max-width: 1023px) { .faq-wrap { width: calc(100% - 64px); gap: 40px; } h2 { font-size: 36px; } }
   @media (max-width: 767px) { .studio-faq { padding-block: 64px; } .faq-wrap { width: calc(100% - 40px); grid-template-columns: 1fr; gap: 32px; } h2 { font-size: 32px; } summary { font-size: 18px; padding-block: 20px; gap: 16px; } header a { margin-top: 20px; } details p { padding-right: 20px; } }
 </style>

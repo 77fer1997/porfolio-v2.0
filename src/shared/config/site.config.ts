@@ -9,6 +9,6 @@ export const siteConfig = {
   logo: "/images/brand/logo-kuroki.png",
   favicon: "/images/brand/favicon-48x48.svg",
   ogImage: "/og-kuroki.svg",
-  themeColor: "#0D0D0D",
+  themeColor: "#3DBDDF",
   isPlaceholder: false,
 } as const;

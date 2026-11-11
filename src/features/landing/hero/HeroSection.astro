@@ -85,7 +85,7 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
   .hero-web__particles { position: absolute; top: 46%; right: 3%; width: 39%; height: 35%; pointer-events: none; transform-origin: 50% 80%; animation: hero-mountain-float 8s ease-in-out infinite alternate; }
   .hero-web__particle { position: absolute; left: var(--x); top: var(--y); width: var(--size); height: var(--size); border-radius: 50%; background: #dedede; opacity: var(--opacity); animation: hero-particle-drift var(--duration) ease-in-out var(--delay) infinite alternate, hero-particle-shimmer calc(var(--duration) * 1.4) ease-in-out var(--delay) infinite alternate; }
   .hero-web__mountain-detail { position: absolute; left: var(--x); top: var(--y); width: var(--size); height: var(--size); border-radius: 50%; background: #dedede; opacity: var(--opacity); }
-  .hero-web__particle--accent { background: #ff702e; box-shadow: 0 0 6px #ff662670; }
+  .hero-web__particle--accent { background: #3dbddf; box-shadow: 0 0 6px #3dbddf70; }
   @keyframes hero-mountain-float { from { transform: translateY(4px) rotate(-0.6deg); } to { transform: translateY(-9px) rotate(0.6deg); } }
   @keyframes hero-particle-shimmer { from { opacity: calc(var(--opacity) * 0.72); } to { opacity: var(--opacity); } }
   @keyframes hero-particle-drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(var(--drift-x), var(--drift-y), 0); } }
@@ -99,15 +99,15 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
   .hero-web h1 > span { display: block; }
   .hero-web__details { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; max-width: 640px; margin-top: 36px; }
   .hero-web__description { max-width: 580px; margin: 0; color: #b5b5b5; font-size: 20px; line-height: 1.6; }
-  .hero-web__primary { display: inline-flex; flex-shrink: 0; min-height: 56px; align-items: center; gap: 28px; padding: 16px 22px; border: 1px solid #80513d; border-radius: 4px; background: #191614; color: #f5f5f5; font-size: 16px; font-weight: 500; line-height: 1.4; text-decoration: none; transition: background 250ms ease, border-color 250ms ease; }
-  .hero-web__primary > span { color: #ff773d; font-size: 24px; transition: transform 350ms var(--motion-ease); }
-  .hero-web__primary:is(:hover, :focus-visible) { background: #261c17; border-color: #c47652; }
-  .hero-web__primary:focus-visible, .hero-web__footer a:focus-visible { outline: 2px solid #ff5004; outline-offset: 6px; }
+  .hero-web__primary { display: inline-flex; flex-shrink: 0; min-height: 56px; align-items: center; gap: 28px; padding: 16px 22px; border: 1px solid #285865; border-radius: 4px; background: #151a1c; color: #f5f5f5; font-size: 16px; font-weight: 500; line-height: 1.4; text-decoration: none; transition: background 250ms ease, border-color 250ms ease; }
+  .hero-web__primary > span { color: #3dbddf; font-size: 24px; transition: transform 350ms var(--motion-ease); }
+  .hero-web__primary:is(:hover, :focus-visible) { background: #17272c; border-color: #3dbddf; }
+  .hero-web__primary:focus-visible, .hero-web__footer a:focus-visible { outline: 2px solid #3dbddf; outline-offset: 6px; }
   .hero-web__primary:is(:hover, :focus-visible) > span { transform: translate(3px, -3px); }
   .hero-web__footer { position: absolute; bottom: 0; inset-inline: 0; display: flex; min-height: 88px; align-items: center; justify-content: center; }
   .hero-web__footer a { display: grid; width: 48px; height: 48px; place-items: center; color: #858585; text-decoration: none; transition: color 250ms ease; }
   .hero-web__mouse { position: relative; display: block; width: 22px; height: 34px; border: 1px solid currentColor; border-radius: 12px; }
-  .hero-web__wheel { position: absolute; top: 7px; left: 50%; width: 2px; height: 6px; margin-left: -1px; border-radius: 1px; background: #ff5004; animation: hero-scroll-wheel 2400ms ease-in-out infinite; }
+  .hero-web__wheel { position: absolute; top: 7px; left: 50%; width: 2px; height: 6px; margin-left: -1px; border-radius: 1px; background: #3dbddf; animation: hero-scroll-wheel 2400ms ease-in-out infinite; }
   .hero-web__footer a:is(:hover, :focus-visible) { color: #fff; }
   @keyframes hero-scroll-wheel { 0%, 20% { opacity: 0.8; transform: translateY(0); } 65% { opacity: 0; transform: translateY(9px); } 66% { opacity: 0; transform: translateY(0); } 100% { opacity: 0.8; transform: translateY(0); } }
   @keyframes hero-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
