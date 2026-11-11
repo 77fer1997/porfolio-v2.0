@@ -49,12 +49,12 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
 const smokePoints = Array.from({ length: 60 }, (_, index) => {
   const height = (index % 15) / 14;
   return {
-    x: 51 + Math.sin(index * 2.17) * (0.5 + height * 1.2),
+    x: 51 + Math.sin(index * 2.17) * (0.7 + height * 2),
     y: 16 + Math.sin(index * 4.3) * 1.8,
-    size: [2.1, 2.6, 3.1][index % 3],
+    size: [2.3, 2.8, 3.3][index % 3],
     opacity: 0.48 + (index % 4) * 0.08,
-    driftX: Math.sin(index * 3.1) * (10 + height * 22),
-    driftY: -(22 + height * 78),
+    driftX: Math.sin(index * 3.1) * (12 + height * 28),
+    driftY: -(26 + height * 90),
     duration: 5.5 + (index % 6) * 0.65,
     delay: -(index * 0.67),
     accent: index % 11 === 0,
