@@ -22,24 +22,33 @@ const companies = [
     href: "/casos-de-exito/klipp/",
     logo: "/images/projects/client-klipp.webp",
   },
+  {
+    name: "Saúl Guzmán",
+    href: "/casos-de-exito/saul-guzman/",
+    logo: "/images/projects/client-saul-guzman.jpeg",
+  },
 ];
 ---
 
 <section class="client-trust bg-white text-kuroki-black">
   <Container class="max-w-[1720px]">
     <div class="client-trust__layout" data-reveal-group>
-      <div class="client-trust__list">
-        {
-          companies.map((company) => (
-            <a
-              href={company.href}
-              class="client-trust__client"
-              data-reveal
-            >
-              <img src={company.logo} alt={company.name} loading="lazy" />
-            </a>
-          ))
-        }
+      <div class="client-trust__viewport" aria-label="Clientes y proyectos">
+        <div class="client-trust__track">
+          {[false, true].map((isClone) => (
+            <div class="client-trust__group" aria-hidden={isClone ? "true" : undefined}>
+              {companies.map((company) => (
+                <a
+                  href={company.href}
+                  class="client-trust__client"
+                  tabindex={isClone ? -1 : undefined}
+                >
+                  <img src={company.logo} alt={isClone ? "" : company.name} loading="lazy" />
+                </a>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
 
     </div>
@@ -48,8 +57,19 @@ const companies = [
 
 <style>
   .client-trust { padding-block: 36px; }
-  .client-trust__list { max-width: 1576px; margin-inline: auto; gap: 32px; }
-  .client-trust__client { min-height: 64px; }
-  .client-trust__client img { max-height: 52px; max-width: min(190px, 100%); filter: grayscale(1) contrast(1.18); opacity: 1; }
-  @media (max-width: 767px) { .client-trust { padding-block: 28px; } .client-trust__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 32px; } .client-trust__client img { max-height: 44px; max-width: min(140px, 100%); } }
+  .client-trust__layout { display: block; }
+  .client-trust__viewport { width: 100%; overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent); }
+  .client-trust__track { display: flex; width: max-content; animation: client-logo-marquee 32s linear infinite; }
+  .client-trust__viewport:hover .client-trust__track,
+  .client-trust__viewport:focus-within .client-trust__track { animation-play-state: paused; }
+  .client-trust__group { display: flex; flex: 0 0 auto; align-items: center; gap: clamp(32px, 5vw, 76px); padding-inline-end: clamp(32px, 5vw, 76px); }
+  .client-trust__client { display: flex; flex: 0 0 clamp(132px, 15vw, 200px); min-height: 64px; align-items: center; justify-content: center; }
+  .client-trust__client img { display: block; width: auto; max-height: 52px; max-width: min(190px, 100%); object-fit: contain; filter: grayscale(1) contrast(1.18); opacity: .76; transition: filter 260ms ease, opacity 260ms ease, transform 260ms ease; }
+  .client-trust__client:hover img,
+  .client-trust__client:focus-visible img { filter: grayscale(0); opacity: 1; transform: translateY(-2px); }
+  .client-trust__client[href$="saul-guzman/"] img { max-height: 58px; border-radius: 3px; filter: none; opacity: 1; }
+  .client-trust__client:focus-visible { outline: 2px solid #3dbddf; outline-offset: 6px; }
+  @keyframes client-logo-marquee { to { transform: translateX(-50%); } }
+  @media (max-width: 767px) { .client-trust { padding-block: 28px; } .client-trust__group { gap: 28px; padding-inline-end: 28px; } .client-trust__client { flex-basis: 132px; min-height: 56px; } .client-trust__client img { max-height: 44px; max-width: min(140px, 100%); } .client-trust__client[href$="saul-guzman/"] img { max-height: 50px; } }
+  @media (prefers-reduced-motion: reduce) { .client-trust__viewport { overflow-x: auto; -webkit-mask-image: none; mask-image: none; scrollbar-width: none; } .client-trust__viewport::-webkit-scrollbar { display: none; } .client-trust__track { animation: none; } .client-trust__group[aria-hidden="true"] { display: none; } }
 </style>
