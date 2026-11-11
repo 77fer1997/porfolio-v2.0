@@ -5,33 +5,21 @@ const services = [
     title: "Una buena primera impresión. Un siguiente paso claro.",
     description: "Creamos páginas web y catálogos digitales para presentar tus servicios o productos y facilitar consultas o compras. Organizamos cada sección según lo que tus clientes necesitan saber para decidir.",
     includes: ["Landing pages y sitios corporativos", "Catálogos digitales y tiendas online", "Diseño adaptable a celulares y computadoras"],
-    image: "/images/projects/project-klipp-principal.webp",
-    alt: "Página de Klipp Studio con sus servicios y portafolio fotográfico",
-    caption: "Klipp Studio", detail: "Diseño y desarrollo web",
     href: "/servicios/landings", cta: "Explorar el servicio",
-    project: "/casos-de-exito/klipp/",
   },
   {
     id: "automatizacion", number: "02", label: "AUTOMATIZACIÓN E IA",
     title: "Automatiza tareas. Responde consultas por WhatsApp.",
     description: "Con n8n conectamos tus herramientas y automatizamos tareas para reducir el trabajo manual. También desarrollamos agentes de IA para WhatsApp que atienden consultas según las necesidades de tu negocio.",
     includes: ["Integración de herramientas con n8n", "Automatización de tareas y notificaciones", "Agentes de IA para WhatsApp"],
-    image: "/images/projects/project-sms-fortuna-backoffice.webp",
-    alt: "Panel de SMS Fortuna para administrar mensajería y recargas",
-    caption: "SMS Fortuna", detail: "Mensajería y gestión de recargas",
     href: "#contacto", cta: "Conversemos sobre tu proceso",
-    project: "/casos-de-exito/sms-fortuna/",
   },
   {
     id: "software", number: "03", label: "SISTEMAS A MEDIDA",
     title: "Herramientas diseñadas para la forma en que trabaja tu equipo.",
     description: "Desarrollamos paneles y sistemas que se ajustan a tus procesos, desde inventario, ventas y compras hasta herramientas internas para tu equipo.",
     includes: ["Paneles de administración", "Inventario, ventas y compras", "Herramientas para tu equipo"],
-    image: "/images/projects/project-botica-dashboard.webp",
-    alt: "Sistema de Botica El Pueblo con ventas, inventario y tareas del día",
-    caption: "El Pueblo", detail: "Sistema de gestión operativa",
     href: "#contacto", cta: "Definir mi proyecto",
-    project: "/casos-de-exito/el-pueblo/",
   },
 ];
 ---
@@ -45,18 +33,16 @@ const services = [
       {services.map((service) => (
         <article id={service.id} class="service-entry">
           <div class="service-entry__copy">
-            <p class="service-entry__label"><span>{service.number}</span>{service.label}</p>
-            <h3>{service.title}</h3>
-            <p class="service-entry__description">{service.description}</p>
-            <ul>{service.includes.map((item) => <li>{item}</li>)}</ul>
-            <a class="service-entry__action" href={service.href}>{service.cta}<span aria-hidden="true">&nearr;</span></a>
+            <div class="service-entry__heading">
+              <p class="service-entry__label"><span>{service.number}</span>{service.label}</p>
+              <h3>{service.title}</h3>
+            </div>
+            <div class="service-entry__details">
+              <p class="service-entry__description">{service.description}</p>
+              <ul>{service.includes.map((item) => <li>{item}</li>)}</ul>
+              <a class="service-entry__action" href={service.href}>{service.cta}<span aria-hidden="true">&nearr;</span></a>
+            </div>
           </div>
-          <figure>
-            <a class="service-entry__preview" href={service.project} aria-label={"Ver el caso " + service.caption}>
-              <img src={service.image} alt={service.alt} width="1900" height="980" loading="lazy" decoding="async" />
-            </a>
-            <figcaption><span>{service.caption}</span><span>{service.detail}</span></figcaption>
-          </figure>
         </article>
       ))}
     </div>
@@ -69,11 +55,13 @@ const services = [
   .section-label { margin: 0 0 24px; color: #126d84; font-size: 12px; font-weight: 600; line-height: 1.5; }
   .services-heading h2 { margin: 0; font-size: 48px; line-height: 1.15; font-weight: 500; }
   .services-heading__note { margin: 0 0 4px; color: #636363; font-size: 17px; line-height: 1.65; }
-  .service-entry { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); align-items: center; gap: 72px; padding-block: 52px; border-top: 1px solid #17171726; scroll-margin-top: 96px; }
-  .service-entry__copy { max-width: 510px; }
+  .service-entry { display: grid; grid-template-columns: minmax(0, 1fr); padding-block: 48px; border-top: 1px solid #17171726; scroll-margin-top: 96px; }
+  .service-entry__copy { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(40px, 7vw, 112px); align-items: center; }
+  .service-entry__heading { max-width: 560px; }
+  .service-entry__details { max-width: 720px; }
   .service-entry__label { display: flex; gap: 20px; align-items: center; margin: 0 0 22px; font-size: 12px; font-weight: 600; color: #555; }
   .service-entry__label span { color: #126d84; font-variant-numeric: tabular-nums; }
-  .service-entry h3 { margin: 0 0 20px; font-size: 34px; line-height: 1.22; font-weight: 500; }
+  .service-entry h3 { margin: 0; font-size: 34px; line-height: 1.22; font-weight: 500; }
   .service-entry__description { margin: 0; color: #555; font-size: 16px; line-height: 1.75; }
   .service-entry ul { display: grid; gap: 8px; margin: 24px 0 28px; padding: 0; list-style: none; color: #454545; font-size: 14px; line-height: 1.5; }
   .service-entry li { display: flex; align-items: baseline; gap: 12px; }
@@ -81,21 +69,17 @@ const services = [
   .service-entry__action { display: inline-flex; align-items: center; gap: 24px; color: #171717; font-size: 15px; font-weight: 500; text-decoration: none; border-bottom: 1px solid #17171770; padding-bottom: 8px; }
   .service-entry__action span { color: #126d84; font-size: 22px; }
   .service-entry__action:hover { border-color: #126d84; }
-  .service-entry figure { min-width: 0; margin: 0; }
-  .service-entry__preview { display: block; background: #e5e7e7; border: 1px solid #17171715; }
-  .service-entry img { display: block; width: 100%; aspect-ratio: 1900 / 980; height: auto; object-fit: contain; }
-  .service-entry figcaption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; font-size: 12px; line-height: 1.6; color: #626262; }
-  .service-entry figcaption span:first-child { color: #171717; font-weight: 500; }
   a:focus-visible { outline: 2px solid #126d84; outline-offset: 6px; }
-  @media (max-width: 1023px) { .service-entry { gap: 36px; } .services-heading h2 { font-size: 40px; } .service-entry h3 { font-size: 28px; } }
+  @media (max-width: 1023px) { .service-entry__copy { gap: 36px; } .services-heading h2 { font-size: 40px; } .service-entry h3 { font-size: 28px; } }
   @media (max-width: 767px) {
     .studio-services { padding-block: 64px 24px; }
     .services-heading { display: block; margin-bottom: 36px; }
     .services-heading h2 { font-size: 32px; }
     .services-heading__note { margin-top: 22px; font-size: 16px; }
-    .service-entry { grid-template-columns: 1fr; padding-block: 36px; gap: 28px; }
+    .service-entry { padding-block: 36px; }
+    .service-entry__copy { grid-template-columns: 1fr; gap: 22px; }
     .service-entry h3 { font-size: 28px; }
-    .service-entry__copy { max-width: none; }
-    .service-entry figcaption { font-size: 11px; }
+    .service-entry__heading,
+    .service-entry__details { max-width: none; }
   }
 </style>
