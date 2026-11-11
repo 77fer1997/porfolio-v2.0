@@ -7,8 +7,8 @@ problem: "El servicio necesitaba comunicar su propuesta con claridad y ordenar l
 solution: "Se desarrollo una landing orientada a conversion y pantallas de backoffice para controlar recargas y administracion."
 scope: "Landing - Backoffice - Recargas - Gestion operativa"
 technologies: ["Astro", "TypeScript", "UI responsive", "Panel admin"]
-coverImage: "/images/projects/project-sms-fortuna-landing.webp"
-coverImageAlt: "Landing del proyecto SMS Fortuna"
+coverImage: "/images/projects/project-sms-fortuna-devices.png"
+coverImageAlt: "Plataforma web de SMS Fortuna mostrada en una laptop y un teléfono móvil"
 galleryImages:
   - src: "/images/projects/project-sms-fortuna-backoffice.webp"
     alt: "Backoffice del proyecto SMS Fortuna"

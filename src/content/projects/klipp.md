@@ -7,8 +7,8 @@ problem: "La operacion necesitaba centralizar acciones frecuentes del cliente y 
 solution: "Se diseno una interfaz directa para que el usuario pueda iniciar sesion, revisar informacion principal y acceder a funciones clave."
 scope: "Web app - Panel - Gestion de usuarios - Experiencia cliente"
 technologies: ["Astro", "TypeScript", "UI responsive", "APIs"]
-coverImage: "/images/projects/project-klipp-principal.webp"
-coverImageAlt: "Pantalla principal del proyecto Klipp"
+coverImage: "/images/projects/project-klipp-devices.png"
+coverImageAlt: "Sitio web de Klipp Studio mostrado en una laptop y un teléfono móvil"
 galleryImages:
   - src: "/images/projects/project-klipp-sesion.webp"
     alt: "Pantalla de inicio de sesion del proyecto Klipp"

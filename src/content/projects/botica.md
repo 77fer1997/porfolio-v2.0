@@ -7,8 +7,8 @@ problem: "La botica necesitaba mejorar el control de productos, compras y movimi
 solution: "Se desarrollo un dashboard operativo con vistas para inventario, compras y seguimiento de informacion clave."
 scope: "Dashboard - Inventario - Compras - Reportes"
 technologies: ["Astro", "TypeScript", "Panel admin", "Datos operativos"]
-coverImage: "/images/projects/project-botica-dashboard.webp"
-coverImageAlt: "Dashboard administrativo del proyecto El Pueblo"
+coverImage: "/images/projects/project-botica-devices.png"
+coverImageAlt: "Sistema de Botica El Pueblo mostrado en una laptop y un teléfono móvil"
 galleryImages:
   - src: "/images/projects/project-botica-inventario.webp"
     alt: "Vista de inventario del proyecto El Pueblo"
