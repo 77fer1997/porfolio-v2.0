@@ -79,6 +79,7 @@ const companies = [
   .client-trust__client:hover img,
   .client-trust__client:focus-visible img { filter: grayscale(0); opacity: 1; transform: translateY(-2px); }
   .client-trust__client--saul img { filter: grayscale(1) contrast(1.18); opacity: .76; }
+  .client-trust__client--saul:is(:hover, :focus-visible) img { filter: grayscale(1) contrast(1.18); opacity: .76; transform: translateY(-2px); }
   .client-trust__client--tmb img { filter: grayscale(1) contrast(1.18) brightness(.65); opacity: .76; }
   .client-trust__client--tmb:is(:hover, :focus-visible) img { filter: grayscale(1) contrast(1.18) brightness(.65); opacity: .76; transform: translateY(-2px); }
   .client-trust__client:focus-visible { outline: 2px solid #3dbddf; outline-offset: 6px; }
