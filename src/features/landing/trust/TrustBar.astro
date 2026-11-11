@@ -25,7 +25,12 @@ const companies = [
   {
     name: "Saúl Guzmán",
     href: "/casos-de-exito/saul-guzman/",
-    logo: "/images/projects/client-saul-guzman.jpeg",
+    logo: "/images/projects/client-saul-guzman-mark.svg",
+  },
+  {
+    name: "TMB Importaciones",
+    href: "https://www.tmbimport.com/",
+    logo: "/images/projects/client-tmb-importaciones.png",
   },
 ];
 ---
@@ -40,8 +45,14 @@ const companies = [
               {companies.map((company) => (
                 <a
                   href={company.href}
-                  class="client-trust__client"
+                  class:list={[
+                    "client-trust__client",
+                    company.name === "Saúl Guzmán" && "client-trust__client--saul",
+                    company.name === "TMB Importaciones" && "client-trust__client--tmb",
+                  ]}
                   tabindex={isClone ? -1 : undefined}
+                  target={company.href.startsWith("https://") ? "_blank" : undefined}
+                  rel={company.href.startsWith("https://") ? "noopener noreferrer" : undefined}
                 >
                   <img src={company.logo} alt={isClone ? "" : company.name} loading="lazy" />
                 </a>
@@ -67,9 +78,10 @@ const companies = [
   .client-trust__client img { display: block; width: auto; max-height: 52px; max-width: min(190px, 100%); object-fit: contain; filter: grayscale(1) contrast(1.18); opacity: .76; transition: filter 260ms ease, opacity 260ms ease, transform 260ms ease; }
   .client-trust__client:hover img,
   .client-trust__client:focus-visible img { filter: grayscale(0); opacity: 1; transform: translateY(-2px); }
-  .client-trust__client[href$="saul-guzman/"] img { max-height: 58px; border-radius: 3px; filter: none; opacity: 1; }
+  .client-trust__client--saul img { filter: grayscale(1) contrast(1.18); }
+  .client-trust__client--tmb img { filter: grayscale(1) contrast(1.18) brightness(0); }
   .client-trust__client:focus-visible { outline: 2px solid #3dbddf; outline-offset: 6px; }
   @keyframes client-logo-marquee { to { transform: translateX(-50%); } }
-  @media (max-width: 767px) { .client-trust { padding-block: 28px; } .client-trust__group { gap: 28px; padding-inline-end: 28px; } .client-trust__client { flex-basis: 132px; min-height: 56px; } .client-trust__client img { max-height: 44px; max-width: min(140px, 100%); } .client-trust__client[href$="saul-guzman/"] img { max-height: 50px; } }
+  @media (max-width: 767px) { .client-trust { padding-block: 28px; } .client-trust__group { gap: 28px; padding-inline-end: 28px; } .client-trust__client { flex-basis: 132px; min-height: 56px; } .client-trust__client img { max-height: 44px; max-width: min(140px, 100%); } }
   @media (prefers-reduced-motion: reduce) { .client-trust__viewport { overflow-x: auto; -webkit-mask-image: none; mask-image: none; scrollbar-width: none; } .client-trust__viewport::-webkit-scrollbar { display: none; } .client-trust__track { animation: none; } .client-trust__group[aria-hidden="true"] { display: none; } }
 </style>
