@@ -46,17 +46,17 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
     accent: base ? index % 4 === 0 : !snow && index % 7 === 0,
   };
 });
-const smokePoints = Array.from({ length: 60 }, (_, index) => {
-  const height = (index % 15) / 14;
+const smokePoints = Array.from({ length: 72 }, (_, index) => {
+  const height = (index % 18) / 17;
   return {
-    x: 51 + Math.sin(index * 2.17) * (0.7 + height * 2),
+    x: 51 + Math.sin(index * 2.17) * (0.8 + height * 2.8),
     y: 16 + Math.sin(index * 4.3) * 1.8,
-    size: [2.3, 2.8, 3.3][index % 3],
+    size: [2.4, 3, 3.6][index % 3],
     opacity: 0.48 + (index % 4) * 0.08,
-    driftX: Math.sin(index * 3.1) * (12 + height * 28),
-    driftY: -(26 + height * 90),
+    driftX: Math.sin(index * 3.1) * (14 + height * 34),
+    driftY: -(30 + height * 108),
     duration: 5.5 + (index % 6) * 0.65,
-    delay: -(index * 0.67),
+    delay: -(index * 0.55),
     accent: index % 11 === 0,
   };
 });
