@@ -35,11 +35,13 @@ const { title, description, canonical, noindex } = Astro.props;
     </a>
     <slot />
     <script>
+      let revealObserver: IntersectionObserver | undefined;
       const initRevealElements = () => {
+        revealObserver?.disconnect();
         const revealElements = document.querySelectorAll("[data-reveal]:not([data-revealed='true'])");
 
         if ("IntersectionObserver" in window) {
-          const observer = new IntersectionObserver(
+          const observer = revealObserver = new IntersectionObserver(
             (entries) => {
               entries.forEach((entry) => {
                 if (!entry.isIntersecting) return;
@@ -47,7 +49,7 @@ const { title, description, canonical, noindex } = Astro.props;
                 observer.unobserve(entry.target);
               });
             },
-            { rootMargin: "0px 0px -8% 0px", threshold: 0.02 },
+            { rootMargin: "0px 0px -2% 0px", threshold: 0.02 },
           );
 
           revealElements.forEach((element) => observer.observe(element));
@@ -57,6 +59,7 @@ const { title, description, canonical, noindex } = Astro.props;
       };
 
       document.addEventListener("astro:page-load", initRevealElements);
+      document.addEventListener("astro:before-swap", () => revealObserver?.disconnect());
     </script>
   </body>
 </html>

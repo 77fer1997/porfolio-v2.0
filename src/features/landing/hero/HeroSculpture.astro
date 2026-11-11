@@ -1,0 +1,125 @@
+<div class="hero-sculpture" data-hero-sculpture aria-hidden="true"><span class="hero-sculpture__fallback"><i></i><i></i><i></i></span></div>
+<style>
+  .hero-sculpture { position: absolute; top: 50%; right: max(24px, calc((100vw - 1720px) / 2)); width: 42%; height: 620px; transform: translateY(-50%); z-index: 0; pointer-events: none; }
+  .hero-sculpture :global(canvas) { display: block; width: 100%; height: 100%; }
+  .hero-sculpture__fallback { position: absolute; inset: 22% 20%; transform: rotate(-18deg); }
+  .hero-sculpture__fallback i { position: absolute; inset: 0; border: 12px solid #292c2e; border-radius: 8px; }
+  .hero-sculpture__fallback i:nth-child(2) { transform: translate(12px, -16px); }
+  .hero-sculpture__fallback i:nth-child(3) { transform: translate(24px, -32px); border-top-color: #a0441d; }
+  @media (max-width: 1199px) { .hero-sculpture { top: auto; right: 0; bottom: 88px; width: 100%; height: 290px; transform: none; } }
+  @media (max-width: 767px) { .hero-sculpture { bottom: 66px; height: 185px; } .hero-sculpture__fallback { inset: 20% 34%; } }
+</style>
+<script>
+  import * as THREE from "three";
+  import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+  import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
+  let cleanup: (() => void) | undefined;
+  function initSculpture() {
+    cleanup?.();
+    const host = document.querySelector<HTMLElement>("[data-hero-sculpture]");
+    const hero = host?.closest<HTMLElement>("[data-hero-web]");
+    if (!host || !hero) return;
+    let renderer: THREE.WebGLRenderer;
+    try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); } catch { return; }
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.75;
+    host.replaceChildren(renderer.domElement);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
+    camera.position.set(0, 0, 15.5);
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    const room = new RoomEnvironment();
+    const environment = pmrem.fromScene(room, 0.04);
+    scene.environment = environment.texture;
+    room.dispose(); pmrem.dispose();
+    const key = new THREE.DirectionalLight(0xffffff, 1.8);
+    key.position.set(-3, 5, 8);
+    scene.add(key, new THREE.HemisphereLight(0xcbd0d3, 0x161719, 0.6));
+    // Quiet layers suggest design, engineering, and integration coming together.
+    const roundedPath = (path: THREE.Path, width: number, height: number, radius: number) => {
+      const x = -width / 2, y = -height / 2;
+      path.moveTo(x, y + radius);
+      path.lineTo(x, y + height - radius);
+      path.quadraticCurveTo(x, y + height, x + radius, y + height);
+      path.lineTo(x + width - radius, y + height);
+      path.quadraticCurveTo(x + width, y + height, x + width, y + height - radius);
+      path.lineTo(x + width, y + radius);
+      path.quadraticCurveTo(x + width, y, x + width - radius, y);
+      path.lineTo(x + radius, y);
+      path.quadraticCurveTo(x, y, x, y + radius);
+      path.closePath();
+    };
+    const outline = new THREE.Shape();
+    roundedPath(outline, 5, 3.7, 0.38);
+    const aperture = new THREE.Path();
+    roundedPath(aperture, 4.25, 2.95, 0.16);
+    outline.holes.push(aperture);
+    const geometry = new THREE.ExtrudeGeometry(outline, { depth: 0.18, bevelEnabled: true, bevelThickness: 0.04, bevelSize: 0.04, bevelSegments: 4, curveSegments: 16 });
+    geometry.center();
+    const materials = [0x242729, 0x303436, 0x3b4043].map(color => new THREE.MeshStandardMaterial({ color, metalness: 0.45, roughness: 0.48, envMapIntensity: 0.6 }));
+    const orange = new THREE.MeshStandardMaterial({ color: 0xe45d25, metalness: 0.25, roughness: 0.5 });
+    const accentGeometry = new RoundedBoxGeometry(0.9, 0.045, 0.025, 3, 0.01);
+    const sculpture = new THREE.Group();
+    const layers = materials.map((material, index) => {
+      const layer = new THREE.Mesh(geometry, material);
+      layer.position.set((index - 1) * 0.32, (index - 1) * 0.3, (index - 1) * 0.62);
+      sculpture.add(layer);
+      return layer;
+    });
+    const accent = new THREE.Mesh(accentGeometry, orange);
+    accent.position.set(-1.35, 1.68, 0.14);
+    layers[2].add(accent);
+    sculpture.rotation.set(-0.32, -0.48, -0.18);
+    scene.add(sculpture);
+    const motion = matchMedia("(prefers-reduced-motion: reduce)");
+    let visible = true;
+    let pointerX = 0, pointerY = 0, elapsed = 0, lastTime = 0;
+    function render(time = 0) {
+      if (lastTime) elapsed += Math.min((time - lastTime) / 1000, 0.05);
+      lastTime = time;
+      if (!motion.matches) {
+        sculpture.rotation.y += (-0.48 + Math.sin(elapsed * 0.16) * 0.035 + pointerX * 0.06 - sculpture.rotation.y) * 0.025;
+        sculpture.rotation.x += (-0.32 + pointerY * 0.035 - sculpture.rotation.x) * 0.025;
+        sculpture.position.y = Math.sin(elapsed * 0.3) * 0.055;
+        layers.forEach((layer, index) => { layer.position.z = (index - 1) * (0.62 + Math.sin(elapsed * 0.24) * 0.045); });
+      }
+      renderer.render(scene, camera);
+    }
+    function resize() {
+      const { width, height } = host!.getBoundingClientRect();
+      if (!width || !height) return;
+      camera.aspect = width / height;
+      camera.position.z = innerWidth < 1200 ? 12.5 : 15.5;
+      camera.updateProjectionMatrix(); renderer.setSize(width, height, false); render();
+    }
+    function updateLoop() {
+      lastTime = 0;
+      renderer.setAnimationLoop(visible && !document.hidden && !motion.matches ? render : null);
+      if (motion.matches) {
+        sculpture.rotation.set(-0.32, -0.48, -0.18); sculpture.position.y = 0;
+        layers.forEach((layer, index) => { layer.position.z = (index - 1) * 0.62; });
+        render();
+      }
+    }
+    function onPointer(event: PointerEvent) {
+      const bounds = hero!.getBoundingClientRect();
+      pointerX = (event.clientX - bounds.left) / bounds.width - 0.5;
+      pointerY = (event.clientY - bounds.top) / bounds.height - 0.5;
+    }
+    function resetPointer() { pointerX = 0; pointerY = 0; }
+    const resizeObserver = new ResizeObserver(resize); resizeObserver.observe(host);
+    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; updateLoop(); }); observer.observe(hero);
+    hero.addEventListener("pointermove", onPointer); hero.addEventListener("pointerleave", resetPointer);
+    document.addEventListener("visibilitychange", updateLoop); motion.addEventListener("change", updateLoop);
+    resize(); updateLoop();
+    cleanup = () => {
+      renderer.setAnimationLoop(null); resizeObserver.disconnect(); observer.disconnect();
+      hero.removeEventListener("pointermove", onPointer); hero.removeEventListener("pointerleave", resetPointer);
+      document.removeEventListener("visibilitychange", updateLoop); motion.removeEventListener("change", updateLoop);
+      geometry.dispose(); accentGeometry.dispose(); orange.dispose(); materials.forEach(material => material.dispose()); environment.dispose(); renderer.dispose(); host.replaceChildren();
+    };
+  }
+  document.addEventListener("astro:page-load", initSculpture);
+  document.addEventListener("astro:before-swap", () => cleanup?.());
+</script>

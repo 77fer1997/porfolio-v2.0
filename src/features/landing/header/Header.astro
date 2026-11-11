@@ -10,16 +10,15 @@ const { tone = "dark" } = Astro.props;
 ---
 
 <header class="site-header fixed inset-x-0 top-0 z-40 bg-transparent" data-site-header data-tone={tone} data-hidden="false">
-  <div class="mx-auto flex h-24 w-full max-w-[1720px] items-center justify-between gap-5 px-[clamp(24px,4vw,72px)]">
+  <div class="site-header__bar mx-auto flex w-full max-w-[1720px] items-center justify-between gap-5 px-[clamp(24px,4vw,72px)]">
     <a href="/#inicio" class="header-logo flex items-center gap-3" aria-label="KUROKI inicio">
       <img src={siteConfig.logo} alt="KUROKI" width="163" height="32" class="header-logo__mark header-logo__mark--light h-7 w-auto sm:h-8" />
       <img src="/images/brand/logo-kuroki-dark.png" alt="" width="163" height="32" class="header-logo__mark header-logo__mark--dark h-7 w-auto sm:h-8" aria-hidden="true" />
     </a>
     <nav class="hidden items-center gap-9 lg:flex" aria-label="Navegacion principal">
       {navigationItems.map((item) => (
-        <a class:list={["nav-link text-lg font-semibold transition", item.external && "nav-link--accent"]} href={item.href}>
+        <a class:list={["nav-link text-base font-medium transition", item.href.endsWith("#contacto") && "header-contact-link"]} href={item.href}>
           {item.label}
-          {item.external && <span aria-hidden="true">&nearr;</span>}
         </a>
       ))}
     </nav>
@@ -31,15 +30,14 @@ const { tone = "dark" } = Astro.props;
       aria-controls="mobile-menu"
       data-menu-button
     >
-      <span class="h-0.5 w-6 bg-current before:block before:h-0.5 before:w-6 before:-translate-y-2 before:bg-current before:content-[''] after:block after:h-0.5 after:w-6 after:translate-y-1.5 after:bg-current after:content-['']"></span>
+      <span class="header-menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
   </div>
-  <nav id="mobile-menu" class="hidden border-t border-kuroki-black/10 bg-white px-5 py-5 lg:hidden" aria-label="Navegacion movil" data-mobile-menu>
+  <nav id="mobile-menu" class="header-mobile-menu hidden border-t px-[clamp(24px,4vw,72px)] py-4 lg:hidden" aria-label="Navegacion movil" data-mobile-menu>
     <div class="mx-auto flex max-w-7xl flex-col gap-2">
       {navigationItems.map((item) => (
-        <a class="rounded-md px-3 py-3 text-base font-semibold text-kuroki-black hover:bg-kuroki-black/5" href={item.href}>
+        <a class:list={["header-mobile-link py-4 text-base font-medium", item.href.endsWith("#contacto") && "header-mobile-contact"]} href={item.href}>
           {item.label}
-          {item.external && <span class="text-kuroki-orange" aria-hidden="true"> &nearr;</span>}
         </a>
       ))}
     </div>
@@ -98,23 +96,40 @@ const { tone = "dark" } = Astro.props;
     const handleMenuClick = () => {
       const expanded = button?.getAttribute("aria-expanded") === "true";
       button?.setAttribute("aria-expanded", String(!expanded));
+      button?.setAttribute("aria-label", expanded ? "Abrir menu" : "Cerrar menu");
       header.setAttribute("data-hidden", "false");
+      header.setAttribute("data-menu-open", String(!expanded));
       menu?.classList.toggle("hidden");
     };
 
     const menuLinks = Array.from(menu?.querySelectorAll<HTMLAnchorElement>("a") ?? []);
     const closeMenu = () => {
+      header.setAttribute("data-menu-open", "false");
       button?.setAttribute("aria-expanded", "false");
+      button?.setAttribute("aria-label", "Abrir menu");
       menu?.classList.add("hidden");
     };
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && button?.getAttribute("aria-expanded") === "true") {
+        closeMenu(); button.focus();
+      }
+    };
+    const handleResize = () => { if (window.innerWidth >= 1024) closeMenu(); };
+    const showOnFocus = () => header.setAttribute("data-hidden", "false");
 
     updateHeader();
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
+    header.addEventListener("focusin", showOnFocus);
+    document.addEventListener("keydown", handleEscape);
     button?.addEventListener("click", handleMenuClick);
     menuLinks.forEach((link) => link.addEventListener("click", closeMenu));
 
     windowWithHeader.__kurokiHeaderCleanup = () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      header.removeEventListener("focusin", showOnFocus);
+      document.removeEventListener("keydown", handleEscape);
       button?.removeEventListener("click", handleMenuClick);
       menuLinks.forEach((link) => link.removeEventListener("click", closeMenu));
     };
@@ -122,3 +137,18 @@ const { tone = "dark" } = Astro.props;
 
   document.addEventListener("astro:page-load", initHeader);
 </script>
+
+<style>
+  .header-contact-link { border: 1px solid currentColor; border-radius: 4px; padding: 10px 18px; }
+  .header-mobile-contact { color: #ff8650; }
+  .header-menu-icon { position: relative; display: block; width: 24px; height: 20px; }
+  .header-menu-icon > span { position: absolute; left: 0; width: 24px; height: 2px; background: currentColor; transition: transform 250ms ease, opacity 180ms ease; }
+  .header-menu-icon > span:nth-child(1) { top: 2px; }
+  .header-menu-icon > span:nth-child(2) { top: 9px; }
+  .header-menu-icon > span:nth-child(3) { top: 16px; }
+  .header-menu-button[aria-expanded="true"] .header-menu-icon > span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .header-menu-button[aria-expanded="true"] .header-menu-icon > span:nth-child(2) { opacity: 0; }
+  .header-menu-button[aria-expanded="true"] .header-menu-icon > span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-link:focus-visible, .header-menu-button:focus-visible, .header-mobile-link:focus-visible { outline: 2px solid #ff8650; outline-offset: 5px; }
+  @media (prefers-reduced-motion: reduce) { .header-menu-icon > span { transition: none; } }
+</style>

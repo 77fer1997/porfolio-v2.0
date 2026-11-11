@@ -132,6 +132,9 @@ const galleryImages =
   projectGalleries[project.data.slug as keyof typeof projectGalleries] ??
   project.data.galleryImages;
 
+const nextProject = projects.find((entry) => entry.data.slug === currentDetail.nextSlug);
+const nextDetail = nextProject && projectDetails[nextProject.data.slug as keyof typeof projectDetails];
+
 ---
 
 <BaseLayout
@@ -143,6 +146,7 @@ const galleryImages =
   <main id="contenido-principal" class="bg-white">
     <section class="case-hero bg-kuroki-black text-white" data-case-project={project.data.slug}>
       <Container class="case-container max-w-[1680px]">
+        <a class="case-back-link" href="/casos-de-exito/"><span aria-hidden="true">&larr;</span> Todos los casos</a>
         <div class="case-hero__intro">
           <h1>{currentDetail.displayTitle}</h1>
           <p>{currentDetail.headline}</p>
@@ -195,6 +199,18 @@ const galleryImages =
     </section>
 
     <CaseGalleryCarousel images={galleryImages} />
+    {nextProject && (
+      <section class="case-next bg-kuroki-black text-white">
+        <Container>
+          <a class="case-next__link" href={`/casos-de-exito/${nextProject.data.slug}/`}>
+            <span class="case-next__eyebrow">SIGUIENTE PROYECTO</span>
+            <span class="case-next__title">{nextDetail?.displayTitle ?? nextProject.data.title}</span>
+            <span class="case-next__arrow" aria-hidden="true">&nearr;</span>
+          </a>
+          <a class="case-next__contact" href="/#contacto">Hablemos de tu proyecto <span aria-hidden="true">&nearr;</span></a>
+        </Container>
+      </section>
+    )}
   </main>
   <Footer />
 </BaseLayout>

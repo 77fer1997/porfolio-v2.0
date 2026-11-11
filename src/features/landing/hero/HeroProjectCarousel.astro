@@ -1,5 +1,6 @@
 ---
 import type { HeroProjectSlide } from "./hero.data";
+import { heroBenefits } from "./hero.data";
 
 interface Props {
   slides: HeroProjectSlide[];
@@ -10,7 +11,6 @@ const slideCount = slides.length;
 ---
 
 <div class="hero-project-carousel" data-hero-carousel tabindex="0" aria-label="Trabajos recientes de KUROKI">
-  <div class="hero-project-carousel__halo" aria-hidden="true"></div>
   <div class="hero-project-carousel__frame">
     <div class="hero-project-carousel__topbar">
       <div class="hero-project-carousel__dots" aria-hidden="true">
@@ -29,6 +29,7 @@ const slideCount = slides.length;
             class:list={["hero-project-carousel__slide", isActive && "is-active"]}
             data-carousel-slide
             data-slide-index={index}
+            data-project-name={slide.name}
             aria-hidden={isActive ? "false" : "true"}
           >
             <a href={slide.href} tabindex={isActive ? 0 : -1} aria-label={`Ver caso ${slide.name}`}>
@@ -43,49 +44,19 @@ const slideCount = slides.length;
                 fetchpriority={isActive ? "high" : "auto"}
               />
             </a>
-            <footer class="hero-project-carousel__caption">
-              <div>
-                <strong>{slide.name}</strong>
-                <span>{slide.category}</span>
-              </div>
-            </footer>
           </article>
         );
       })}
+      <span class="hero-project-carousel__counter" data-carousel-counter>{`01 / ${String(slideCount).padStart(2, "0")}`}</span>
+      <div class="hero-project-carousel__progress" aria-hidden="true"><span></span></div>
     </div>
   </div>
 
-  <div class="hero-project-carousel__controls">
-    <span class="hero-project-carousel__counter" data-carousel-counter>{`01 / ${String(slideCount).padStart(2, "0")}`}</span>
-    <div class="hero-project-carousel__buttons">
-      <button type="button" data-carousel-prev aria-label="Proyecto anterior">
-        <span aria-hidden="true">←</span>
-      </button>
-      <button type="button" data-carousel-toggle aria-label="Pausar carrusel" aria-pressed="false">
-        <span data-carousel-toggle-icon aria-hidden="true">Ⅱ</span>
-      </button>
-      <button type="button" data-carousel-next aria-label="Proyecto siguiente">
-        <span aria-hidden="true">→</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="hero-project-carousel__selectors" role="tablist" aria-label="Seleccionar proyecto">
-    {
-      slides.map((slide, index) => (
-        <button
-          type="button"
-          role="tab"
-          aria-label={`Mostrar ${slide.name}`}
-          aria-selected={index === 0 ? "true" : "false"}
-          data-carousel-selector
-          data-slide-index={index}
-        >
-          <span></span>
-        </button>
-      ))
-    }
-  </div>
+  <ul class="hero-project-carousel__benefits">
+    {heroBenefits.map((benefit) => (
+      <li><span aria-hidden="true">✓</span>{benefit}</li>
+    ))}
+  </ul>
 </div>
 
 <script>
@@ -97,17 +68,11 @@ const slideCount = slides.length;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const slides = Array.from(carousel.querySelectorAll<HTMLElement>("[data-carousel-slide]"));
-    const selectors = Array.from(carousel.querySelectorAll<HTMLButtonElement>("[data-carousel-selector]"));
-    const prevButton = carousel.querySelector<HTMLButtonElement>("[data-carousel-prev]");
-    const nextButton = carousel.querySelector<HTMLButtonElement>("[data-carousel-next]");
-    const toggleButton = carousel.querySelector<HTMLButtonElement>("[data-carousel-toggle]");
-    const toggleIcon = carousel.querySelector<HTMLElement>("[data-carousel-toggle-icon]");
     const counter = carousel.querySelector<HTMLElement>("[data-carousel-counter]");
     const title = carousel.querySelector<HTMLElement>("[data-carousel-title]");
 
     let activeIndex = 0;
     let timer: number | undefined;
-    let userPaused = reduceMotion.matches;
     let interactionPaused = false;
     let visible = true;
 
@@ -121,25 +86,22 @@ const slideCount = slides.length;
       }
     };
 
-    const updateToggle = () => {
-      if (!toggleButton || !toggleIcon) return;
-      toggleButton.setAttribute("aria-pressed", String(userPaused));
-      toggleButton.setAttribute("aria-label", userPaused ? "Reanudar carrusel" : "Pausar carrusel");
-      toggleIcon.textContent = userPaused ? "▶" : "Ⅱ";
-    };
-
     const stop = () => {
+      carousel.removeAttribute("data-running");
       if (timer !== undefined) {
         window.clearInterval(timer);
         timer = undefined;
       }
     };
 
-    const shouldRun = () => !userPaused && !interactionPaused && visible && !document.hidden && !reduceMotion.matches && total > 1;
+    const shouldRun = () => !interactionPaused && visible && !document.hidden && !reduceMotion.matches && total > 1;
 
     const start = () => {
       stop();
       if (!shouldRun()) return;
+      // Restart the visual countdown together with the autoplay timer.
+      void carousel.offsetWidth;
+      carousel.dataset.running = "true";
       timer = window.setInterval(() => setActive(activeIndex + 1), 6000);
     };
 
@@ -160,38 +122,19 @@ const slideCount = slides.length;
         });
       });
 
-      selectors.forEach((selector, index) => {
-        selector.setAttribute("aria-selected", String(index === activeIndex));
-      });
-
       const activeSlide = slides[activeIndex];
-      const activeName = activeSlide?.querySelector("strong")?.textContent ?? "";
+      const activeName = activeSlide?.dataset.projectName ?? "";
       if (counter) counter.textContent = `${pad(activeIndex + 1)} / ${pad(total)}`;
       if (title) title.textContent = activeName;
       start();
     }
-
-    prevButton?.addEventListener("click", () => setActive(activeIndex - 1));
-    nextButton?.addEventListener("click", () => setActive(activeIndex + 1));
-    toggleButton?.addEventListener("click", () => {
-      userPaused = !userPaused;
-      updateToggle();
-      start();
-    });
-
-    selectors.forEach((selector) => {
-      selector.addEventListener("click", () => {
-        const index = Number(selector.dataset.slideIndex ?? 0);
-        setActive(index);
-      });
-    });
 
     carousel.addEventListener("mouseenter", () => {
       interactionPaused = true;
       stop();
     });
     carousel.addEventListener("mouseleave", () => {
-      interactionPaused = false;
+      interactionPaused = carousel.contains(document.activeElement);
       start();
     });
     carousel.addEventListener("focusin", () => {
@@ -199,8 +142,10 @@ const slideCount = slides.length;
       stop();
     });
     carousel.addEventListener("focusout", () => {
-      interactionPaused = false;
-      start();
+      queueMicrotask(() => {
+        interactionPaused = carousel.matches(":hover") || carousel.contains(document.activeElement);
+        start();
+      });
     });
     carousel.addEventListener("keydown", (event) => {
       if (event.key === "ArrowRight") {
@@ -242,13 +187,10 @@ const slideCount = slides.length;
     observer.observe(carousel);
 
     const handleMotionChange = () => {
-      userPaused = reduceMotion.matches || userPaused;
-      updateToggle();
       start();
     };
     reduceMotion.addEventListener("change", handleMotionChange);
 
-    updateToggle();
     start();
 
     document.addEventListener(
@@ -265,32 +207,98 @@ const slideCount = slides.length;
 </script>
 
 <style>
+  @property --hero-frame-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
   .hero-project-carousel {
     position: relative;
     isolation: isolate;
     width: 100%;
     max-width: 660px;
     color: #f5f3ef;
+    animation: carousel-enter 1000ms cubic-bezier(0.22, 1, 0.36, 1) 250ms both;
   }
 
-  .hero-project-carousel__halo {
+  @keyframes carousel-enter {
+    from { opacity: 0; transform: translateY(30px) rotate(1deg); }
+    to { opacity: 1; transform: translateY(0) rotate(0); }
+  }
+
+  .hero-project-carousel__progress {
     position: absolute;
-    inset: -12% -8% 12%;
-    z-index: -1;
-    border-radius: 999px;
-    background:
-      radial-gradient(circle at 58% 48%, rgba(255, 80, 4, 0.25), transparent 36%),
-      radial-gradient(circle at 22% 74%, rgba(255, 255, 255, 0.08), transparent 34%);
-    filter: blur(22px);
-    opacity: 0.82;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 4;
+    height: 2px;
+    overflow: hidden;
+    background: rgba(245, 243, 239, 0.12);
+  }
+
+  .hero-project-carousel__progress span {
+    display: block;
+    height: 100%;
+    background: #ff5004;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .hero-project-carousel[data-running] .hero-project-carousel__progress span {
+    animation: carousel-countdown 6s linear forwards;
+  }
+
+  @keyframes carousel-countdown {
+    to { transform: scaleX(1); }
+  }
+
+  @keyframes project-drift {
+    from { transform: scale(1); }
+    to { transform: scale(1.035); }
   }
 
   .hero-project-carousel__frame {
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 18px;
-    background: #1a1816;
-    box-shadow: 0 28px 78px rgba(0, 0, 0, 0.38);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background:
+      linear-gradient(#1a1816, #1a1816) padding-box,
+      conic-gradient(from var(--hero-frame-angle), #42332b 0deg, #42332b 240deg, #ff5004 290deg, #ffb18e 310deg, #42332b 350deg) border-box;
+    box-shadow: 0 28px 78px rgba(0, 0, 0, 0.38), 0 0 24px rgba(255, 80, 4, 0.06);
+    animation: frame-trace 7s linear infinite paused;
+  }
+
+  .hero-project-carousel[data-running] .hero-project-carousel__frame {
+    animation-play-state: running;
+  }
+
+  @keyframes frame-trace {
+    to { --hero-frame-angle: 360deg; }
+  }
+
+  .hero-project-carousel__benefits {
+    display: grid;
+    gap: 10px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+    color: #c9c5c0;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  .hero-project-carousel__benefits li {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .hero-project-carousel__benefits li span {
+    flex-shrink: 0;
+    color: #ff5004;
+    font-weight: 800;
   }
 
   .hero-project-carousel__topbar {
@@ -328,6 +336,18 @@ const slideCount = slides.length;
     background: #0f0e0d;
   }
 
+  .hero-project-carousel__viewport::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    height: 64px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+    pointer-events: none;
+    content: "";
+  }
+
   .hero-project-carousel__slide {
     position: absolute;
     inset: 0;
@@ -341,6 +361,15 @@ const slideCount = slides.length;
     opacity: 1;
     pointer-events: auto;
     z-index: 2;
+  }
+
+  .hero-project-carousel__slide.is-active img {
+    animation: project-drift 8s ease-in-out both;
+    animation-play-state: paused;
+  }
+
+  .hero-project-carousel[data-running] .hero-project-carousel__slide.is-active img {
+    animation-play-state: running;
   }
 
   .hero-project-carousel__slide a,
@@ -368,96 +397,25 @@ const slideCount = slides.length;
     object-position: 50% 42%;
   }
 
-  .hero-project-carousel__caption {
-    position: absolute;
-    right: 16px;
-    bottom: 16px;
-    left: 16px;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 14px;
-    background: rgba(18, 16, 14, 0.84);
-    padding: 14px 16px;
-    backdrop-filter: blur(14px);
-  }
-
-  .hero-project-carousel__caption strong,
-  .hero-project-carousel__caption span {
-    display: block;
-  }
-
-  .hero-project-carousel__caption strong {
-    font-size: clamp(1rem, 1.5vw, 1.2rem);
-    line-height: 1.1;
-  }
-
-  .hero-project-carousel__caption span {
-    margin-top: 4px;
-    color: #c9c5c0;
-    font-size: 0.82rem;
-    font-weight: 600;
-  }
-
-  .hero-project-carousel__controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-top: 18px;
-  }
-
   .hero-project-carousel__counter {
-    color: #c9c5c0;
+    position: absolute;
+    bottom: 16px;
+    left: 18px;
+    z-index: 4;
+    color: #f5f3ef;
     font-size: 0.82rem;
     font-weight: 800;
-    letter-spacing: 0.12em;
+    font-variant-numeric: tabular-nums;
   }
 
-  .hero-project-carousel__buttons,
-  .hero-project-carousel__selectors {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
+  @media (min-width: 1600px) {
+    .hero-project-carousel {
+      max-width: none;
+    }
 
-  .hero-project-carousel__buttons button,
-  .hero-project-carousel__selectors button {
-    display: grid;
-    min-width: 44px;
-    min-height: 44px;
-    place-items: center;
-    border: 1px solid rgba(245, 243, 239, 0.16);
-    border-radius: 999px;
-    color: #f5f3ef;
-    transition:
-      border-color 180ms ease,
-      background-color 180ms ease,
-      color 180ms ease;
-  }
-
-  .hero-project-carousel__buttons button:hover,
-  .hero-project-carousel__buttons button:focus-visible,
-  .hero-project-carousel__selectors button:hover,
-  .hero-project-carousel__selectors button:focus-visible {
-    border-color: rgba(255, 80, 4, 0.88);
-    background: rgba(255, 80, 4, 0.16);
-  }
-
-  .hero-project-carousel__selectors {
-    margin-top: 10px;
-  }
-
-  .hero-project-carousel__selectors button span {
-    width: 22px;
-    height: 3px;
-    border-radius: 999px;
-    background: rgba(245, 243, 239, 0.28);
-  }
-
-  .hero-project-carousel__selectors button[aria-selected="true"] span {
-    background: #ff5004;
+    .hero-project-carousel__viewport {
+      aspect-ratio: 16 / 10;
+    }
   }
 
   @media (max-width: 767px) {
@@ -465,19 +423,16 @@ const slideCount = slides.length;
       aspect-ratio: 4 / 3.35;
     }
 
-    .hero-project-carousel__controls {
-      align-items: flex-start;
-    }
-
-    .hero-project-carousel__caption {
-      right: 12px;
-      bottom: 12px;
-      left: 12px;
-      padding: 12px;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero-project-carousel,
+    .hero-project-carousel__frame,
+    .hero-project-carousel__slide.is-active img,
+    .hero-project-carousel[data-running] .hero-project-carousel__progress span {
+      animation: none;
+    }
+
     .hero-project-carousel__slide {
       transition: none;
     }

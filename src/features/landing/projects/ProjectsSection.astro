@@ -3,10 +3,11 @@ import Container from "@shared/ui/Container.astro";
 
 const projects = [
   {
-    category: "Web / Diseno / Desarrollo",
+    category: "Web / Diseño / Desarrollo",
     name: "Klipp Studio",
     slug: "klipp",
-    description: "Una presencia digital que organiza y muestra el trabajo del estudio.",
+    description: "Web para presentar los servicios y el trabajo visual del estudio.",
+    scope: "Diseño web · Desarrollo responsive",
     variant: "klipp",
     transitionName: "project-klipp",
     image: "/images/projects/project-klipp-landing-2.png",
@@ -15,7 +16,8 @@ const projects = [
     category: "Software / Web",
     name: "SMS Fortuna",
     slug: "sms-fortuna",
-    description: "Una plataforma central para gestionar usuarios, recargas y mensajería.",
+    description: "Landing y backoffice para administrar recargas y la operación del servicio SMS.",
+    scope: "Landing · Backoffice · Gestión de recargas",
     variant: "sms",
     transitionName: "project-sms-fortuna",
     image: "/images/projects/project-sms-fortuna-landing-1.webp",
@@ -24,7 +26,8 @@ const projects = [
     category: "Dashboard / Inventario / Compras",
     name: "El Pueblo",
     slug: "el-pueblo",
-    description: "Ventas, inventario y compras reunidos en una sola operación digital.",
+    description: "Un panel central para controlar ventas, stock y compras sin registros aislados.",
+    scope: "Dashboard · Inventario · Compras",
     variant: "botica",
     transitionName: "project-botica",
     image: "/images/projects/project-botica-landing-3.png",
@@ -35,14 +38,11 @@ const firstProjectRow = projects.slice(0, 2);
 const boticaProject = projects[2];
 ---
 
-<section id="casos-de-exito" class="projects-section scroll-mt-24 bg-kuroki-black py-24 text-white sm:py-32 lg:py-36">
-  <Container class="projects-container max-w-[1680px]">
-    <div class="project-section-heading" data-reveal>
-      <p>CASOS DE ÉXITO</p>
-      <h2>
-        Trabajo real.<br />
-        Soluciones en marcha.
-      </h2>
+<section id="casos-de-exito" class="projects-section scroll-mt-24 py-24 text-white sm:py-32 lg:py-36">
+  <Container class="projects-container max-w-[1720px]">
+    <div class="project-section-heading">
+      <h2>Casos de éxito</h2>
+      <p>Diseño y tecnología, puestos en práctica.</p>
     </div>
 
     <div class="project-editorial-list">
@@ -70,11 +70,13 @@ const boticaProject = projects[2];
                     decoding="async"
                     class="project-cover__image"
                   />
+                  <span class="project-category">{project.category}</span>
                 </span>
 
                 <span class="project-editorial-meta" data-project-meta>
                   <h3 data-project-meta-item>{project.name}</h3>
                   <span data-project-meta-item>{project.description}</span>
+                  <small class="project-scope" data-project-meta-item>{project.scope}</small>
                 </span>
 
                 <span class="project-hover-cursor" aria-hidden="true">Ver caso</span>
@@ -106,11 +108,13 @@ const boticaProject = projects[2];
                 decoding="async"
                 class="project-cover__image"
               />
+              <span class="project-category">{boticaProject.category}</span>
             </span>
 
             <span class="project-editorial-meta" data-project-meta>
               <h3 data-project-meta-item>{boticaProject.name}</h3>
               <span data-project-meta-item>{boticaProject.description}</span>
+              <small class="project-scope" data-project-meta-item>{boticaProject.scope}</small>
             </span>
 
             <span class="project-hover-cursor" aria-hidden="true">Ver caso</span>
@@ -118,7 +122,7 @@ const boticaProject = projects[2];
         </article>
       </div>
 
-      <div class="project-editorial-footer" data-reveal>
+      <div class="project-editorial-footer">
         <a href="/casos-de-exito/" class="project-all-link">
           Ver todos los casos de éxito
           <span aria-hidden="true">&nearr;</span>
@@ -129,90 +133,184 @@ const boticaProject = projects[2];
 </section>
 
 <script>
-  import { gsap } from "gsap";
-
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const initProjectsMotion = () => {
     const section = document.querySelector<HTMLElement>("#casos-de-exito");
     if (!section) return;
+    if (section.dataset.projectsReady === "true") return;
+    section.dataset.projectsReady = "true";
 
-    const cards = gsap.utils.toArray<HTMLElement>("[data-project-card]");
-    const visuals = gsap.utils.toArray<HTMLElement>("[data-project-visual]");
-    const metaItems = gsap.utils.toArray<HTMLElement>("[data-project-meta-item]");
-    const projectLinks = gsap.utils.toArray<HTMLElement>("[data-project-link]");
-
-    gsap.killTweensOf([...cards, ...visuals, ...metaItems]);
+    const visuals = Array.from(section.querySelectorAll<HTMLElement>("[data-project-visual]"));
+    const captions = Array.from(section.querySelectorAll<HTMLElement>("[data-project-meta]"));
+    const projectLinks = Array.from(section.querySelectorAll<HTMLElement>("[data-project-link]"));
 
     if (reduceMotion.matches) {
-      gsap.set([...cards, ...visuals, ...metaItems], { clearProps: "all", opacity: 1, y: 0, scale: 1, clipPath: "none" });
       return;
     }
-
-    gsap.set(visuals, { opacity: 0, y: 28, scale: 0.985, clipPath: "inset(10% 0 0 0)" });
-    gsap.set(metaItems, { opacity: 0, y: 12 });
 
     const observers: IntersectionObserver[] = [];
 
     if ("IntersectionObserver" in window) {
-      cards.forEach((card) => {
-        const visual = card.querySelector<HTMLElement>("[data-project-visual]");
-        const items = gsap.utils.toArray<HTMLElement>("[data-project-meta-item]", card);
-        if (!visual) return;
-
-        const observer = new IntersectionObserver(
+      section.dataset.projectsMotion = "true";
+      const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
               if (!entry.isIntersecting) return;
 
-              const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-              tl.to(visual, { opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0 0 0)", duration: 0.85 })
-                .to(items, { opacity: 1, y: 0, duration: 0.48, stagger: 0.08 }, "-=0.28");
-
-              observer.unobserve(card);
+              (entry.target as HTMLElement).dataset.projectRevealed = "true";
+              observer.unobserve(entry.target);
             });
           },
-          { rootMargin: "0px 0px -12% 0px", threshold: 0.16 },
+          { rootMargin: "0px 0px -4% 0px", threshold: 0.08 },
         );
 
-        observer.observe(card);
-        observers.push(observer);
-      });
-    } else {
-      gsap.set(visuals, { opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0 0 0)" });
-      gsap.set(metaItems, { opacity: 1, y: 0 });
+      [...visuals, ...captions].forEach(element => observer.observe(element));
+      observers.push(observer);
     }
 
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const listeners = new AbortController();
+    const listenerOptions = { signal: listeners.signal };
 
     projectLinks.forEach((link) => {
+      link.addEventListener("focusin", () => {
+        link.querySelectorAll<HTMLElement>("[data-project-visual], [data-project-meta]").forEach(element => {
+          element.dataset.projectRevealed = "true";
+        });
+      }, listenerOptions);
       const cursor = link.querySelector<HTMLElement>(".project-hover-cursor");
       if (!cursor || !finePointer.matches) return;
 
-      link.addEventListener("pointerenter", () => {
-        cursor.dataset.active = "true";
-      });
+      const positionCursor = (event: PointerEvent) => {
+        const rect = link.getBoundingClientRect();
+        cursor.style.setProperty("--cursor-x", `${Math.max(48, Math.min(rect.width - 48, event.clientX - rect.left))}px`);
+        cursor.style.setProperty("--cursor-y", `${Math.max(24, event.clientY - rect.top)}px`);
+        link.style.setProperty("--media-x", `${((event.clientX - rect.left) / rect.width - 0.5) * 6}px`);
+        link.style.setProperty("--media-y", `${((event.clientY - rect.top) / rect.height - 0.5) * 6}px`);
+      };
+      link.addEventListener("pointerenter", (event) => {
+        positionCursor(event);
+        cursor.dataset.active = String(!reduceMotion.matches);
+      }, listenerOptions);
 
       link.addEventListener("pointermove", (event) => {
-        const rect = link.getBoundingClientRect();
-        cursor.style.setProperty("--cursor-x", `${event.clientX - rect.left}px`);
-        cursor.style.setProperty("--cursor-y", `${event.clientY - rect.top}px`);
-      });
+        if (reduceMotion.matches) return;
+        positionCursor(event);
+      }, listenerOptions);
 
       link.addEventListener("pointerleave", () => {
         cursor.dataset.active = "false";
-      });
+        link.style.setProperty("--media-x", "0px");
+        link.style.setProperty("--media-y", "0px");
+      }, listenerOptions);
     });
+
+    const stopMotion = () => {
+      if (!reduceMotion.matches) return;
+      observers.forEach(observer => observer.disconnect());
+      delete section.dataset.projectsMotion;
+      section.querySelectorAll<HTMLElement>(".project-hover-cursor").forEach(cursor => { cursor.dataset.active = "false"; });
+    };
+    reduceMotion.addEventListener("change", stopMotion);
 
     document.addEventListener(
       "astro:before-swap",
       () => {
         observers.forEach((observer) => observer.disconnect());
-        gsap.killTweensOf([...cards, ...visuals, ...metaItems]);
+        listeners.abort();
+        reduceMotion.removeEventListener("change", stopMotion);
+        delete section.dataset.projectsMotion;
       },
       { once: true },
     );
   };
 
   initProjectsMotion();
+  document.addEventListener("astro:page-load", initProjectsMotion);
 </script>
+
+<style>
+  .projects-section[data-projects-motion="true"] [data-project-visual] {
+    opacity: 0;
+    transform: translateY(24px) scale(0.94);
+    transition: transform 1300ms var(--motion-ease), opacity 650ms ease;
+  }
+  .projects-section[data-projects-motion="true"] [data-project-visual] .project-cover__image {
+    transform: scale(1.07);
+    transition: transform 1300ms var(--motion-ease);
+  }
+  .projects-section[data-projects-motion="true"] [data-project-visual][data-project-revealed="true"] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .projects-section[data-projects-motion="true"] [data-project-visual][data-project-revealed="true"] .project-cover__image {
+    transform: scale(1);
+  }
+  .projects-section[data-projects-motion="true"] [data-project-meta] {
+    opacity: 1;
+  }
+  .projects-section[data-projects-motion="true"] [data-project-meta-item] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 700ms var(--motion-ease), transform 1100ms var(--motion-ease);
+  }
+  .projects-section[data-projects-motion="true"] [data-project-meta-item]:nth-child(2) {
+    transition-delay: 120ms;
+  }
+  .projects-section[data-projects-motion="true"] [data-project-meta][data-project-revealed="true"] [data-project-meta-item] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .project-scope { display: block; margin-top: 8px; color: #a7a7a7; font-size: 13px; line-height: 1.6; }
+  .projects-section[data-projects-motion="true"] [data-project-meta-item]:nth-child(3) { transition-delay: 220ms; }
+  .project-category {
+    position: absolute;
+    z-index: 4;
+    left: 24px;
+    bottom: 24px;
+    max-width: calc(100% - 48px);
+    padding: 8px 12px;
+    background: #101010;
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 500ms ease, transform 700ms var(--motion-ease);
+    pointer-events: none;
+  }
+  .project-hover-cursor { border-radius: 4px; }
+  @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+    .projects-section[data-projects-motion="true"] .project-editorial-link:hover [data-project-visual][data-project-revealed="true"] {
+      transform: translateY(0) scale(1.015);
+      transition-duration: 700ms;
+    }
+    .projects-section[data-projects-motion="true"] .project-editorial-link:hover [data-project-visual][data-project-revealed="true"] .project-cover__image,
+    .projects-section[data-projects-motion="true"] .project-editorial-link:focus-visible [data-project-visual][data-project-revealed="true"] .project-cover__image {
+      transform: scale(1.045) translate(var(--media-x, 0px), var(--media-y, 0px));
+      transition-duration: 1100ms;
+    }
+    .project-editorial-link:hover .project-category,
+    .project-editorial-link:focus-visible .project-category {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 120ms;
+    }
+  }
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+    .project-editorial-link .project-cover { cursor: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .projects-section[data-projects-motion="true"] [data-project-visual],
+    .projects-section[data-projects-motion="true"] [data-project-visual] img,
+    .projects-section[data-projects-motion="true"] [data-project-meta],
+    .projects-section[data-projects-motion="true"] [data-project-meta-item] {
+      opacity: 1;
+      transform: none !important;
+      transition: none;
+    }
+    .project-category { display: none; }
+    .project-hover-cursor { display: none; }
+  }
+</style>

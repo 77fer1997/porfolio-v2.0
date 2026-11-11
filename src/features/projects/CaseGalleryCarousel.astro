@@ -23,6 +23,8 @@ const formattedTotal = String(total).padStart(2, "0");
           class="case-gallery__carousel"
           data-case-carousel
           aria-label="Galería del caso"
+          role="region"
+          aria-roledescription="carrusel"
           tabindex="0"
         >
           <p class="case-gallery__eyebrow">GALERÍA</p>
@@ -101,6 +103,9 @@ const formattedTotal = String(total).padStart(2, "0");
 
       const update = (nextIndex = activeIndex, offset = 0) => {
         activeIndex = Math.max(0, Math.min(nextIndex, slides.length - 1));
+        const activeImage = slides[activeIndex].querySelector("img");
+        if (activeImage) activeImage.loading = "eager";
+        slides.forEach((slide,index) => slide.setAttribute("aria-hidden", String(index !== activeIndex)));
         track.style.transform = `translate3d(${activeIndex * -getStep() + offset}px, 0, 0)`;
         current.textContent = formatIndex(activeIndex);
         previousButton?.toggleAttribute("disabled", activeIndex === 0);
@@ -135,7 +140,7 @@ const formattedTotal = String(total).padStart(2, "0");
         }
 
         isDragging = false;
-        track.releasePointerCapture(event.pointerId);
+        if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
 
         const threshold = Math.min(160, getStep() * 0.18);
         if (dragOffset < -threshold) {
@@ -171,7 +176,9 @@ const formattedTotal = String(total).padStart(2, "0");
       track.addEventListener("pointerup", onPointerUp);
       track.addEventListener("pointercancel", onPointerUp);
       track.addEventListener("dragstart", (event) => event.preventDefault());
-      window.addEventListener("resize", () => update());
+      const onResize = () => update();
+      window.addEventListener("resize", onResize);
+      document.addEventListener("astro:before-swap", () => window.removeEventListener("resize", onResize), { once: true });
 
       update();
     });

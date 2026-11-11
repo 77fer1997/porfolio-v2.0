@@ -1,74 +1,102 @@
 ---
-import Container from "@shared/ui/Container.astro";
-
 const services = [
   {
-    id: "web",
-    label: "LANDINGS",
-    statement: "Convierte visitas en oportunidades.",
-    description:
-      "Diseñamos, desarrollamos y mantenemos sitios web profesionales enfocados en presentar tu negocio y convertir visitas en oportunidades.",
-    note: "Planes desde S/99 al mes",
-    cta: "Ver servicio",
-    href: "/servicios/landings",
-    labelTransitionName: "service-landings-label",
-    titleTransitionName: "service-landings-title",
+    id: "web", number: "01", label: "PÁGINAS WEB",
+    title: "Una buena primera impresión. Un siguiente paso claro.",
+    description: "Presenta tus servicios, muestra tu trabajo y facilita que tus clientes te contacten. Diseñamos tu web alrededor de lo que tu negocio necesita contar.",
+    includes: ["Landing pages y sitios web", "Diseño para todos los dispositivos", "Publicación y mantenimiento"],
+    image: "/images/projects/project-klipp-principal.webp",
+    alt: "Página de Klipp Studio con sus servicios y portafolio fotográfico",
+    caption: "Klipp Studio", detail: "Diseño y desarrollo web",
+    href: "/servicios/landings", cta: "Explorar el servicio",
+    project: "/casos-de-exito/klipp/",
   },
   {
-    id: "automatizacion",
-    label: "AUTOMATIZACIÓN",
-    statement: "Menos tareas repetitivas. Más tiempo para lo importante.",
-    description:
-      "Automatizamos procesos repetitivos para reducir trabajo manual y mejorar la eficiencia de tu negocio.",
-    cta: "Conocer más",
-    href: "#contacto",
-    labelTransitionName: "service-automation-label",
-    titleTransitionName: "service-automation-title",
+    id: "automatizacion", number: "02", label: "AUTOMATIZACIÓN",
+    title: "Menos pasos manuales. Más tiempo para tu negocio.",
+    description: "Conectamos tus herramientas y organizamos los flujos que hoy te hacen repetir trabajo. Empezamos por la tarea que más tiempo te está quitando.",
+    includes: ["Conexión entre herramientas", "Flujos de trabajo y notificaciones", "Integraciones según tu operación"],
+    image: "/images/projects/project-sms-fortuna-backoffice.webp",
+    alt: "Panel de SMS Fortuna para administrar mensajería y recargas",
+    caption: "SMS Fortuna", detail: "Mensajería y gestión de recargas",
+    href: "#contacto", cta: "Conversar sobre mi proceso",
+    project: "/casos-de-exito/sms-fortuna/",
   },
   {
-    id: "software",
-    label: "SOFTWARE A MEDIDA",
-    statement: "Cuando lo genérico ya no alcanza.",
-    description:
-      "Desarrollamos soluciones digitales adaptadas a los procesos y necesidades específicas de tu negocio.",
-    cta: "Cotizar proyecto",
-    href: "#contacto",
-    labelTransitionName: "service-software-label",
-    titleTransitionName: "service-software-title",
+    id: "software", number: "03", label: "SOFTWARE A MEDIDA",
+    title: "Tus datos y tu operación, en un mismo lugar.",
+    description: "Creamos paneles y sistemas para la forma en que trabaja tu equipo. Desde inventario y compras hasta las herramientas internas que tu operación necesita.",
+    includes: ["Paneles de administración", "Inventario, ventas y compras", "Herramientas para tu equipo"],
+    image: "/images/projects/project-botica-dashboard.webp",
+    alt: "Sistema de Botica El Pueblo con ventas, inventario y tareas del día",
+    caption: "El Pueblo", detail: "Sistema de gestión operativa",
+    href: "#contacto", cta: "Definir mi proyecto",
+    project: "/casos-de-exito/el-pueblo/",
   },
-] as const;
+];
 ---
-
-<section id="servicios" class="services-editorial bg-kuroki-black text-white">
-  <Container class="max-w-[1680px]">
-    <div class="services-editorial__header" data-reveal>
-      <p>SERVICIOS</p>
-      <h2>Construimos lo que tu operación realmente necesita.</h2>
+<section id="servicios" class="studio-services" aria-labelledby="services-title">
+  <div class="studio-wrap">
+    <header class="services-heading">
+      <div><p class="section-label">LO QUE HACEMOS</p><h2 id="services-title">De tu idea a una<br />solución que funciona.</h2></div>
+      <p class="services-heading__note">Una web para mostrarte.<br />Herramientas para avanzar.</p>
+    </header>
+    <div class="services-list">
+      {services.map((service) => (
+        <article id={service.id} class="service-entry">
+          <div class="service-entry__copy">
+            <p class="service-entry__label"><span>{service.number}</span>{service.label}</p>
+            <h3>{service.title}</h3>
+            <p class="service-entry__description">{service.description}</p>
+            <ul>{service.includes.map((item) => <li>{item}</li>)}</ul>
+            <a class="service-entry__action" href={service.href}>{service.cta}<span aria-hidden="true">&nearr;</span></a>
+          </div>
+          <figure>
+            <a class="service-entry__preview" href={service.project} aria-label={"Ver el caso " + service.caption}>
+              <img src={service.image} alt={service.alt} width="1900" height="980" loading="lazy" decoding="async" />
+            </a>
+            <figcaption><span>{service.caption}</span><span>{service.detail}</span></figcaption>
+          </figure>
+        </article>
+      ))}
     </div>
-
-    <div class="services-editorial__list" data-reveal-group>
-      {
-        services.map((service) => (
-          <a id={service.id} href={service.href} class="service-row scroll-mt-24" data-reveal>
-            <span class="service-row__label" style={`view-transition-name: ${service.labelTransitionName};`}>
-              {service.label}
-            </span>
-            <span class="service-row__main">
-              <span class="service-row__statement" style={`view-transition-name: ${service.titleTransitionName};`}>
-                {service.statement}
-              </span>
-              {"note" in service && <span class="service-row__note">{service.note}</span>}
-            </span>
-            <span class="service-row__side">
-              <span class="service-row__description">{service.description}</span>
-              <span class="service-row__action">
-                <span class="service-row__action-text">{service.cta}</span>
-                <span aria-hidden="true">&nearr;</span>
-              </span>
-            </span>
-          </a>
-        ))
-      }
-    </div>
-  </Container>
+  </div>
 </section>
+<style>
+  .studio-services { background: #f5f5f3; color: #171717; padding-block: 96px 40px; scroll-margin-top: 80px; }
+  .studio-wrap { width: calc(100% - 96px); max-width: 1360px; margin-inline: auto; }
+  .services-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 64px; }
+  .section-label { margin: 0 0 24px; color: #a33b13; font-size: 12px; font-weight: 600; line-height: 1.5; }
+  .services-heading h2 { margin: 0; font-size: 48px; line-height: 1.15; font-weight: 500; }
+  .services-heading__note { margin: 0 0 4px; color: #636363; font-size: 17px; line-height: 1.65; }
+  .service-entry { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); align-items: center; gap: 72px; padding-block: 52px; border-top: 1px solid #17171726; scroll-margin-top: 96px; }
+  .service-entry__copy { max-width: 510px; }
+  .service-entry__label { display: flex; gap: 20px; align-items: center; margin: 0 0 22px; font-size: 12px; font-weight: 600; color: #555; }
+  .service-entry__label span { color: #a33b13; font-variant-numeric: tabular-nums; }
+  .service-entry h3 { margin: 0 0 20px; font-size: 34px; line-height: 1.22; font-weight: 500; }
+  .service-entry__description { margin: 0; color: #555; font-size: 16px; line-height: 1.75; }
+  .service-entry ul { display: grid; gap: 8px; margin: 24px 0 28px; padding: 0; list-style: none; color: #454545; font-size: 14px; line-height: 1.5; }
+  .service-entry li { display: flex; align-items: baseline; gap: 12px; }
+  .service-entry li::before { content: ''; flex: 0 0 4px; width: 4px; height: 4px; background: #b9471c; align-self: center; }
+  .service-entry__action { display: inline-flex; align-items: center; gap: 24px; color: #171717; font-size: 15px; font-weight: 500; text-decoration: none; border-bottom: 1px solid #17171770; padding-bottom: 8px; }
+  .service-entry__action span { color: #a33b13; font-size: 22px; }
+  .service-entry__action:hover { border-color: #a33b13; }
+  .service-entry figure { min-width: 0; margin: 0; }
+  .service-entry__preview { display: block; background: #e5e7e7; border: 1px solid #17171715; }
+  .service-entry img { display: block; width: 100%; aspect-ratio: 1900 / 980; height: auto; object-fit: contain; }
+  .service-entry figcaption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; font-size: 12px; line-height: 1.6; color: #626262; }
+  .service-entry figcaption span:first-child { color: #171717; font-weight: 500; }
+  a:focus-visible { outline: 2px solid #b9471c; outline-offset: 6px; }
+  @media (max-width: 1023px) { .studio-wrap { width: calc(100% - 64px); } .service-entry { gap: 36px; } .services-heading h2 { font-size: 40px; } .service-entry h3 { font-size: 28px; } }
+  @media (max-width: 767px) {
+    .studio-services { padding-block: 64px 24px; }
+    .studio-wrap { width: calc(100% - 40px); }
+    .services-heading { display: block; margin-bottom: 36px; }
+    .services-heading h2 { font-size: 32px; }
+    .services-heading__note { margin-top: 22px; font-size: 16px; }
+    .service-entry { grid-template-columns: 1fr; padding-block: 36px; gap: 28px; }
+    .service-entry h3 { font-size: 28px; }
+    .service-entry__copy { max-width: none; }
+    .service-entry figcaption { font-size: 11px; }
+  }
+</style>

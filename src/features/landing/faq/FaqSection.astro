@@ -1,78 +1,42 @@
 ---
-import Container from "@shared/ui/Container.astro";
 import { faqItems } from "./faq.data";
 ---
-
-<section id="preguntas" class="faq-editorial text-kuroki-black">
-  <Container class="max-w-[1680px]">
-    <div class="faq-editorial__layout">
-      <div class="faq-editorial__intro" data-reveal>
-        <p>PREGUNTAS</p>
-        <h2>Antes de empezar.</h2>
-      </div>
-
-      <div class="faq-editorial__list" data-faq-list data-reveal-group>
-        {
-          faqItems.map((item, index) => {
-            const panelId = `faq-panel-${index + 1}`;
-
-            return (
-              <div class:list={["faq-editorial__item", index === 0 && "is-open"]} data-faq-item data-reveal>
-                <button
-                  class="faq-editorial__trigger"
-                  type="button"
-                  aria-expanded={index === 0 ? "true" : "false"}
-                  aria-controls={panelId}
-                  data-faq-trigger
-                >
-                  <span>{item.question}</span>
-                  <span class="faq-editorial__icon" aria-hidden="true">+</span>
-                </button>
-                <div id={panelId} class="faq-editorial__panel" data-faq-panel>
-                  <div class="faq-editorial__answer">
-                    <p>{item.answer}</p>
-                  </div>
-                </div>
-              </div>
-            );
-          })
-        }
-      </div>
+<section id="preguntas" class="studio-faq" aria-labelledby="faq-title">
+  <div class="faq-wrap">
+    <header>
+      <p class="faq-label">PREGUNTAS FRECUENTES</p>
+      <h2 id="faq-title">Antes del<br />siguiente paso.</h2>
+      <a href="#contacto">¿Tienes otra pregunta? <span aria-hidden="true">&nearr;</span></a>
+    </header>
+    <div class="faq-questions">
+      {faqItems.map((item, index) => (
+        <details open={index === 0}>
+          <summary><span>{item.question}</span><i aria-hidden="true"></i></summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
     </div>
-  </Container>
+  </div>
 </section>
-
-<script>
-  const initFaqAccordion = () => {
-    const lists = document.querySelectorAll<HTMLElement>("[data-faq-list]");
-
-    lists.forEach((list) => {
-      if (list.dataset.faqReady === "true") {
-        return;
-      }
-
-      list.dataset.faqReady = "true";
-
-      const items = Array.from(list.querySelectorAll<HTMLElement>("[data-faq-item]"));
-
-      const setOpenItem = (activeItem: HTMLElement) => {
-        items.forEach((item) => {
-          const isOpen = item === activeItem;
-          const trigger = item.querySelector<HTMLButtonElement>("[data-faq-trigger]");
-
-          item.classList.toggle("is-open", isOpen);
-          trigger?.setAttribute("aria-expanded", String(isOpen));
-        });
-      };
-
-      items.forEach((item) => {
-        const trigger = item.querySelector<HTMLButtonElement>("[data-faq-trigger]");
-
-        trigger?.addEventListener("click", () => setOpenItem(item));
-      });
-    });
-  };
-
-  initFaqAccordion();
-  document.addEventListener("astro:page-load", initFaqAccordion);
-</script>
+<style>
+  .studio-faq { padding-block: 80px; background: #f5f5f3; color: #171717; scroll-margin-top: 80px; }
+  .faq-wrap { width: calc(100% - 96px); max-width: 1360px; margin-inline: auto; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 80px; }
+  .faq-label { color: #a33b13; margin: 0 0 24px; font-size: 12px; font-weight: 600; }
+  h2 { margin: 0; font-size: 40px; font-weight: 500; line-height: 1.2; }
+  header a { display: inline-flex; align-items: center; gap: 16px; margin-top: 30px; color: #555; font-size: 14px; line-height: 1.6; text-decoration: none; }
+  header a span { color: #a33b13; font-size: 20px; }
+  .faq-questions { border-top: 1px solid #17171730; min-width: 0; }
+  details { border-bottom: 1px solid #17171730; }
+  summary { display: flex; justify-content: space-between; gap: 28px; align-items: start; padding-block: 23px; cursor: pointer; list-style: none; font-size: 19px; font-weight: 500; line-height: 1.45; }
+  summary::-webkit-details-marker { display: none; }
+  summary i { position: relative; display: block; width: 20px; height: 20px; flex: 0 0 20px; margin-top: 3px; }
+  summary i::before, summary i::after { content: ''; position: absolute; top: 9px; left: 2px; width: 16px; height: 1px; background: currentColor; }
+  summary i::after { transform: rotate(90deg); }
+  details[open] summary i { color: #a33b13; }
+  details[open] summary i::after { transform: none; }
+  details p { max-width: 600px; margin: 0; padding: 0 44px 24px 0; color: #555; font-size: 15px; line-height: 1.8; }
+  summary:hover, header a:hover { color: #a33b13; }
+  a:focus-visible, summary:focus-visible { outline: 2px solid #a33b13; outline-offset: 5px; }
+  @media (max-width: 1023px) { .faq-wrap { width: calc(100% - 64px); gap: 40px; } h2 { font-size: 36px; } }
+  @media (max-width: 767px) { .studio-faq { padding-block: 64px; } .faq-wrap { width: calc(100% - 40px); grid-template-columns: 1fr; gap: 32px; } h2 { font-size: 32px; } summary { font-size: 18px; padding-block: 20px; gap: 16px; } header a { margin-top: 20px; } details p { padding-right: 20px; } }
+</style>

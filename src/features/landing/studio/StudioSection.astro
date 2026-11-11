@@ -1,0 +1,57 @@
+---
+import Container from "@shared/ui/Container.astro";
+---
+
+<section id="estudio" class="studio-section scroll-mt-24">
+  <Container class="max-w-[1680px]">
+    <div class="studio-layout">
+      <div class="studio-intro" data-reveal>
+        <p class="studio-eyebrow">KUROKI / AREQUIPA</p>
+        <h2>Diseño y desarrollo.<br />Una misma dirección.</h2>
+      </div>
+      <div class="studio-copy" data-reveal>
+        <p>KUROKI conecta el diseño de tu presencia digital con el desarrollo de las herramientas que necesita tu negocio.</p>
+        <p>Webs para presentar servicios y productos. Herramientas digitales para ordenar la operación. Diseño y desarrollo conectados desde el principio.</p>
+        <a href="#contacto">Conversemos sobre tu proyecto <span aria-hidden="true">&nearr;</span></a>
+      </div>
+    </div>
+    <div class="studio-photo" role="img" aria-label="Espacio reservado para la futura fotografía de KUROKI" data-reveal>
+      <span class="studio-photo__corner">KUROKI / ESTUDIO</span>
+      <span class="studio-photo__mock" aria-hidden="true"><span>KUROKI</span><small>Fotografía del estudio / Próximamente</small></span>
+      <span class="studio-photo__location">Arequipa, Perú</span>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .studio-section { padding: 96px 0; background: #edf1ef; color: #171a18; }
+  .studio-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: 100px; align-items: start; }
+  .studio-eyebrow { margin: 0 0 24px; font-size: 13px; font-weight: 600; color: #59645d; }
+  h2 { margin: 0; font-size: 46px; line-height: 1.15; font-weight: 500; }
+  .studio-copy p { margin: 0 0 22px; color: #4a554e; font-size: 19px; line-height: 1.65; max-width: 580px; }
+  .studio-copy p:first-child { color: #171a18; font-size: 24px; line-height: 1.45; }
+  .studio-copy a { display: inline-flex; gap: 16px; margin-top: 12px; padding-bottom: 8px; color: #171a18; text-decoration: none; border-bottom: 1px solid #87958b; font-size: 16px; }
+  .studio-copy a span { color: #c83a00; }
+  .studio-copy a:hover { border-color: #c83a00; }
+  .studio-copy a:focus-visible { outline: 2px solid #c83a00; outline-offset: 6px; }
+  .studio-photo { position: relative; display: grid; place-items: center; margin-top: 64px; aspect-ratio: 16 / 7; overflow: hidden; background: #d4ded7; border: 1px solid #c1cec5; }
+  .studio-photo__corner, .studio-photo__location { position: absolute; font-size: 12px; font-weight: 500; color: #526357; }
+  .studio-photo__corner { top: 24px; left: 24px; }
+  .studio-photo__location { right: 24px; bottom: 24px; }
+  .studio-photo__mock { display: grid; gap: 16px; text-align: center; border: 1px solid #a6b8ad; padding: 40px 64px; max-width: calc(100% - 48px); }
+  .studio-photo__mock > span { font-size: 52px; font-weight: 400; color: #6b8172; }
+  .studio-photo__mock small { font-size: 13px; color: #526357; }
+  @media (max-width: 1023px) { .studio-layout { gap: 48px; } h2 { font-size: 38px; } }
+  @media (max-width: 767px) {
+    .studio-section { padding: 64px 0; }
+    .studio-layout { grid-template-columns: 1fr; gap: 28px; }
+    h2 { font-size: 32px; }
+    .studio-copy p:first-child { font-size: 21px; }
+    .studio-copy p { font-size: 16px; }
+    .studio-photo { margin-top: 40px; aspect-ratio: 4 / 3; }
+    .studio-photo__mock { padding: 24px 20px; }
+    .studio-photo__mock > span { font-size: 36px; }
+    .studio-photo__corner { top: 16px; left: 16px; }
+    .studio-photo__location { bottom: 16px; right: 16px; }
+  }
+</style>

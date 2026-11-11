@@ -1,53 +1,35 @@
 ---
 import { siteConfig } from "@shared/config/site.config";
-import { footerLinks } from "./footer.data";
+import { contactConfig } from "@shared/config/contact.config";
 ---
-
-<footer class="border-t border-white/10 bg-kuroki-black py-10">
-  <div class="mx-auto flex w-full max-w-[1720px] flex-col gap-6 px-[clamp(24px,4vw,72px)] md:flex-row md:items-center md:justify-between">
-    <a href="/#inicio" class="flex items-center gap-3" aria-label="KUROKI inicio">
-      <img src={siteConfig.logo} alt="KUROKI" width="163" height="32" class="h-7 w-auto sm:h-8" />
-    </a>
-    <nav class="flex flex-wrap items-center gap-3" aria-label="Redes sociales">
-      {
-        footerLinks.map((link) => (
-          <a
-            class="grid h-9 w-9 place-items-center text-text-secondary transition-colors duration-300 hover:text-kuroki-orange"
-            href={link.href}
-            aria-label={link.label}
-            target={link.href.startsWith("http") ? "_blank" : undefined}
-            rel={link.href.startsWith("http") ? "noreferrer" : undefined}
-          >
-            {
-              link.icon === "linkedin" && (
-                <svg aria-hidden="true" class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v1.8" />
-                  <path d="M2 9h4v11H2z" />
-                  <path d="M4 4.5v.1" />
-                </svg>
-              )
-            }
-            {
-              link.icon === "instagram" && (
-                <svg aria-hidden="true" class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                  <rect width="18" height="18" x="3" y="3" rx="5" />
-                  <circle cx="12" cy="12" r="3.5" />
-                  <path d="M17.5 6.5v.1" />
-                </svg>
-              )
-            }
-            {
-              link.icon === "github" && (
-                <svg aria-hidden="true" class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M15 22v-3.5a3.4 3.4 0 0 0-1-2.6c3.3-.4 6.8-1.6 6.8-7.3a5.7 5.7 0 0 0-1.5-4 5.3 5.3 0 0 0-.1-4s-1.2-.4-4 1.5a13.8 13.8 0 0 0-7.2 0C5.2-.3 4 .1 4 .1a5.3 5.3 0 0 0-.1 4 5.7 5.7 0 0 0-1.5 4c0 5.7 3.5 6.9 6.8 7.3a3.4 3.4 0 0 0-1 2.6V22" />
-                  <path d="M9 18c-3 .9-3-1.5-4.2-2" />
-                </svg>
-              )
-            }
-          </a>
-        ))
-      }
-    </nav>
-    <p class="text-sm text-text-secondary">&copy; {new Date().getFullYear()} KUROKI.</p>
+<footer class="studio-footer">
+  <div class="footer-wrap">
+    <div class="footer-main">
+      <a class="footer-logo" href="/#inicio" aria-label="KUROKI inicio"><img src={siteConfig.logo} alt="KUROKI" width="200" height="40" loading="lazy" /></a>
+      <nav aria-label="Navegación del pie de página"><a href="/casos-de-exito/">Casos de éxito</a><a href="/#servicios">Servicios</a><a href="/#metodo">Método</a><a href="/#contacto">Contacto</a></nav>
+      <p>Diseño, desarrollo y buenas ideas.<br /><span>Desde Arequipa, Perú.</span></p>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; {new Date().getFullYear()} KUROKI</span>
+      <a href={"mailto:" + contactConfig.email}>{contactConfig.email}</a>
+      <a href="/#inicio">Volver arriba <span aria-hidden="true">&uarr;</span></a>
+    </div>
   </div>
 </footer>
+<style>
+  .studio-footer { background: #0d0d0d; color: #bcbcbc; border-top: 1px solid #ffffff20; padding-block: 40px 28px; }
+  .footer-wrap { width: calc(100% - 96px); max-width: 1360px; margin-inline: auto; }
+  .footer-main { display: grid; grid-template-columns: .8fr 1.2fr 1fr; align-items: start; gap: 40px; padding-bottom: 40px; }
+  .footer-logo { display: block; width: fit-content; }
+  .footer-logo img { width: 180px; height: auto; }
+  nav { display: grid; grid-template-columns: repeat(2, max-content); gap: 16px 32px; font-size: 14px; line-height: 1.5; }
+  .footer-main p { margin: 0; font-size: 14px; line-height: 1.7; }
+  .footer-main p span { color: #8f8f8f; }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid #ffffff20; padding-top: 24px; color: #999; font-size: 12px; line-height: 1.5; }
+  a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+  a:hover { color: #ff9462; }
+  a:focus-visible { outline: 2px solid #ff9462; outline-offset: 6px; }
+  .footer-bottom a:last-child span { margin-left: 12px; color: #ff9462; }
+  @media (max-width: 1023px) { .footer-wrap { width: calc(100% - 64px); } .footer-main { grid-template-columns: 1fr 1fr; } .footer-main p { grid-column: 1 / -1; } }
+  @media (max-width: 767px) { .footer-wrap { width: calc(100% - 40px); } .footer-main { grid-template-columns: 1fr; gap: 30px; } .footer-main p { grid-column: auto; } .footer-bottom { flex-wrap: wrap; gap: 16px 24px; } .footer-bottom > span { width: 100%; } }
+</style>

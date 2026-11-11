@@ -42,10 +42,14 @@ const companies = [
         }
       </div>
 
-      <a href="#casos-de-exito" class="client-trust__link" data-reveal>
-        Ver todos los clientes
-        <span aria-hidden="true">&nearr;</span>
-      </a>
     </div>
   </Container>
 </section>
+
+<style>
+  .client-trust { padding-block: 36px; }
+  .client-trust__list { max-width: 1100px; margin-inline: auto; gap: 32px; }
+  .client-trust__client { min-height: 64px; }
+  .client-trust__client img { max-height: 52px; max-width: min(190px, 100%); }
+  @media (max-width: 767px) { .client-trust { padding-block: 28px; } .client-trust__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 32px; } .client-trust__client img { max-height: 44px; max-width: min(140px, 100%); } }
+</style>

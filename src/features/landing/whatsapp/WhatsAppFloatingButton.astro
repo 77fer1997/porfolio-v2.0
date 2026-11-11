@@ -25,16 +25,33 @@ const whatsappHref = `${contactConfig.whatsappHref}${hrefSeparator}text=${encode
 </a>
 
 <script>
-  const whatsappButton = document.querySelector<HTMLElement>("[data-whatsapp-float]");
-
-  const updateWhatsAppButton = () => {
-    if (!whatsappButton) return;
-
-    whatsappButton.setAttribute("data-visible", String(window.scrollY > 320));
-
+  const initWhatsAppButton = () => {
+    const button = document.querySelector<HTMLElement>("[data-whatsapp-float]");
+    if (!button || button.dataset.ready) return;
+    button.dataset.ready = "true";
+    const closingSections = Array.from(document.querySelectorAll<HTMLElement>("#contacto, footer"));
+    const controller = new AbortController();
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const atContact = closingSections.some(section => {
+        const rect = section.getBoundingClientRect();
+        return rect.top < window.innerHeight && rect.bottom > 0;
+      });
+      const visible = window.scrollY > 320 && !atContact;
+      button.dataset.visible = String(visible);
+      button.tabIndex = visible ? 0 : -1;
+      button.setAttribute("aria-hidden", String(!visible));
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true, signal: controller.signal });
+    window.addEventListener("resize", schedule, { signal: controller.signal });
+    document.addEventListener("astro:before-swap", () => {
+      controller.abort();
+      cancelAnimationFrame(frame);
+    }, { once: true });
   };
-
-  updateWhatsAppButton();
-  window.addEventListener("scroll", updateWhatsAppButton, { passive: true });
-  window.addEventListener("resize", updateWhatsAppButton);
+  initWhatsAppButton();
+  document.addEventListener("astro:page-load", initWhatsAppButton);
 </script>

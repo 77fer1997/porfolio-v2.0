@@ -31,20 +31,20 @@ const caseSummaries = {
 >
   <Header />
   <main id="contenido-principal" class="bg-kuroki-black text-white">
-    <section class="py-28 sm:py-32 lg:py-40">
+    <section class="cases-index">
       <Container class="max-w-[1680px]">
         <div class="max-w-4xl">
-          <p class="mb-5 text-sm font-bold uppercase tracking-[0.18em] text-white/48">Casos de éxito</p>
-          <h1 class="text-balance text-5xl font-bold leading-none sm:text-7xl lg:text-8xl">Trabajo real para operaciones reales.</h1>
+          <p class="case-eyebrow mb-5">CASOS DE ÉXITO</p>
+          <h1 class="cases-index__title">Trabajo real para operaciones reales.</h1>
         </div>
 
-        <div class="mt-20 grid gap-16 lg:grid-cols-3">
+        <div class="cases-index__grid">
           {
             cases.map((project) => {
               const summary = caseSummaries[project.data.slug as keyof typeof caseSummaries];
               return (
                 <a href={`/casos-de-exito/${project.data.slug}/`} class="group grid gap-5 text-white no-underline">
-                  <span class="relative block aspect-[4/3] overflow-hidden bg-white/8">
+                  <span class="cases-index__cover" data-case-cover={project.data.slug}>
                     <img
                       src={summary?.image ?? project.data.coverImage}
                       alt={project.data.coverImageAlt}
@@ -52,12 +52,12 @@ const caseSummaries = {
                       height="1050"
                       loading="lazy"
                       decoding="async"
-                      class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
+                      class="h-full w-full object-cover"
                     />
                   </span>
                   <span class="grid gap-2">
-                    <span class="text-3xl font-bold leading-none">{project.data.title}</span>
-                    <span class="max-w-xl text-lg leading-8 text-white/64">{summary?.description ?? project.data.summary}</span>
+                    <span class="text-2xl font-semibold leading-tight">{project.data.slug === "klipp" ? "Klipp Studio" : project.data.title}</span>
+                    <span class="max-w-xl text-base leading-7 text-white/64">{summary?.description ?? project.data.summary}</span>
                   </span>
                 </a>
               );

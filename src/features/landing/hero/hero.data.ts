@@ -1,8 +1,8 @@
 export const heroContent = {
   eyebrow: "DISEÑO Y DESARROLLO WEB · AREQUIPA",
   description:
-    "Presenta tus servicios, muestra tus productos y facilita que tus clientes te contacten. Diseñamos tu página web y te acompañamos después del lanzamiento con mantenimiento técnico mensual.",
-  primaryCta: "Cotizar mi página web",
+    "Diseñamos y desarrollamos webs para presentar tu negocio y facilitar que tus clientes te contacten.",
+  primaryCta: "Hablemos por WhatsApp",
   secondaryCta: "Ver proyectos",
   supportText: "Implementación inicial + mantenimiento mensual",
   whatsappMessage: "Hola, quiero cotizar una página web para mi negocio.",
@@ -17,6 +17,12 @@ export type HeroProjectSlide = {
   height: number;
   href: string;
 };
+
+export const heroBenefits = [
+  "Diseño a medida para tu negocio",
+  "Contacto directo por WhatsApp",
+  "Mantenimiento técnico mensual",
+] as const;
 
 export const heroProjectSlides: HeroProjectSlide[] = [
   {

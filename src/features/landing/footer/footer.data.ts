@@ -1,7 +1,7 @@
 import { contactConfig } from "@shared/config/contact.config";
 
-export const footerLinks = [
-  { label: "LinkedIn", href: contactConfig.linkedin, icon: "linkedin" },
-  { label: "Instagram", href: "#", icon: "instagram" },
-  { label: "GitHub", href: "#", icon: "github" },
-] as const;
+type FooterLink = { label: string; href: string; icon: "linkedin" | "instagram" | "github" };
+
+export const footerLinks: readonly FooterLink[] = contactConfig.isPlaceholder
+  ? []
+  : [{ label: "LinkedIn", href: contactConfig.linkedin, icon: "linkedin" }];

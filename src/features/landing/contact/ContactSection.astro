@@ -1,55 +1,90 @@
 ---
-import Container from "@shared/ui/Container.astro";
 import { contactConfig } from "@shared/config/contact.config";
+const directWhatsApp = new URL(contactConfig.whatsappHref);
+directWhatsApp.searchParams.set("text", "Hola, quisiera conversar sobre un proyecto para mi negocio.");
 ---
-
-<section id="contacto" class="contact-editorial bg-kuroki-black text-white">
-  <Container class="max-w-[1680px]">
-    <div class="contact-editorial__layout">
-      <div class="contact-editorial__intro" data-reveal>
-        <p>CONTACTO</p>
-        <h2>Cuéntanos qué quieres resolver.</h2>
-        <span>No necesitas llegar con la solución definida. Cuéntanos qué está pasando y veremos el siguiente paso.</span>
-
-        <address class="contact-editorial__email">
-          <span>Correo</span>
-          <a href={`mailto:${contactConfig.email}`}>{contactConfig.email}</a>
-        </address>
-      </div>
-
-      <form class="contact-editorial__form" action={contactConfig.formEndpoint} method="post" data-reveal>
-        <div class="contact-editorial__grid">
-          <label class="contact-editorial__field">
-            <span>Nombre</span>
-            <input required name="name" autocomplete="name" />
-          </label>
-
-          <label class="contact-editorial__field">
-            <span>Correo</span>
-            <input required type="email" name="email" autocomplete="email" />
-          </label>
-        </div>
-
-        <label class="contact-editorial__field">
-          <span>¿Qué quieres mejorar?</span>
-          <select name="projectType">
-            <option>Landing</option>
-            <option>Automatización</option>
-            <option>Software a medida</option>
-            <option>No estoy seguro</option>
-          </select>
-        </label>
-
-        <label class="contact-editorial__field">
-          <span>Contexto breve</span>
-          <textarea required name="message" rows="4" placeholder="Qué pasa hoy y qué resultado buscas."></textarea>
-        </label>
-
-        <button class="contact-editorial__submit" type="submit">
-          <span>Cuéntanos tu proyecto</span>
-          <span aria-hidden="true">↗</span>
-        </button>
-      </form>
+<section id="contacto" class="project-contact" aria-labelledby="contact-title">
+  <div class="contact-wrap">
+    <p class="contact-label">TU PRÓXIMO PROYECTO</p>
+    <div class="contact-heading">
+      <h2 id="contact-title">Las buenas ideas<br />empiezan conversando.</h2>
+      <p>Cuéntanos qué tienes en mente.<br />Encontraremos el siguiente paso juntos.</p>
     </div>
-  </Container>
+    <div class="contact-channels">
+      <a class="contact-whatsapp" href={directWhatsApp.href} target="_blank" rel="noreferrer">Hablemos por WhatsApp <span aria-hidden="true">&nearr;</span></a>
+      <a class="contact-email" href={"mailto:" + contactConfig.email}>{contactConfig.email}<span aria-hidden="true">&nearr;</span></a>
+    </div>
+    <details class="contact-brief">
+      <summary><span>Prefiero contarte mi proyecto</span><i aria-hidden="true"></i></summary>
+      <form action={contactConfig.isPlaceholder ? contactConfig.whatsappHref : contactConfig.formEndpoint} method={contactConfig.isPlaceholder ? "get" : "post"} data-contact-form data-whatsapp={contactConfig.isPlaceholder ? contactConfig.whatsappHref : undefined}>
+        <div class="brief-grid">
+          <label><span>Nombre</span><input required name="name" autocomplete="name" /></label>
+          <label><span>Correo (opcional)</span><input type="email" name="email" autocomplete="email" /></label>
+          <label><span>¿Qué necesitas?</span><select name="projectType"><option>No estoy seguro</option><option>Página web</option><option>Automatización</option><option>Software a medida</option></select></label>
+        </div>
+        <label><span>Cuéntanos un poco</span><textarea required name="message" rows="3"></textarea></label>
+        <button type="submit">{contactConfig.isPlaceholder ? "Continuar en WhatsApp" : "Cuéntanos tu proyecto"} <span aria-hidden="true">&nearr;</span></button>
+      </form>
+    </details>
+  </div>
 </section>
+<script>
+  function initContactForm() {
+    document.querySelectorAll<HTMLFormElement>("[data-contact-form][data-whatsapp]").forEach((form) => {
+      if (form.dataset.ready) return;
+      form.dataset.ready = "true";
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+        const values = new FormData(form);
+        const message = [
+          "Hola, soy " + values.get("name") + ".",
+          values.get("email") ? "Correo: " + values.get("email") : null,
+          "Proyecto: " + values.get("projectType"),
+          String(values.get("message") || ""),
+        ].filter(Boolean).join("\n");
+        const url = new URL(form.dataset.whatsapp!);
+        url.searchParams.set("text", message);
+        window.location.assign(url.href);
+      });
+    });
+  }
+  initContactForm();
+  document.addEventListener("astro:page-load", initContactForm);
+</script>
+<style>
+  .project-contact { background: #0d0d0d; color: #f5f5f5; padding-block: 88px 64px; scroll-margin-top: 80px; }
+  .contact-wrap { width: calc(100% - 96px); max-width: 1360px; margin-inline: auto; }
+  .contact-label { margin: 0 0 28px; color: #ff9462; font-size: 12px; font-weight: 500; }
+  .contact-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; }
+  h2 { margin: 0; max-width: 900px; font-size: 56px; font-weight: 500; line-height: 1.15; }
+  .contact-heading p { margin: 0 0 6px; color: #aaa; font-size: 16px; line-height: 1.75; }
+  .contact-channels { display: flex; justify-content: space-between; align-items: center; gap: 32px; margin: 40px 0 64px; flex-wrap: wrap; }
+  .contact-whatsapp { display: inline-flex; align-items: center; gap: 32px; padding: 16px 22px; min-height: 56px; border: 1px solid #80513d; border-radius: 4px; background: #191614; font-size: 17px; font-weight: 500; }
+  a { text-decoration: none; color: inherit; }
+  .contact-whatsapp span { color: #ff8650; font-size: 25px; }
+  .contact-whatsapp:hover { background: #261c17; border-color: #c47652; }
+  .contact-email { display: inline-flex; align-items: center; gap: 20px; color: #bcbcbc; font-size: 16px; overflow-wrap: anywhere; }
+  .contact-email span { color: #ff8650; }
+  .contact-email:hover { color: #fff; }
+  .contact-brief { border-top: 1px solid #ffffff30; border-bottom: 1px solid #ffffff30; }
+  summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; list-style: none; padding-block: 24px; color: #ccc; font-size: 16px; cursor: pointer; }
+  summary::-webkit-details-marker { display: none; }
+  summary i { position: relative; width: 20px; height: 20px; flex-shrink: 0; }
+  summary i::before, summary i::after { content: ''; position: absolute; top: 9px; left: 2px; width: 16px; height: 1px; background: #ff9462; }
+  summary i::after { transform: rotate(90deg); }
+  details[open] summary i::after { transform: none; }
+  form { display: grid; gap: 24px; padding-block: 12px 32px; }
+  .brief-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  label { display: grid; gap: 10px; min-width: 0; }
+  label > span { color: #c5c5c5; font-size: 13px; line-height: 1.5; }
+  input, select, textarea { box-sizing: border-box; width: 100%; min-width: 0; padding: 14px 16px; border: 1px solid #ffffff40; border-radius: 4px; background: #151515; color: #fff; font: inherit; font-size: 16px; line-height: 1.5; color-scheme: dark; }
+  textarea { resize: vertical; }
+  button { justify-self: start; display: inline-flex; align-items: center; gap: 28px; min-height: 52px; padding: 14px 20px; border: 1px solid #80513d; border-radius: 4px; background: #191614; color: #fff; font: inherit; font-size: 15px; cursor: pointer; }
+  button span { color: #ff8650; }
+  button:hover { background: #261c17; }
+  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #ff9462; outline-offset: 5px; }
+  @media (max-width: 1023px) { .contact-wrap { width: calc(100% - 64px); } .contact-heading { display: block; } h2 { font-size: 48px; } .contact-heading p { margin-top: 24px; } }
+  @media (max-width: 767px) { .project-contact { padding-block: 64px 48px; } .contact-wrap { width: calc(100% - 40px); } h2 { font-size: 34px; } .contact-channels { align-items: start; flex-direction: column; gap: 28px; margin-block: 32px 44px; } .contact-whatsapp { gap: 20px; font-size: 15px; padding-inline: 18px; } .contact-email { font-size: 14px; } .brief-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 374px) { h2 { font-size: 29px; } .contact-whatsapp { font-size: 14px; gap: 14px; padding-inline: 14px; } .contact-whatsapp span { font-size: 22px; } }
+</style>

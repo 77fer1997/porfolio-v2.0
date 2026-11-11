@@ -1,204 +1,131 @@
 ---
 import { contactConfig } from "@shared/config/contact.config";
-import HeroProjectCarousel from "./HeroProjectCarousel.astro";
-import { heroContent, heroProjectSlides } from "./hero.data";
-
+import { heroContent } from "./hero.data";
 const whatsappHref = `${contactConfig.whatsappHref}?text=${encodeURIComponent(heroContent.whatsappMessage)}`;
+const ridgeHeight = (x: number) => {
+  const distance = Math.abs(x - 51);
+  if (distance < 7) return 16 + Math.sin(x * 0.7) * 1.4;
+  const slope = Math.min(1, (distance - 7) / 38);
+  return 82 - 64 * Math.pow(1 - slope, 1.55);
+};
+const particles = Array.from({ length: 208 }, (_, index) => {
+  const ridge = index < 96;
+  const loose = index >= 190;
+  const along = ridge ? index / 95 : ((index * 67) % 191) / 190;
+  const x = 6 + along * 90;
+  const surface = ridgeHeight(x);
+  const fill = ((index * 43) % 97) / 96;
+  const depth = index % 3;
+  const accent = index % (ridge ? 4 : 3) === 0;
+  return {
+    x: x + Math.sin(index * 7.13) * (loose ? 5 : 0.6),
+    y: loose ? 9 + fill * 83 : ridge ? surface + Math.sin(index * 4.7) * 1.8 : surface + 3 + fill * (85 - surface),
+    size: ridge ? [2, 2.6, 3][depth] : [1.5, 2.5, 4][depth],
+    opacity: accent ? 0.9 : loose ? 0.35 : ridge ? [0.85, 0.95, 1][depth] : [0.25, 0.4, 0.65][depth],
+    driftX: loose ? 12 : [3, -4, 5][depth],
+    driftY: loose ? -20 : [-4, 5, -6][depth],
+    duration: 3.5 + (index % 7) * 0.65,
+    delay: -(index * 2.3),
+    accent,
+  };
+});
+const mountainDetails = Array.from({ length: 250 }, (_, index) => {
+  const base = index < 100;
+  const foothill = index >= 210;
+  const snow = index >= 100 && index < 140;
+  const lane = Math.floor((index - 140) / 14);
+  const progress = ((index - 140) % 14) / 13;
+  const x = base ? 5 + index * 0.92 : foothill ? 15 + (index - 210) * 1.8 : snow ? 37 + (index - 100) * 0.72 : 42 + lane * 4.5 + (lane - 2) * progress * 8;
+  const y = base ? 85 + Math.sin(index * 0.12) * 1.6 + Math.sin(index * 0.37) * 0.7 + Math.cos(index * 1.7) * 0.35 : foothill ? 91 + Math.sin(index * 0.22) * 1.2 + Math.sin(index * 0.61) * 0.5 : snow ? 34 + Math.sin(index * 0.54) * 3 + Math.sin(index * 0.21) * 2 : 38 + progress * 44 + Math.sin(progress * 6 + lane) * 2;
+  const edgeFade = Math.pow(Math.max(0, Math.sin(Math.PI * (base ? index / 99 : (index - 210) / 39))), 0.6);
+  return {
+    x: base || foothill ? x + Math.sin(index * 2.3) * 0.2 : x,
+    y,
+    size: snow ? 2 : base ? 1.8 : 1.4,
+    opacity: base ? 0.75 * edgeFade : snow ? 0.95 : foothill ? 0.3 * edgeFade : 0.35,
+    accent: base ? index % 4 === 0 : !snow && index % 7 === 0,
+  };
+});
 ---
-
 <section id="inicio" class="hero-web" data-hero-web>
+  <div class="hero-web__particles" aria-hidden="true">
+    {mountainDetails.map((point) => (
+      <span
+        class:list={["hero-web__mountain-detail", { "hero-web__particle--accent": point.accent }]}
+        style={`--x:${point.x}%;--y:${point.y}%;--size:${point.size}px;--opacity:${point.opacity};`}
+      />
+    ))}
+    {particles.map((particle) => (
+      <span
+        class:list={["hero-web__particle", { "hero-web__particle--accent": particle.accent }]}
+        style={`--x:${particle.x}%;--y:${particle.y}%;--size:${particle.size}px;--opacity:${particle.opacity};--drift-x:${particle.driftX}px;--drift-y:${particle.driftY}px;--duration:${particle.duration}s;--delay:${particle.delay}s;`}
+      />
+    ))}
+  </div>
   <div class="hero-web__container">
     <div class="hero-web__content">
       <p class="hero-web__eyebrow">{heroContent.eyebrow}</p>
-      <h1>
-        Una página <wbr />web a la altura de <span>tu negocio.</span>
-      </h1>
-      <p class="hero-web__description">{heroContent.description}</p>
-
-      <div class="hero-web__actions">
-        <a href={whatsappHref} class="hero-web__primary" target="_blank" rel="noreferrer">
-          {heroContent.primaryCta}
-          <span aria-hidden="true">↗</span>
-        </a>
-        <a href="#casos-de-exito" class="hero-web__secondary">
-          {heroContent.secondaryCta}
-          <span aria-hidden="true">↓</span>
-        </a>
+      <h1><span>Diseñamos y desarrollamos </span><span>tu próxima web.</span></h1>
+      <div class="hero-web__details">
+        <p class="hero-web__description">{heroContent.description}</p>
+        <a href={whatsappHref} class="hero-web__primary" target="_blank" rel="noreferrer">{heroContent.primaryCta} <span aria-hidden="true">&nearr;</span></a>
       </div>
-
-      <p class="hero-web__note">{heroContent.supportText}</p>
     </div>
-
-    <HeroProjectCarousel slides={heroProjectSlides} />
+    <div class="hero-web__footer">
+      <a href="#casos-de-exito" aria-label="Ver proyectos seleccionados" title="Ver proyectos">
+        <span class="hero-web__mouse" aria-hidden="true"><span class="hero-web__wheel"></span></span>
+      </a>
+    </div>
   </div>
 </section>
-
 <style>
-  .hero-web {
-    position: relative;
-    isolation: isolate;
-    overflow: clip;
-    background: #12100e;
-    color: #f5f3ef;
-  }
-
-  .hero-web::before {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background:
-      radial-gradient(circle at 78% 28%, rgba(255, 80, 4, 0.16), transparent 34%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 34%);
-    content: "";
-  }
-
-  .hero-web__container {
-    display: grid;
-    width: 100%;
-    max-width: 1440px;
-    min-height: clamp(720px, 92svh, 880px);
-    margin: 0 auto;
-    grid-template-columns: minmax(0, 0.96fr) minmax(440px, 1.04fr);
-    align-items: center;
-    gap: clamp(48px, 5vw, 64px);
-    padding: clamp(136px, 15svh, 168px) clamp(32px, 5vw, 64px) clamp(64px, 8svh, 88px);
-  }
-
-  .hero-web__content {
-    max-width: 650px;
-    min-width: 0;
-  }
-
-  .hero-web__eyebrow {
-    margin: 0 0 22px;
-    color: #ff5004;
-    font-size: clamp(0.78rem, 1.05vw, 0.92rem);
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    line-height: 1.35;
-  }
-
-  .hero-web h1 {
-    max-width: 760px;
-    margin: 0;
-    color: #f5f3ef;
-    font-size: clamp(3.5rem, 5.2vw, 4.75rem);
-    font-weight: 800;
-    line-height: 0.96;
-    overflow-wrap: break-word;
-  }
-
-  .hero-web h1 span {
-    color: #ff5004;
-  }
-
-  .hero-web__description {
-    max-width: 620px;
-    margin: 28px 0 0;
-    color: #c9c5c0;
-    font-size: clamp(1rem, 1.22vw, 1.16rem);
-    font-weight: 500;
-    line-height: 1.78;
-    overflow-wrap: break-word;
-  }
-
-  .hero-web__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 34px;
-  }
-
-  .hero-web__primary,
-  .hero-web__secondary {
-    display: inline-flex;
-    min-height: 48px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border-radius: 8px;
-    padding: 0.88rem 1.08rem;
-    font-size: 0.92rem;
-    font-weight: 800;
-    line-height: 1;
-    text-decoration: none;
-    transition:
-      transform 180ms ease,
-      border-color 180ms ease,
-      background-color 180ms ease,
-      color 180ms ease;
-  }
-
-  .hero-web__primary {
-    border: 1px solid rgba(255, 80, 4, 0.96);
-    background: #ff5004;
-    color: #ffffff;
-    box-shadow: 0 18px 38px rgba(255, 80, 4, 0.24);
-  }
-
-  .hero-web__secondary {
-    border: 1px solid rgba(245, 243, 239, 0.16);
-    color: #f5f3ef;
-  }
-
-  .hero-web__primary:hover,
-  .hero-web__secondary:hover {
-    transform: translateY(-2px);
-  }
-
-  .hero-web__primary:hover {
-    background: #e94803;
-  }
-
-  .hero-web__secondary:hover {
-    border-color: rgba(255, 80, 4, 0.8);
-    color: #ff5004;
-  }
-
-  .hero-web__note {
-    margin: 22px 0 0;
-    color: rgba(201, 197, 192, 0.78);
-    font-size: 0.86rem;
-    font-weight: 700;
-  }
-
-  @media (max-width: 1023px) {
-    .hero-web__container {
-      min-height: 0;
-      grid-template-columns: 1fr;
-      gap: 44px;
-      padding-top: 128px;
-    }
-
-    .hero-web__content,
-    .hero-web__description {
-      max-width: 720px;
-    }
-  }
-
+  .hero-web { position: relative; overflow: clip; background: #0d0d0d; color: #fff; font-family: var(--font-sans); letter-spacing: 0; }
+  .hero-web__container { position: relative; display: flex; flex-direction: column; justify-content: center; width: 100%; min-height: max(680px, 100svh); padding: 128px clamp(24px, 4vw, 72px); }
+  .hero-web__content { width: 100%; max-width: 1576px; margin-inline: auto; }
+  .hero-web__particles { position: absolute; top: 46%; right: 3%; width: 39%; height: 35%; pointer-events: none; transform-origin: 50% 80%; animation: hero-mountain-float 8s ease-in-out infinite alternate; }
+  .hero-web__particle { position: absolute; left: var(--x); top: var(--y); width: var(--size); height: var(--size); border-radius: 50%; background: #dedede; opacity: var(--opacity); animation: hero-particle-drift var(--duration) ease-in-out var(--delay) infinite alternate, hero-particle-shimmer calc(var(--duration) * 1.4) ease-in-out var(--delay) infinite alternate; }
+  .hero-web__mountain-detail { position: absolute; left: var(--x); top: var(--y); width: var(--size); height: var(--size); border-radius: 50%; background: #dedede; opacity: var(--opacity); }
+  .hero-web__particle--accent { background: #ff702e; box-shadow: 0 0 6px #ff662670; }
+  @keyframes hero-mountain-float { from { transform: translateY(4px) rotate(-0.6deg); } to { transform: translateY(-9px) rotate(0.6deg); } }
+  @keyframes hero-particle-shimmer { from { opacity: calc(var(--opacity) * 0.72); } to { opacity: var(--opacity); } }
+  @keyframes hero-particle-drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(var(--drift-x), var(--drift-y), 0); } }
+  .hero-web__eyebrow { animation: hero-enter 900ms var(--motion-ease) 100ms both; }
+  .hero-web h1 > span { animation: hero-title-enter 1100ms var(--motion-ease) 220ms both; }
+  .hero-web h1 > span + span { animation-delay: 380ms; }
+  .hero-web__details { animation: hero-enter 1000ms var(--motion-ease) 620ms both; }
+  .hero-web__footer a { animation: hero-enter 900ms var(--motion-ease) 950ms both; }
+  .hero-web__eyebrow { margin: 0 0 32px; color: #a8a8a8; font-size: 12px; font-weight: 500; line-height: 1.5; letter-spacing: 0; }
+  .hero-web h1 { margin: 0; font-size: 80px; font-weight: 500; line-height: 1.12; letter-spacing: 0; }
+  .hero-web h1 > span { display: block; }
+  .hero-web__details { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; max-width: 640px; margin-top: 36px; }
+  .hero-web__description { max-width: 580px; margin: 0; color: #b5b5b5; font-size: 20px; line-height: 1.6; }
+  .hero-web__primary { display: inline-flex; flex-shrink: 0; min-height: 56px; align-items: center; gap: 28px; padding: 16px 22px; border: 1px solid #80513d; border-radius: 4px; background: #191614; color: #f5f5f5; font-size: 16px; font-weight: 500; line-height: 1.4; text-decoration: none; transition: background 250ms ease, border-color 250ms ease; }
+  .hero-web__primary > span { color: #ff773d; font-size: 24px; transition: transform 350ms var(--motion-ease); }
+  .hero-web__primary:is(:hover, :focus-visible) { background: #261c17; border-color: #c47652; }
+  .hero-web__primary:focus-visible, .hero-web__footer a:focus-visible { outline: 2px solid #ff5004; outline-offset: 6px; }
+  .hero-web__primary:is(:hover, :focus-visible) > span { transform: translate(3px, -3px); }
+  .hero-web__footer { position: absolute; bottom: 0; inset-inline: 0; display: flex; min-height: 88px; align-items: center; justify-content: center; }
+  .hero-web__footer a { display: grid; width: 48px; height: 48px; place-items: center; color: #858585; text-decoration: none; transition: color 250ms ease; }
+  .hero-web__mouse { position: relative; display: block; width: 22px; height: 34px; border: 1px solid currentColor; border-radius: 12px; }
+  .hero-web__wheel { position: absolute; top: 7px; left: 50%; width: 2px; height: 6px; margin-left: -1px; border-radius: 1px; background: #ff5004; animation: hero-scroll-wheel 2400ms ease-in-out infinite; }
+  .hero-web__footer a:is(:hover, :focus-visible) { color: #fff; }
+  @keyframes hero-scroll-wheel { 0%, 20% { opacity: 0.8; transform: translateY(0); } 65% { opacity: 0; transform: translateY(9px); } 66% { opacity: 0; transform: translateY(0); } 100% { opacity: 0.8; transform: translateY(0); } }
+  @keyframes hero-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes hero-title-enter { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  @media (min-width: 1600px) { .hero-web h1 { font-size: 96px; } }
+  @media (max-width: 1199px) { .hero-web h1 { font-size: 64px; } .hero-web__details { gap: 32px; } .hero-web__description { font-size: 18px; } }
   @media (max-width: 767px) {
-    .hero-web__container {
-      padding-top: 116px;
-      padding-right: 20px;
-      padding-bottom: 60px;
-      padding-left: 20px;
-    }
-
-    .hero-web h1 {
-      font-size: clamp(2.25rem, 10.2vw, 2.65rem);
-      line-height: 1.02;
-    }
-
-    .hero-web__description {
-      margin-top: 22px;
-      font-size: 1rem;
-      line-height: 1.68;
-    }
-
-    .hero-web__actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      margin-top: 28px;
-    }
+    .hero-web__container { min-height: max(600px, 100svh); padding: 120px 24px; }
+    .hero-web__content { max-width: 100%; }
+    .hero-web__particles { top: auto; bottom: 70px; right: 12px; width: 120px; height: 100px; opacity: 0.6; }
+    .hero-web__eyebrow { max-width: 310px; margin-bottom: 22px; font-size: 11px; }
+    .hero-web h1 { font-size: 38px; line-height: 1.14; }
+    .hero-web__details { align-items: flex-start; flex-direction: column; gap: 28px; margin-top: 28px; }
+    .hero-web__description { max-width: 360px; font-size: 16px; }
+    .hero-web__primary { min-height: 52px; padding: 12px 18px; gap: 20px; font-size: 15px; }
+    .hero-web__footer { min-height: 80px; }
   }
+  @media (max-width: 374px) { .hero-web h1 { font-size: 31px; } .hero-web__primary { padding-inline: 14px; gap: 12px; font-size: 14px; } }
+  @media (prefers-reduced-motion: reduce) { .hero-web__eyebrow, .hero-web h1 > span, .hero-web__details, .hero-web__footer a, .hero-web__wheel { animation: none; } .hero-web__primary, .hero-web__primary > span, .hero-web__footer a { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero-web__particles, .hero-web__particle { animation: none; } }
 </style>
