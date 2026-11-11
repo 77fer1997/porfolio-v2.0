@@ -12,7 +12,7 @@ directWhatsApp.searchParams.set("text", "Hola, quisiera conversar sobre un proye
       <p>Cuéntanos qué tienes en mente.<br />Encontraremos el siguiente paso juntos.</p>
     </div>
     <div class="contact-channels">
-      <a class="contact-whatsapp" href={directWhatsApp.href} target="_blank" rel="noreferrer">Conversemos por WhatsApp <span aria-hidden="true">&nearr;</span></a>
+      <a class="contact-whatsapp" href={directWhatsApp.href} target="_blank" rel="noreferrer">Escribir por WhatsApp <span aria-hidden="true">&nearr;</span></a>
       <a class="contact-email" href={"mailto:" + contactConfig.email}>{contactConfig.email}<span aria-hidden="true">&nearr;</span></a>
     </div>
     <div class="contact-form-area">
@@ -32,7 +32,7 @@ directWhatsApp.searchParams.set("text", "Hola, quisiera conversar sobre un proye
           />
         </div>
         <label><span>Cuéntanos un poco</span><textarea required name="message" rows="3"></textarea></label>
-        <button type="submit">{contactConfig.isPlaceholder ? "Continuar en WhatsApp" : "Cuéntanos tu proyecto"} <span aria-hidden="true">&nearr;</span></button>
+        <button type="submit">{contactConfig.isPlaceholder ? "Enviar mi consulta por WhatsApp" : "Cuéntanos tu proyecto"} <span aria-hidden="true">&nearr;</span></button>
       </form>
     </div>
   </div>
