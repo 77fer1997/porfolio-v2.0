@@ -1,26 +1,26 @@
 export const processSteps = [
   {
     number: "01",
-    title: "Entendemos el problema",
-    description: "Identificamos qué está frenando realmente la operación.",
-    outcome: "Problema claro · Prioridad · Ruta",
+    title: "Entendemos tu operación",
+    description: "Conversamos sobre tus procesos y detectamos qué conviene resolver primero.",
+    outcome: "Prioridades y objetivo claros",
   },
   {
     number: "02",
-    title: "Definimos lo necesario",
-    description: "Decidimos qué resolver ahora y qué puede esperar.",
-    outcome: "Alcance · Entregables · Tiempos",
+    title: "Definimos la ruta",
+    description: "Acordamos el alcance, los entregables y los tiempos antes de construir.",
+    outcome: "Alcance y tiempos acordados",
   },
   {
     number: "03",
     title: "Construimos y validamos",
-    description: "Entregamos por bloques para probar antes de seguir.",
-    outcome: "Avance visible · Feedback · Validación",
+    description: "Avanzamos por etapas y revisamos contigo cada entrega antes de seguir.",
+    outcome: "Avances que puedes probar",
   },
   {
     number: "04",
     title: "Lanzamos y evolucionamos",
-    description: "Ponemos la solución en operación y seguimos mejorándola.",
-    outcome: "Lanzamiento · Seguimiento · Próximos pasos",
+    description: "Ponemos la solución en marcha y planificamos cómo mantenerla y mejorarla.",
+    outcome: "Lanzamiento y siguientes mejoras",
   },
 ] as const;
