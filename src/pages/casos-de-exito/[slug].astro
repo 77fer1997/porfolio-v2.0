@@ -194,6 +194,11 @@ const nextDetail = nextProject && projectDetails[nextProject.data.slug as keyof 
           <div class="case-overview__copy">
             <p>{currentDetail.body}</p>
             <p>{currentDetail.result}</p>
+            {project.data.slug === "saul-guzman" && (
+              <a class="case-project-link" href="https://saulguzman.com/" target="_blank" rel="noopener noreferrer">
+                Visitar sitio web <span aria-hidden="true">&nearr;</span>
+              </a>
+            )}
             <dl class="case-facts">
               <div>
                 <dt>ROL</dt>

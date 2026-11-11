@@ -96,9 +96,9 @@ const remainingProjects = projects.slice(2);
         }
       </div>
 
-      <div class="project-editorial-row project-editorial-row--single">
-        {
-          remainingProjects.map((project) => (
+      {
+        remainingProjects.map((project) => (
+          <div class="project-editorial-row project-editorial-row--single">
             <article class:list={["project-editorial-item", `project-editorial-item--${project.variant}`]} data-project-card>
               <a
                 href={`/casos-de-exito/${project.slug}/`}
@@ -132,9 +132,9 @@ const remainingProjects = projects.slice(2);
                 <span class="project-hover-cursor" aria-hidden="true">Ver caso</span>
               </a>
             </article>
-          ))
-        }
-      </div>
+          </div>
+        ))
+      }
 
       <div class="project-editorial-footer">
         <a href="/casos-de-exito/" class="project-all-link">
