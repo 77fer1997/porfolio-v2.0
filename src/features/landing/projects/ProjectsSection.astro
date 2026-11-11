@@ -32,10 +32,20 @@ const projects = [
     transitionName: "project-botica",
     image: "/images/projects/project-botica-landing-3.png",
   },
+  {
+    category: "Web / Servicios legales",
+    name: "Saúl Guzmán",
+    slug: "saul-guzman",
+    description: "Sitio profesional para presentar sus áreas de práctica y facilitar consultas legales.",
+    scope: "Diseño web · Desarrollo responsive · WhatsApp",
+    variant: "saul",
+    transitionName: "project-saul-guzman",
+    image: "/images/projects/project-saul-guzman-home.png",
+  },
 ] as const;
 
 const firstProjectRow = projects.slice(0, 2);
-const boticaProject = projects[2];
+const remainingProjects = projects.slice(2);
 ---
 
 <section id="casos-de-exito" class="projects-section scroll-mt-24 py-24 text-white sm:py-32 lg:py-36">
@@ -87,39 +97,43 @@ const boticaProject = projects[2];
       </div>
 
       <div class="project-editorial-row project-editorial-row--single">
-        <article class:list={["project-editorial-item", `project-editorial-item--${boticaProject.variant}`]} data-project-card>
-          <a
-            href={`/casos-de-exito/${boticaProject.slug}/`}
-            class="project-editorial-link"
-            aria-label={`Ver caso ${boticaProject.name}`}
-            data-project-link
-          >
-            <span
-              class:list={["project-cover", `project-cover--${boticaProject.variant}`]}
-              data-project-visual
-              style={`view-transition-name: ${boticaProject.transitionName};`}
-            >
-              <img
-                src={boticaProject.image}
-                alt={`Portada de ${boticaProject.name}`}
-                width="1400"
-                height="1050"
-                loading="lazy"
-                decoding="async"
-                class="project-cover__image"
-              />
-              <span class="project-category">{boticaProject.category}</span>
-            </span>
+        {
+          remainingProjects.map((project) => (
+            <article class:list={["project-editorial-item", `project-editorial-item--${project.variant}`]} data-project-card>
+              <a
+                href={`/casos-de-exito/${project.slug}/`}
+                class="project-editorial-link"
+                aria-label={`Ver caso ${project.name}`}
+                data-project-link
+              >
+                <span
+                  class:list={["project-cover", `project-cover--${project.variant}`]}
+                  data-project-visual
+                  style={`view-transition-name: ${project.transitionName};`}
+                >
+                  <img
+                    src={project.image}
+                    alt={`Portada de ${project.name}`}
+                    width="1400"
+                    height="1050"
+                    loading="lazy"
+                    decoding="async"
+                    class="project-cover__image"
+                  />
+                  <span class="project-category">{project.category}</span>
+                </span>
 
-            <span class="project-editorial-meta" data-project-meta>
-              <h3 data-project-meta-item>{boticaProject.name}</h3>
-              <span data-project-meta-item>{boticaProject.description}</span>
-              <small class="project-scope" data-project-meta-item>{boticaProject.scope}</small>
-            </span>
+                <span class="project-editorial-meta" data-project-meta>
+                  <h3 data-project-meta-item>{project.name}</h3>
+                  <span data-project-meta-item>{project.description}</span>
+                  <small class="project-scope" data-project-meta-item>{project.scope}</small>
+                </span>
 
-            <span class="project-hover-cursor" aria-hidden="true">Ver caso</span>
-          </a>
-        </article>
+                <span class="project-hover-cursor" aria-hidden="true">Ver caso</span>
+              </a>
+            </article>
+          ))
+        }
       </div>
 
       <div class="project-editorial-footer">
