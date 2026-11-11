@@ -70,12 +70,12 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
         <p class="hero-web__description">{heroContent.description}</p>
         <div class="hero-web__actions">
           <a href={whatsappHref} class="hero-web__primary" target="_blank" rel="noreferrer">{heroContent.primaryCta} <span aria-hidden="true">&nearr;</span></a>
-          <a href="#casos-de-exito" class="hero-web__secondary">{heroContent.secondaryCta} <span aria-hidden="true">&darr;</span></a>
         </div>
       </div>
     </div>
     <div class="hero-web__footer">
-      <a href="#casos-de-exito" aria-label="Ver proyectos seleccionados" title="Ver proyectos">
+      <a href="#casos-de-exito" class="hero-web__cases-link">{heroContent.secondaryCta} <span aria-hidden="true">&darr;</span></a>
+      <a href="#casos-de-exito" class="hero-web__scroll-link" aria-label="Ver proyectos seleccionados" title="Ver proyectos">
         <span class="hero-web__mouse" aria-hidden="true"><span class="hero-web__wheel"></span></span>
       </a>
     </div>
@@ -108,16 +108,17 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
   .hero-web__primary:is(:hover, :focus-visible) { background: transparent; color: #ffffff; }
   .hero-web__primary:focus-visible, .hero-web__footer a:focus-visible { outline: 2px solid #3dbddf; outline-offset: 6px; }
   .hero-web__primary:is(:hover, :focus-visible) > span { transform: translate(3px, -3px); }
-  .hero-web__secondary { display: inline-flex; min-height: 48px; align-items: center; gap: 12px; color: #c4c4c4; font-size: 15px; font-weight: 500; text-decoration: none; transition: color 220ms ease; }
-  .hero-web__secondary span { color: #3dbddf; font-size: 20px; transition: transform 220ms ease; }
-  .hero-web__secondary:hover { color: #fff; }
-  .hero-web__secondary:hover span { transform: translateY(3px); }
-  .hero-web__secondary:focus-visible { outline: 2px solid #3dbddf; outline-offset: 6px; }
-  .hero-web__footer { position: absolute; bottom: 0; inset-inline: 0; display: flex; min-height: 88px; align-items: center; justify-content: center; }
-  .hero-web__footer a { display: grid; width: 48px; height: 48px; place-items: center; color: #858585; text-decoration: none; transition: color 250ms ease; }
+  .hero-web__footer { position: absolute; bottom: 0; inset-inline: 0; display: flex; min-height: 124px; flex-direction: column; align-items: center; justify-content: center; gap: 0; padding-bottom: 8px; box-sizing: border-box; }
+  .hero-web__footer a { color: #858585; text-decoration: none; transition: color 250ms ease; }
+  .hero-web__footer .hero-web__cases-link { display: inline-flex; min-height: 38px; align-items: center; gap: 10px; color: #c4c4c4; font-size: 13px; font-weight: 500; }
+  .hero-web__cases-link span { color: #3dbddf; font-size: 18px; transition: transform 220ms ease; }
+  .hero-web__footer .hero-web__cases-link:hover { color: #fff; }
+  .hero-web__cases-link:hover span { transform: translateY(3px); }
+  .hero-web__scroll-link { display: grid; width: 48px; height: 48px; place-items: center; }
   .hero-web__mouse { position: relative; display: block; width: 22px; height: 34px; border: 1px solid currentColor; border-radius: 12px; }
   .hero-web__wheel { position: absolute; top: 7px; left: 50%; width: 2px; height: 6px; margin-left: -1px; border-radius: 1px; background: #3dbddf; animation: hero-scroll-wheel 2400ms ease-in-out infinite; }
   .hero-web__footer a:is(:hover, :focus-visible) { color: #fff; }
+  .hero-web__footer a:focus-visible { outline: 2px solid #3dbddf; outline-offset: 4px; }
   @keyframes hero-scroll-wheel { 0%, 20% { opacity: 0.8; transform: translateY(0); } 65% { opacity: 0; transform: translateY(9px); } 66% { opacity: 0; transform: translateY(0); } 100% { opacity: 0.8; transform: translateY(0); } }
   @keyframes hero-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes hero-title-enter { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
@@ -131,10 +132,9 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
     .hero-web h1 { font-size: 34px; line-height: 1.14; }
     .hero-web__details { align-items: flex-start; flex-direction: column; gap: 24px; margin-top: 28px; }
     .hero-web__actions { gap: 16px 24px; }
-    .hero-web__secondary { min-height: 44px; font-size: 14px; }
     .hero-web__description { max-width: 360px; font-size: 16px; }
     .hero-web__primary { min-height: 52px; padding: 12px 18px; gap: 20px; font-size: 15px; }
-    .hero-web__footer { min-height: 80px; }
+    .hero-web__footer { min-height: 112px; }
   }
   @media (max-width: 374px) { .hero-web h1 { font-size: 31px; } .hero-web__primary { padding-inline: 14px; gap: 12px; font-size: 14px; } }
   @media (prefers-reduced-motion: reduce) { .hero-web__eyebrow, .hero-web h1 > span, .hero-web__details, .hero-web__footer a, .hero-web__wheel { animation: none; } .hero-web__primary, .hero-web__primary > span, .hero-web__footer a { transition: none; } }
