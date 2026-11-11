@@ -61,6 +61,9 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
         style={`--x:${particle.x}%;--y:${particle.y}%;--size:${particle.size}px;--opacity:${particle.opacity};--drift-x:${particle.driftX}px;--drift-y:${particle.driftY}px;--duration:${particle.duration}s;--delay:${particle.delay}s;`}
       />
     ))}
+    <div class="hero-web__smoke">
+      <span></span><span></span><span></span><span></span>
+    </div>
   </div>
   <div class="hero-web__container">
     <div class="hero-web__content">
@@ -89,7 +92,14 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
   .hero-web__particle { position: absolute; left: var(--x); top: var(--y); width: var(--size); height: var(--size); border-radius: 50%; background: #dedede; opacity: var(--opacity); animation: hero-particle-drift var(--duration) ease-in-out var(--delay) infinite alternate, hero-particle-shimmer calc(var(--duration) * 1.4) ease-in-out var(--delay) infinite alternate; }
   .hero-web__mountain-detail { position: absolute; left: var(--x); top: var(--y); width: var(--size); height: var(--size); border-radius: 50%; background: #dedede; opacity: var(--opacity); }
   .hero-web__particle--accent { background: #3dbddf; box-shadow: 0 0 6px #3dbddf70; }
+  .hero-web__smoke { position: absolute; left: 51%; bottom: 84%; width: 92px; height: 112px; transform: translateX(-50%); }
+  .hero-web__smoke span { position: absolute; bottom: 0; width: 34px; height: 42px; border-radius: 50%; background: radial-gradient(ellipse, #d6e1e766 0%, #b9cbd544 48%, transparent 76%); filter: blur(6px); opacity: 0; animation: hero-smoke-rise 5.8s ease-out infinite; }
+  .hero-web__smoke span:nth-child(1) { left: 16%; animation-delay: -1.4s; }
+  .hero-web__smoke span:nth-child(2) { left: 38%; width: 42px; height: 50px; animation-delay: -3.2s; }
+  .hero-web__smoke span:nth-child(3) { left: 58%; width: 30px; height: 38px; animation-delay: -4.5s; }
+  .hero-web__smoke span:nth-child(4) { left: 32%; width: 48px; height: 56px; animation-delay: -5.4s; }
   @keyframes hero-mountain-float { from { transform: translateY(4px) rotate(-0.6deg); } to { transform: translateY(-9px) rotate(0.6deg); } }
+  @keyframes hero-smoke-rise { 0% { opacity: 0; transform: translate3d(0, 8px, 0) scale(.55); } 15% { opacity: .82; } 68% { opacity: .36; } 100% { opacity: 0; transform: translate3d(12px, -108px, 0) scale(1.45); } }
   @keyframes hero-particle-shimmer { from { opacity: calc(var(--opacity) * 0.72); } to { opacity: var(--opacity); } }
   @keyframes hero-particle-drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(var(--drift-x), var(--drift-y), 0); } }
   .hero-web__eyebrow { animation: hero-enter 900ms var(--motion-ease) 100ms both; }
@@ -136,5 +146,5 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
   }
   @media (max-width: 374px) { .hero-web h1 { font-size: 31px; } .hero-web__primary { padding-inline: 14px; gap: 12px; font-size: 14px; } }
   @media (prefers-reduced-motion: reduce) { .hero-web__eyebrow, .hero-web h1 > span, .hero-web__details, .hero-web__footer a, .hero-web__wheel { animation: none; } .hero-web__primary, .hero-web__primary > span, .hero-web__footer a { transition: none; } }
-  @media (prefers-reduced-motion: reduce) { .hero-web__particles, .hero-web__particle { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero-web__particles, .hero-web__particle, .hero-web__smoke span { animation: none; } .hero-web__smoke span { opacity: .2; transform: translateY(-20px); } }
 </style>
