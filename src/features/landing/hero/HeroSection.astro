@@ -74,7 +74,7 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
       </div>
     </div>
     <div class="hero-web__footer">
-      <a href="#casos-de-exito" class="hero-web__cases-link">{heroContent.secondaryCta} <span aria-hidden="true">&darr;</span></a>
+      <a href="#casos-de-exito" class="hero-web__cases-link">{heroContent.secondaryCta}</a>
       <a href="#casos-de-exito" class="hero-web__scroll-link" aria-label="Ver proyectos seleccionados" title="Ver proyectos">
         <span class="hero-web__mouse" aria-hidden="true"><span class="hero-web__wheel"></span></span>
       </a>
@@ -110,10 +110,8 @@ const mountainDetails = Array.from({ length: 250 }, (_, index) => {
   .hero-web__primary:is(:hover, :focus-visible) > span { transform: translate(3px, -3px); }
   .hero-web__footer { position: absolute; bottom: 0; inset-inline: 0; display: flex; min-height: 124px; flex-direction: column; align-items: center; justify-content: center; gap: 0; padding-bottom: 8px; box-sizing: border-box; }
   .hero-web__footer a { color: #858585; text-decoration: none; transition: color 250ms ease; }
-  .hero-web__footer .hero-web__cases-link { display: inline-flex; min-height: 38px; align-items: center; gap: 10px; color: #c4c4c4; font-size: 13px; font-weight: 500; }
-  .hero-web__cases-link span { color: #3dbddf; font-size: 18px; transition: transform 220ms ease; }
+  .hero-web__footer .hero-web__cases-link { display: inline-flex; min-height: 38px; align-items: center; color: #c4c4c4; font-size: 13px; font-weight: 500; }
   .hero-web__footer .hero-web__cases-link:hover { color: #fff; }
-  .hero-web__cases-link:hover span { transform: translateY(3px); }
   .hero-web__scroll-link { display: grid; width: 48px; height: 48px; place-items: center; }
   .hero-web__mouse { position: relative; display: block; width: 22px; height: 34px; border: 1px solid currentColor; border-radius: 12px; }
   .hero-web__wheel { position: absolute; top: 7px; left: 50%; width: 2px; height: 6px; margin-left: -1px; border-radius: 1px; background: #3dbddf; animation: hero-scroll-wheel 2400ms ease-in-out infinite; }
