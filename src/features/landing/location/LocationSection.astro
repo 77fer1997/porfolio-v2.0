@@ -1,0 +1,53 @@
+---
+const address = "Calle La Merced 125, oficina 111, Centro Comercial Unicentro, Arequipa, Perú";
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+---
+
+<section id="ubicacion" class="location-section" aria-labelledby="location-title">
+  <div class="location-wrap">
+    <header class="location-heading">
+      <p class="location-label">VISÍTANOS</p>
+      <h2 id="location-title">Estamos en el centro de Arequipa.</h2>
+    </header>
+
+    <div class="location-card">
+      <div class="location-pin" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <path d="M38 20c0 12-14 24-14 24S10 32 10 20a14 14 0 1 1 28 0Z" />
+          <circle cx="24" cy="20" r="5" />
+        </svg>
+      </div>
+      <div class="location-details">
+        <p class="location-card-label">OFICINA · UNICENTRO</p>
+        <address>
+          <span>Calle La Merced 125</span>
+          <span>Oficina 111, Centro Comercial Unicentro</span>
+          <span>Arequipa, Perú</span>
+        </address>
+        <a class="location-link" href={mapsUrl} target="_blank" rel="noopener noreferrer">
+          Cómo llegar <span aria-hidden="true">&nearr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .location-section { background: #faf9f5; color: #171717; padding-block: clamp(72px, 7vw, 104px); }
+  .location-wrap { width: calc(100% - clamp(48px, 8vw, 144px)); max-width: 1576px; margin-inline: auto; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: center; gap: clamp(44px, 7vw, 112px); }
+  .location-label { margin: 0 0 24px; color: #126d84; font-size: 12px; font-weight: 600; letter-spacing: .08em; }
+  .location-heading h2 { max-width: 620px; margin: 0; font-size: clamp(40px, 4.5vw, 64px); font-weight: 500; line-height: 1.08; letter-spacing: -.025em; }
+  .location-card { display: flex; align-items: flex-start; gap: 28px; padding: clamp(28px, 4vw, 48px); border: 1px solid #1717171f; background: #fff; }
+  .location-pin { display: grid; flex: 0 0 52px; width: 52px; height: 52px; place-items: center; border: 1px solid #3dbddf70; }
+  .location-pin svg { width: 28px; height: 28px; stroke: #126d84; stroke-width: 1.5; }
+  .location-details { min-width: 0; }
+  .location-card-label { margin: 0 0 18px; color: #126d84; font-size: 11px; font-weight: 600; letter-spacing: .08em; }
+  .location-details address { display: grid; gap: 5px; color: #171717; font-size: clamp(16px, 1.45vw, 19px); font-style: normal; line-height: 1.55; }
+  .location-details address span:first-child { font-weight: 600; }
+  .location-link { display: inline-flex; align-items: center; gap: 18px; margin-top: 26px; border-bottom: 1px solid #17171770; padding-bottom: 7px; color: #171717; font-size: 14px; text-decoration: none; transition: border-color 220ms ease, color 220ms ease; }
+  .location-link span { color: #126d84; font-size: 20px; }
+  .location-link:hover { border-color: #126d84; color: #126d84; }
+  .location-link:focus-visible { outline: 2px solid #3dbddf; outline-offset: 5px; }
+  @media (max-width: 900px) { .location-wrap { grid-template-columns: 1fr; gap: 32px; } .location-heading h2 { max-width: 720px; } }
+  @media (max-width: 767px) { .location-section { padding-block: 64px; } .location-label { margin-bottom: 18px; } .location-heading h2 { font-size: 36px; } .location-card { gap: 18px; padding: 24px 20px; } .location-pin { flex-basis: 44px; width: 44px; height: 44px; } .location-pin svg { width: 24px; height: 24px; } .location-card-label { margin-bottom: 14px; } .location-details address { font-size: 16px; } }
+</style>
