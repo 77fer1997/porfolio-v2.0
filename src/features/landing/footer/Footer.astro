@@ -1,38 +1,40 @@
 ---
 import { siteConfig } from "@shared/config/site.config";
-import { contactConfig } from "@shared/config/contact.config";
+import { footerLinks } from "./footer.data";
 ---
 <footer class="studio-footer">
   <div class="footer-wrap">
-    <div class="footer-main">
-      <div class="footer-brand">
-        <a class="footer-logo" href="/#inicio" aria-label="KUROKI inicio"><img src={siteConfig.logo} alt="KUROKI" width="200" height="40" loading="lazy" /></a>
-        <p>Diseño, desarrollo y buenas ideas.<br /><span>Desde Arequipa, Perú.</span></p>
-      </div>
-      <nav aria-label="Navegación del pie de página"><a href="/casos-de-exito/">Casos de éxito</a><a href="/#servicios">Servicios</a><a href="/#metodo">Método</a><a href="/#ubicacion">Ubicación</a><a href="/#contacto">Contacto</a></nav>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; {new Date().getFullYear()} KUROKI</span>
-      <a href={"mailto:" + contactConfig.email}>{contactConfig.email}</a>
-      <a href="/#inicio">Volver arriba <span aria-hidden="true">&uarr;</span></a>
-    </div>
+    <a class="footer-logo" href="/#inicio" aria-label="KUROKI inicio"><img src={siteConfig.logo} alt="KUROKI" width="200" height="40" loading="lazy" /></a>
+    {footerLinks.length > 0 && (
+      <nav class="footer-socials" aria-label="Redes sociales">
+        {footerLinks.map((link) => (
+          <a href={link.href} aria-label={link.label} target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              {link.icon === "linkedin" && <path d="M5.2 8.7H2.6v12.1h2.6V8.7ZM3.9 7.5a1.6 1.6 0 1 0 0-3.2 1.6 1.6 0 0 0 0 3.2Zm5.6 1.2H7v12.1h2.6v-6c0-1.6.3-3.2 2.4-3.2 2.1 0 2.1 1.9 2.1 3.3v5.9h2.6v-6.6c0-3.3-.7-5.5-4.3-5.5-1.7 0-2.9.9-3.4 1.8h-.1V8.7Z" />}
+              {link.icon === "instagram" && <><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.7" cy="6.5" r=".8" class="footer-socials__dot" /></>}
+              {link.icon === "github" && <path d="M12 2.8a9.2 9.2 0 0 0-2.9 18c.5.1.6-.2.6-.4v-1.6c-2.4.5-2.9-1-2.9-1-.4-1-.9-1.2-.9-1.2-.8-.6.1-.6.1-.6.9.1 1.3.9 1.3.9.8 1.3 2 1 2.5.8.1-.6.3-1 .6-1.2-1.9-.2-3.9-1-3.9-4.2 0-.9.3-1.6.9-2.2-.1-.2-.4-1.1.1-2.2 0 0 .7-.2 2.3.9a8 8 0 0 1 4.2 0c1.6-1.1 2.3-.9 2.3-.9.5 1.1.2 2 .1 2.2.6.6.9 1.3.9 2.2 0 3.2-2 4-3.9 4.2.3.3.6.8.6 1.6v2.3c0 .2.2.5.6.4a9.2 9.2 0 0 0-2.6-18Z" />}
+            </svg>
+          </a>
+        ))}
+      </nav>
+    )}
+    <p class="footer-copy">&copy; {new Date().getFullYear()} KUROKI</p>
   </div>
 </footer>
 <style>
-  .studio-footer { background: #0d0d0d; color: #b7c2d0; border-top: 1px solid rgba(255, 255, 255, 0.14); padding-block: 48px 24px; }
-  .footer-wrap { width: calc(100% - clamp(48px, 8vw, 144px)); max-width: 1576px; margin-inline: auto; }
-  .footer-main { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 40px; padding-bottom: 36px; }
-  .footer-brand { display: grid; gap: 14px; }
+  .studio-footer { background: #0d0d0d; color: #aeb9c6; border-top: 1px solid rgba(255, 255, 255, 0.14); padding-block: 26px; }
+  .footer-wrap { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: clamp(24px, 4vw, 56px); width: calc(100% - clamp(48px, 8vw, 144px)); max-width: 1576px; margin-inline: auto; }
   .footer-logo { display: block; width: fit-content; }
-  .footer-logo img { width: 156px; height: auto; filter: hue-rotate(174deg) saturate(0.78) brightness(1.08); }
-  .footer-brand p { margin: 0; color: #aeb9c6; font-size: 13px; line-height: 1.7; }
-  .footer-brand p span { color: #78879a; }
-  .footer-main nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 14px 30px; font-size: 13px; line-height: 1.5; }
-  .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid rgba(174, 185, 198, 0.16); padding-top: 20px; color: #8290a1; font-size: 12px; line-height: 1.5; }
-  a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+  .footer-logo img { display: block; width: 142px; height: auto; filter: hue-rotate(174deg) saturate(0.78) brightness(1.08); }
+  .footer-socials { display: flex; align-items: center; gap: 18px; }
+  .footer-socials a { display: grid; width: 44px; height: 44px; place-items: center; color: #aeb9c6; transition: color 200ms ease; }
+  .footer-socials svg { width: 19px; height: 19px; fill: currentColor; }
+  .footer-socials a:has(rect) svg { fill: none; stroke: currentColor; stroke-width: 1.7; }
+  .footer-socials__dot { fill: currentColor; stroke: none; }
+  .footer-copy { margin: 0; color: #8290a1; font-size: 12px; line-height: 1.5; white-space: nowrap; }
+  a { color: inherit; text-decoration: none; }
   a:hover { color: #3dbddf; }
-  a:focus-visible { outline: 2px solid #3dbddf; outline-offset: 6px; }
-  .footer-bottom a:last-child span { margin-left: 8px; color: #3dbddf; }
-  @media (max-width: 1023px) { .footer-main { gap: 32px; } .footer-main nav { gap: 14px 20px; } }
-  @media (max-width: 767px) { .studio-footer { padding-block: 36px 20px; } .footer-main { grid-template-columns: 1fr; gap: 28px; padding-bottom: 28px; } .footer-main nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); justify-content: start; gap: 14px 18px; } .footer-bottom { display: grid; grid-template-columns: 1fr auto; gap: 14px 18px; } .footer-bottom > span { grid-column: 1 / -1; } }
+  a:focus-visible { outline: 2px solid #3dbddf; outline-offset: 5px; }
+  @media (max-width: 767px) { .studio-footer { padding-block: 22px; } .footer-wrap { grid-template-columns: 1fr auto; gap: 16px; } .footer-logo img { width: 124px; } .footer-socials { grid-column: 1 / -1; grid-row: 2; } .footer-copy { grid-column: 2; grid-row: 1; } }
+  @media (prefers-reduced-motion: reduce) { .footer-socials a { transition: none; } }
 </style>

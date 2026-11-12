@@ -295,6 +295,9 @@ const remainingProjects = projects.slice(2);
     pointer-events: none;
   }
   .project-hover-cursor { border-radius: 4px; }
+  @media (max-width: 767px) {
+    .project-category { left: 16px; bottom: 16px; max-width: calc(100% - 32px); opacity: 1; transform: none; }
+  }
   @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
     .projects-section[data-projects-motion="true"] .project-editorial-link:hover [data-project-visual][data-project-revealed="true"] {
       transform: translateY(0) scale(1.015);
