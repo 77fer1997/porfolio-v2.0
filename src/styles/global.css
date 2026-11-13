@@ -2321,6 +2321,10 @@ body {
     margin-left: 0;
   }
 
+  .project-editorial-row--single .project-editorial-item--saul {
+    grid-column: 1;
+  }
+
   .project-editorial-row--pair .project-editorial-item--sms {
     margin-top: 0;
   }
@@ -3331,6 +3335,10 @@ body {
     margin-top: 0;
   }
 
+  .project-editorial-row--single .project-editorial-item--saul {
+    grid-column: 1;
+  }
+
   .project-cover--klipp,
   .project-cover--sms,
   .project-cover--botica {
@@ -3540,6 +3548,15 @@ body {
   .cases-index { padding-block: 132px 72px; }
   .cases-index__title { font-size: 40px; }
   .cases-index__grid { grid-template-columns: minmax(0,1fr); gap: 48px; margin-top: 40px; }
+  .whatsapp-float {
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    width: 52px;
+    min-width: 52px;
+    height: 52px;
+    min-height: 52px;
+  }
+  .whatsapp-float__icon { width: 27px; height: 27px; }
 }
 
 @keyframes kuroki-float {

@@ -32,24 +32,37 @@ const whatsappHref = `${contactConfig.whatsappHref}${hrefSeparator}text=${encode
     const closingSections = Array.from(document.querySelectorAll<HTMLElement>("#contacto, footer"));
     const controller = new AbortController();
     let frame = 0;
+    let idleTimer = 0;
+    let lastScrollY = Math.max(window.scrollY, 0);
+    let scrollDirection: "up" | "down" | "idle" = "idle";
     const update = () => {
       frame = 0;
       const atContact = closingSections.some(section => {
         const rect = section.getBoundingClientRect();
         return rect.top < window.innerHeight && rect.bottom > 0;
       });
-      const visible = window.scrollY > 320 && !atContact;
+      const visible = window.scrollY > 320 && !atContact && (scrollDirection !== "down" || document.activeElement === button);
       button.dataset.visible = String(visible);
       button.tabIndex = visible ? 0 : -1;
       button.setAttribute("aria-hidden", String(!visible));
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const handleScroll = () => {
+      const currentScrollY = Math.max(window.scrollY, 0);
+      if (currentScrollY > lastScrollY + 2) scrollDirection = "down";
+      else if (currentScrollY < lastScrollY - 2) scrollDirection = "up";
+      lastScrollY = currentScrollY;
+      window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => { scrollDirection = "idle"; schedule(); }, 260);
+      schedule();
+    };
     update();
-    window.addEventListener("scroll", schedule, { passive: true, signal: controller.signal });
+    window.addEventListener("scroll", handleScroll, { passive: true, signal: controller.signal });
     window.addEventListener("resize", schedule, { signal: controller.signal });
     document.addEventListener("astro:before-swap", () => {
       controller.abort();
       cancelAnimationFrame(frame);
+      window.clearTimeout(idleTimer);
     }, { once: true });
   };
   initWhatsAppButton();
