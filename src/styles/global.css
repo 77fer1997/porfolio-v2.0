@@ -3286,7 +3286,7 @@ body {
   }
 
   .project-editorial-list {
-    gap: 58px;
+    gap: 58px; padding-inline: 24px;
   }
 
   .projects-section {
@@ -3358,7 +3358,7 @@ body {
   .project-editorial-meta {
     gap: 7px;
     max-width: 100%;
-    padding-inline: 24px;
+    padding-inline: 0;
   }
 
   .project-editorial-meta h3 {
