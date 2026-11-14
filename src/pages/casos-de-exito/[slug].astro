@@ -198,6 +198,9 @@ const nextDetail = nextProject && projectDetails[nextProject.data.slug as keyof 
               <div class="case-story__item">
                 <span>03 · EL APORTE</span>
                 <p>{currentDetail.result}</p>
+                {project.data.slug === "saul-guzman" && (
+                  <p>Si buscas facilitar las consultas desde tu web, conoce nuestro servicio de <a href="/servicios/landings/" style="text-decoration: underline">diseño de páginas web</a>.</p>
+                )}
               </div>
             </div>
             {project.data.slug === "saul-guzman" && (

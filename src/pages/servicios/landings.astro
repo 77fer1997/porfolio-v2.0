@@ -9,10 +9,10 @@ import { contactConfig } from "@shared/config/contact.config";
 import { siteConfig } from "@shared/config/site.config";
 import { organizationJsonLd, websiteJsonLd } from "@shared/seo/structured-data";
 
-const title = "Landings administradas | KUROKI";
+const title = "Diseño de páginas web en Arequipa | KUROKI";
 const description =
-  "Diseñamos, desarrollamos y mantenemos sitios web profesionales con dominio, hosting, SSL y soporte incluidos desde S/99 al mes.";
-const canonical = `${siteConfig.url}/servicios/landings`;
+  "Diseñamos páginas web en Arequipa para presentar tus servicios y facilitar que tus clientes te contacten por WhatsApp.";
+const canonical = `${siteConfig.url}/servicios/landings/`;
 const separator = contactConfig.whatsappHref.includes("?") ? "&" : "?";
 const whatsappHref = `${contactConfig.whatsappHref}${separator}text=${encodeURIComponent(
   "Hola Kuroki, quiero conversar sobre el servicio de Landings.",

@@ -39,7 +39,7 @@ const services = [
             </div>
             <div class="service-entry__details">
               <p class="service-entry__description">{service.description}</p>
-              <ul>{service.includes.map((item) => <li>{item}</li>)}</ul>
+              <ul>{service.includes.map((item) => <li>{item === "Landing pages y sitios corporativos" ? <a href="/servicios/landings/" style="text-decoration: underline">Diseño de páginas web</a> : item}</li>)}</ul>
               <a class="service-entry__action" href={service.href}>{service.cta}<span aria-hidden="true">&nearr;</span></a>
             </div>
           </div>
